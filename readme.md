@@ -30,19 +30,23 @@ Recomendo! Nele é possível abrir várias abas, isso no decorrer do projeto é 
 
 #Iniciando com Laravel (Para estudo)
 
-	Acho importante que todos saibam como iniciar um projeto, mas no nosso caso, um criará e os outros apenas baixarão pelo git. Para criar é só abrir o terminal e escolher o diretório onde quer criar o projeto. Ai cola esse comando:
+Acho importante que todos saibam como iniciar um projeto, mas no nosso caso, um criará e os outros apenas baixarão pelo git. Para criar é só abrir o terminal e escolher o diretório onde quer criar o projeto. Ai cola esse comando:
 
-composer create-project --prefer-dist laravel/laravel alecrim
+	composer create-project --prefer-dist laravel/laravel alecrim
+	
 Onde está alecrim pode colocar o nome que quiser.
 
-	Depois que terminar de executar, pode testar, para saber se está funcionando corretamente. Basta colar esse comando no terminal e dar enter:
+Depois que terminar de executar, pode testar, para saber se está funcionando corretamente. Basta colar esse comando no terminal e dar enter:
 
-php artisan serve
+	php artisan serve
 Esse comando inicia um servidor local, no localhost:8000.
 
 O laravel vem com um namespace padrão, chamado App, é recomendado mudar e colocar o nome do seu projeto. Entao basta colar esse comando no terminal
 
 php artisan app:name alecrim
 
-Fazer um npm install e um npm run dev
+Fazer um 
+	npm install 
+e um 
+	npm run dev
 
