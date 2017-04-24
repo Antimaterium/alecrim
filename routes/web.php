@@ -11,5 +11,13 @@
 |
 */
 
+Route::get('/', function() {
+	return view('home');
+});
+
+//PRODUTOS (lista, adiciona, mostra detalhes)
 Route::get('/lista-produtos', 'ProductController@list');
-Route::get('/adiciona-produtos', 'ProductController@add');
+Route::get('/lista-produtos/detalhes/{id}', 'ProductController@viewProduct');
+Route::get('/adiciona-produtos', 'ProductController@viewAdd');
+Route::post('/adiciona-produtos/concluido', 'ProductController@addProduct');
+
