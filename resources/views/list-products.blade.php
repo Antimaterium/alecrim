@@ -13,7 +13,7 @@
 				<td> {{ $value->product_price }}</td>
 				<td>
 					<a href="/lista-produtos/detalhes/{{ $value->id }}">
-						<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+						<i class="material-icons">search</i>
 					</a>
 				</td>
 			</tr>
