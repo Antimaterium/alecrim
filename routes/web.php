@@ -18,6 +18,7 @@ Route::get('/', function() {
 //PRODUTOS (lista, adiciona, mostra detalhes)
 Route::get('/lista-produtos', 'ProductController@list');
 Route::get('/lista-produtos/detalhes/{id}', 'ProductController@viewProduct');
+Route::get('/lista-produtos/remove/{id}', 'ProductController@destroy');
 Route::get('/adiciona-produtos', 'ProductController@viewAdd');
 Route::post('/adiciona-produtos/concluido', 'ProductController@addProduct');
 

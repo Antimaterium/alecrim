@@ -2,13 +2,13 @@
 
 @section('content')
 <section class="list-products">
-	<div class="card">
+
 		@if(old('nome'))
 			<div class="alert alert-success">
 				Produto {{ old('nome') }} foi adicionado com sucesso!
 			</div>	
 		@endif
-		
+	<div class="card">		
 		<div class="card-header">
 			Produtos
 		</div>
@@ -23,6 +23,11 @@
 						<td>
 							<a href="/lista-produtos/detalhes/{{ $value->id }}">
 								<i class="material-icons">search</i>
+							</a>
+						</td>
+						<td>
+							<a href="/lista-produtos/remove/{{ $value->id }}">
+								<i class="material-icons">delete</i>
 							</a>
 						</td>
 					</tr>
