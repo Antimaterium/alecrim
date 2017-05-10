@@ -5,6 +5,7 @@ namespace alecrim\Http\Controllers;
 use Request;
 use Illuminate\Support\Facades\DB;
 use alecrim\Product;
+use alecrim\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
@@ -23,10 +24,9 @@ class ProductController extends Controller
 
     }
 
-    public function addProduct() {
+    public function addProduct(ProductRequest $request) {
 
-        Product::create(Request::all()); 
-
+        Product::create($request->all()); 
         return redirect('/lista-produtos')->withInput();
 
     }
@@ -34,7 +34,6 @@ class ProductController extends Controller
     public function viewProduct($id) {
         
         $product = Product::find($id);
-
         return view('details-product')->with('product',$product);
 
     }
