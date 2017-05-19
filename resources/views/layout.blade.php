@@ -6,6 +6,7 @@
 		<link rel="stylesheet" href="/css/app.css" type="text/css">
 
 		<!-- MATERIAL ICONS -->
+
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<!-- END MATERIAL ICONS -->
 
@@ -19,6 +20,9 @@
 	    <!-- Custom CSS -->
 	    <link href="css/simple-sidebar.css" rel="stylesheet">
 
+	    <!-- stylesheet CSS -->
+	    <link href="css/stylesheet.css" rel="stylesheet">
+
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	    <!--[if lt IE 9]>
@@ -30,27 +34,66 @@
 
 	<body>
 
+		<nav class="navbar navbar-toggleable-md navbar-inverse" style="background-color: #000;">
+			
+			<a class="navbar-brand" href="/">Alecrim</a>
+
+			
+			
+			<!-- <ul class="nav navbar-nav navbar-right">
+			                 
+			                   <li class="dropdown" id="logout">
+			                       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+			                                    			<i class="material-icons" >exit_to_app</i>
+			                       </a>
+			                                 
+			                       <ul class="dropdown-menu" role="menu">
+			                           <li>
+			                               <a href="{{ route('logout') }}"
+			                                   onclick="event.preventDefault();
+			                                            document.getElementById('logout-form').submit();">
+			                                   Logout
+			                               </a>
+			                                 
+			                               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+			                                   {{ csrf_field() }}
+			                               </form>
+			                           </li>
+			                       </ul>
+			                   </li>
+			                 
+			              </ul> -->
+			<!-- <div class="collapse navbar-collapse" id="navbarText">
+			  <ul class="navbar-nav mr-auto">
+			    <li class="nav-item active">
+			      <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+			    </li>
+			    <li class="nav-item">
+			      <a class="nav-link" href="#">Features</a>
+			    </li>
+			    <li class="nav-item">
+			      <a class="nav-link" href="#">Pricing</a>
+			    </li>
+			  </ul>
+			  <span class="navbar-text">
+			    Navbar text with an inline element
+			  </span>
+			</div> -->
+		</nav>
+
 		<div id="wrapper" class="toggled">
 
 	        <!-- Sidebar -->
 	        <div id="sidebar-wrapper">
 	            <ul class="sidebar-nav">
-	                <li class="sidebar-brand">
-	                    <a href="/">
-	                        Alecrim
-	                    </a>
-	                </li>
-	                <li>
-	                    <a href="/">Home</a>
-	                </li>
 	                <li>
 	                    <a href="#">Pedidos</a>
 	                </li>
 	                <li>
-	                    <a href="#">Produtos</a>
-	                    <ul style="list-style: none">
+	                    <a href="#product-menu" data-toggle="collapse" class="hide">Produtos</a>
+	                    <ul class="link" id="product-menu">
 	                    	<li>
-	                    		<a href=" adiciona-produtos">Adicionar Produtos</a>	
+	                    		<a href="adiciona-produtos">Adicionar Produtos</a>	
 	                    	</li>
 	                    	<li>
 	                    		<a href="lista-produtos">Listagem de Produtos</a>
@@ -62,6 +105,13 @@
 	                </li>
 	                <li>
 	                    <a href="#">Caixa</a>
+	                </li>	                
+	                <li>
+	                    <a href="#">Funcionários</a>
+	                    <ul class="link">
+	                    	<li><a href="{{ route('register') }}">Cadastrar</a></li>
+	                    	<li><a href="#">Listar</a></li>
+	                    </ul>
 	                </li>
 	            </ul>
 	        </div>
@@ -93,6 +143,7 @@
 	    // });
 	    </script>
 
+		
 	</body>
 
 </html>

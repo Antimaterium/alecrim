@@ -1,0 +1,10 @@
+#logout {
+	position: absolute;
+    margin-right: 15px;
+    right: 0;
+    color: white;
+}
+
+.link {
+	list-style: none;
+}

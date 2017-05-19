@@ -1,9 +1,11 @@
 @extends('layout')
 
 @section('content')
-<section>	
-
-	<h3>Página Inicial</h3>
-
-</section>
-@stop
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+           Dashboard
+        </div>
+    </div>
+</div>
+@endsection

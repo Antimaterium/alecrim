@@ -22,3 +22,6 @@ Route::get('/lista-produtos/remove/{id}', 'ProductController@destroy');
 Route::get('/adiciona-produtos', 'ProductController@viewAdd');
 Route::post('/adiciona-produtos/concluido', 'ProductController@addProduct');
 
+Auth::routes();
+
+//Route::get('/home', 'HomeController@index');
