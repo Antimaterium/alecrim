@@ -86,29 +86,35 @@
 	        <!-- Sidebar -->
 	        <div id="sidebar-wrapper">
 	            <ul class="sidebar-nav">
-	                <li>
+	                <!-- <li>
 	                    <a href="#">Pedidos</a>
-	                </li>
+	                </li> -->
 	                <li>
-	                    <a href="#product-menu" data-toggle="collapse" class="hide">Produtos</a>
-	                    <ul class="link" id="product-menu">
+	                    <a href="#product-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
+	                    	Produtos
+	                    	<i class="material-icons">keyboard_arrow_down</i>
+                    	</a>
+	                    <ul class="link collapse" id="product-menu" aria-expanded="false">
 	                    	<li>
-	                    		<a href="adiciona-produtos">Adicionar Produtos</a>	
+	                    		<a href="adiciona-produtos">Cadastrar</a>	
 	                    	</li>
 	                    	<li>
-	                    		<a href="lista-produtos">Listagem de Produtos</a>
+	                    		<a href="lista-produtos">Listar</a>
 	                    	</li>
 	                    </ul>
 	                </li>
+	                <!-- <li>
+	                                    <a href="#">Fornecedores</a>
+	                                </li>
+	                                <li>
+	                                     <a href="#">Caixa</a>
+	                                </li>	 -->                
 	                <li>
-	                    <a href="#">Fornecedores</a>
-	                </li>
-	                <li>
-	                    <a href="#">Caixa</a>
-	                </li>	                
-	                <li>
-	                    <a href="#">Funcionários</a>
-	                    <ul class="link">
+	                    <a href="#employee-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
+	                    	Funcionários
+	                    	<i class="material-icons">keyboard_arrow_down</i>
+                    	</a>
+	                    <ul class="link collapse" id="employee-menu" aria-expanded="false">
 	                    	<li><a href="{{ route('register') }}">Cadastrar</a></li>
 	                    	<li><a href="#">Listar</a></li>
 	                    </ul>

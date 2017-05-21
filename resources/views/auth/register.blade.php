@@ -10,7 +10,7 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('name') ? ' bg-danger' : '' }}">
                             <label for="name" class="col-md-4 control-label">Nome</label>
 
                             <div class="col-md-12 col-lg-12">
@@ -24,7 +24,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('email') ? ' bg-danger' : '' }}">
 
                             <div>
                                 <label for="email" class="col-md-4 control-label">E-Mail</label>
@@ -40,19 +40,24 @@
                             </div>
 
                             <div >
-                                <label for="password-confirm" class="col-md-4 control-label">Selecione Perfil</label>
+                                <label for="permission" class="col-md-4 control-label">Selecione Perfil</label>
                                 <div class="col-md-6 col-lg-6">
                                     <select name="permission" id="permission" class="form-control">
                                         <option value="1">Administrador</option>
                                         <option value="2">Gerente</option>
                                         <option value="3">Funcionário</option>
                                     </select>
+                                    @if ($errors->has('email'))
+                                        <span class="help-block">
+                                            <strong>{{ $errors->first('email') }}</strong>
+                                        </span>
+                                    @endif
                                 </div>
                             </div>
 
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('password') ? ' bg-danger' : '' }}">
                             <label for="password" class="col-md-4 control-label">Senha</label>
 
                             <div class="col-md-12 col-lg-12">
