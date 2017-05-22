@@ -3,14 +3,13 @@
 namespace alecrim\Http\Controllers;
 
 use Request;
-use Illuminate\Support\Facades\DB;
 use alecrim\Product;
 use alecrim\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
 
-    public function list() {
+    public function show() {
 
         $products_list = Product::all();
 
@@ -18,20 +17,20 @@ class ProductController extends Controller
 
     }
 
-    public function viewAdd() {
+    public function viewCreate() {
        
        return view('add-product');
 
     }
 
-    public function addProduct(ProductRequest $request) {
+    public function create(ProductRequest $request) {
 
         Product::create($request->all()); 
         return redirect('/lista-produtos')->withInput();
 
     }
 
-    public function viewProduct($id) {
+    public function details($id) {
         
         $product = Product::find($id);
         return view('details-product')->with('product',$product);
@@ -43,7 +42,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->delete();
 
-        return redirect('lista-produtos');
+        return redirect('lista-produtos')->withInput();
 
     }
 

@@ -41,7 +41,7 @@ class ProductRequest extends FormRequest
             //description
             'product_description.required' => 'Preencha o campo descrição',
             'product_description.max' => 'Digite no maximo 255 caracteres no campo descrição',
-            'product_description.min' => 'Digite no no mínimo 10 caracteres no campo descrição',
+            'product_description.min' => 'Digite no mínimo 10 caracteres no campo descrição',
             //quantity
             'product_quantity.required' => 'Preencha o campo quantidade',
             'product_quantity.numeric' => 'Digite apenas numeros no campo quantidade',

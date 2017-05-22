@@ -1,3 +1,7 @@
+body {
+	background: #f8f8f8;
+}
+
 #logout {
 	position: absolute;
     margin-right: 15px;
