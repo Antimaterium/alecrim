@@ -1,0 +1,14 @@
+body {
+	background: #f8f8f8;
+}
+
+#logout {
+	position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.link {
+	list-style: none;
+	color: white;
+}
