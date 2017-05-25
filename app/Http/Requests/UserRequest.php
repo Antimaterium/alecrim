@@ -28,7 +28,7 @@ class UserRequest extends FormRequest
             'email'                 => 'required|max:100|email',
             'permission'            => 'required',
             'password'              => 'required|min:8|string|confirmed', 
-            'password-confirm'      => 'required|min:8|string'
+            'password_confirmation' => 'required|min:8|string'
         ];
     }
 
@@ -51,9 +51,9 @@ class UserRequest extends FormRequest
             'password.min'          => 'Digite no mínimo 8 caracteres',
             'password.confirmed'    =>  'Os campos de senha não coincidem',
 
-            //password-confirm
-            'password-confirm.required'    => 'Preencha o campo',
-            'password-confirm.min'         => 'Digite no mínimo 8 caracteres'
+            //password_confirmation
+            'password_confirmation.required'    => 'Preencha o campo',
+            'password_confirmation.min'         => 'Digite no mínimo 8 caracteres'
         ];  
 
     }

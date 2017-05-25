@@ -7,11 +7,12 @@ use Auth;
 
 class Authorizator
 {
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = null)
     {
-        /*if (!$request->is('login') && Auth::guest()) {
+    	
+        if (!$request->is('login') && Auth::guest()) {
             return redirect('/login');
-        }*/
+        }
         return $next($request);
 
     }

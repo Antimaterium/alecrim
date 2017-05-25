@@ -71,15 +71,15 @@
                     @endif
                 </div>
 
-                <div class="form-group{{ $errors->has('password-confirm') ? ' has-danger' : '' }}">
+                <div class="form-group{{ $errors->has('password_confirmation') ? ' has-danger' : '' }}">
                     <label for="password-confirm" class="col-md-4 control-label">Confirmar senha</label>
                     <div class="">
-                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                        <input id="password_confirmation" type="password" class="form-control" name="password_confirmation">
                     </div>
-					@if ($errors->has('password-confirm'))
+					@if ($errors->has('password_confirmation'))
                         <span class="help-block">
                             <div class="form-control-feedback">
-                                {{ $errors->first('password-confirm') }}
+                                {{ $errors->first('password_confirmation') }}
                             </div>
                         </span>
                     @endif
