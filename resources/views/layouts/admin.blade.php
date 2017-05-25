@@ -6,22 +6,24 @@
 		<link rel="stylesheet" href="/css/app.css" type="text/css">
 		
 		<!-- MATERIAL ICONS -->
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 		<!-- END MATERIAL ICONS -->
 
+		 <!-- Custom CSS -->
+	    <link href="/css/simple-sidebar.css" type="text/css" rel="stylesheet"/>
+
+	    <!-- stylesheet CSS -->
+	    <link href="/css/stylesheet.css" type="text/css" rel="stylesheet"/>
+
+
 		<!-- BOOTSTRAP -->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
 		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 		<!-- END BOOTSTRAP -->
 
-	    <!-- Custom CSS -->
-	    <link href="css/simple-sidebar.css" rel="stylesheet">
-
-	    <!-- stylesheet CSS -->
-	    <link href="css/stylesheet.css" rel="stylesheet">
-
+	   
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	    <!--[if lt IE 9]>
@@ -68,10 +70,10 @@
                     	</a>
 	                    <ul class="link collapse" id="product-menu" aria-expanded="false">
 	                    	<li>
-	                    		<a href="adiciona-produtos">Cadastrar</a>	
+	                    		<a href="/adiciona-produtos">Cadastrar</a>	
 	                    	</li>
 	                    	<li>
-	                    		<a href="lista-produtos">Listar</a>
+	                    		<a href="/lista-produtos">Listar</a>
 	                    	</li>
 	                    </ul>
 	                </li>
@@ -87,8 +89,8 @@
 	                    	<i class="material-icons">keyboard_arrow_down</i>
                     	</a>
 	                    <ul class="link collapse" id="employee-menu" aria-expanded="false">
-	                    	<li><a href="cadastrar-usuario">Cadastrar</a></li>
-	                    	<li><a href="listar-usuarios">Listar</a></li>
+	                    	<li><a href="/cadastrar-usuario">Cadastrar</a></li>
+	                    	<li><a href="/listar-usuarios">Listar</a></li>
 	                    </ul>
 	                </li>
 	            </ul>

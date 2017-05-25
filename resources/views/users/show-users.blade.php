@@ -19,7 +19,7 @@
 					<th>Nome</th>
 					<th>E-mail</th>
 					<th>Perfil</th>
-					<!-- <th>Ações</th> -->
+					<th>Ações</th>
 				</thead>
 				<tbody>
 					@foreach ($users_list as $user)
@@ -28,12 +28,12 @@
 							<td> {{ $user->email }}</td>
 							<td> {{ $user->permission }}</td>
 
-							<!-- <td>
+							<td>
 								<div class="btn-group">
-									<a href="lista-usuarios/{{ $user->id }}/edita" class="btn btn-sm btn-outline-warning" value="delete">Editar</a>
-									<a href="lista-usuarios/{{ $user->id }}" class="btn btn-sm btn-outline-danger" value="delete">Remover</a>
+									<a href="{{ route('users.user-edit',$user->id) }}" class="btn btn-sm btn-outline-warning" value="delete">Editar</a>
+									<a href="javascript:(confirm('Deletear esse resgistro?') ? window.location.href='{{route('users.destroy',$user->id)}}' : '')" class="btn btn-sm btn-outline-danger" value="delete">Remover</a>
 								</div>
-							</td> -->
+							</td>
 						</tr>
 					@endforeach
 				</tbody>

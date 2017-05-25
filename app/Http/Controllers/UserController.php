@@ -32,16 +32,44 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        if(!$user){
+           
+            \Session::flash('flash_message',[
+                'msg'=>"Não Existe Esse Usuario cadastrado! Deseja Cadastrar um novo Usuario?",
+                'class'=>"alert-danger"
+                ]);
+            return redirect()->route('/listar-usuarios');
+        }
+
+            return view('users.user-edit',compact('user'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,$id)
     {
-        //
+
+            User::find($id)->update($request->all());
+        
+           // User::create($request->all());
+            
+            \Session::flash('flash_message',[
+                'msg'=>"Usuário Atualizado com sucesso!?",
+                'class'=>"alert-success"
+                ]);
+
+            return redirect('/listar-usuarios')->withInput();
     }
+    
 
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        \Session::flash('flash_message',[
+                'msg'=>"Usuário deletado com sucesso!?",
+                'class'=>"alert-success"
+                ]);
+
+        return redirect('/listar-usuarios')->withInput();
     }
 }
