@@ -31,7 +31,7 @@
 							<td>
 								<div class="btn-group">
 									<a href="{{ route('users.user-edit',$user->id) }}" class="btn btn-sm btn-outline-warning" value="delete">Editar</a>
-									<a href="javascript:(confirm('Deletear esse resgistro?') ? window.location.href='{{route('users.destroy',$user->id)}}' : '')" class="btn btn-sm btn-outline-danger" value="delete">Remover</a>
+									<a href="javascript:(confirm('Deletear esse resgistro?') ? window.location.href='{{route('users.destroy',$user->id)}}' : window.location.href='{{route('user.list')}}')" class="btn btn-sm btn-outline-danger" value="delete">Remover</a>
 								</div>
 							</td>
 						</tr>

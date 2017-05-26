@@ -1,16 +1,4 @@
 <?php
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 //HOME
 Route::get('/', function () {
 		return view('/home');  
@@ -24,7 +12,7 @@ Route::post('login', 'AuthController@attempt');
 Route::get('logout', 'AuthController@logout');
 
 //USERS 
-Route::get('listar-usuarios', 'UserController@index');
+Route::get('listar-usuarios', ['uses' =>'UserController@index', 'as' => 'user.list' ]);
 
 //USERS EDIT 
 Route::get('editar-usuario/{id}', ['uses'=>'UserController@edit','as'=>'users.user-edit']);
@@ -39,6 +27,10 @@ Route::get('cadastrar-usuario', 'UserController@create');
 Route::post('cadastrar-usuario', 'UserController@store');
 
 //PRODUCTS
-Route::get('lista-produtos', 'ProductController@index');
+Route::get('lista-produtos', ['uses' => 'ProductController@index', 'as' => 'product.list']);
+Route::get('adiciona-produtos', 'ProductController@create');
+Route::post('adiciona-produtos', 'ProductController@store');
+Route::get('edita-produtos/{id}', ['uses' => 'ProductController@edit', 'as' => 'product.edit']);
+Route::put('edita-produtos/{id}', ['uses' => 'ProductController@update', 'as' => 'product.update']);
 Route::get('lista-produtos/detalhes/{id}', 'ProductController@show');
-Route::get('lista-produtos/remove/{id}', 'ProductController@destroy');
+Route::get('lista-produtos/remove/{id}', ['uses' => 'ProductController@destroy', 'as' => 'product.destroy']);

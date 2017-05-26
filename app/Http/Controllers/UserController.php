@@ -5,6 +5,7 @@ namespace alecrim\Http\Controllers;
 use Illuminate\Http\Request;
 use alecrim\User;
 use alecrim\Http\Requests\UserRequest;
+use Session;
 
 class UserController extends Controller
 {
@@ -35,7 +36,7 @@ class UserController extends Controller
         $user = User::find($id);
         if(!$user){
            
-            \Session::flash('flash_message',[
+            Session::flash('flash_message',[
                 'msg'=>"Não Existe Esse Usuario cadastrado! Deseja Cadastrar um novo Usuario?",
                 'class'=>"alert-danger"
                 ]);
@@ -47,12 +48,11 @@ class UserController extends Controller
 
     public function update(Request $request,$id)
     {
-
             User::find($id)->update($request->all());
         
            // User::create($request->all());
             
-            \Session::flash('flash_message',[
+            Session::flash('flash_message',[
                 'msg'=>"Usuário Atualizado com sucesso!?",
                 'class'=>"alert-success"
                 ]);
@@ -65,7 +65,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        \Session::flash('flash_message',[
+        Session::flash('flash_message',[
                 'msg'=>"Usuário deletado com sucesso!?",
                 'class'=>"alert-success"
                 ]);

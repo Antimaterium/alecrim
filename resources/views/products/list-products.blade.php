@@ -37,17 +37,28 @@
 							<td> {{ $product->product_quantity }}</td>
 							<td> {{ $product->product_price }}</td>
 							<td>
-								<a href="/lista-produtos/detalhes/{{ $product->id }}">
-									<i class="material-icons">search</i>
-								</a>
-								<a href="/lista-produtos/remove/{{ $product->id }}">
-									<i class="material-icons">delete</i>
-								</a>
+								<div class="btn-group">
+									<a href="{{ route('product.edit',$product->id) }}" class="btn btn-sm btn-outline-warning">Editar</a>	
+									<a href="javascript:(confirm('Apagar esse resgistro?') ? window.location.href='{{route('product.destroy',$product->id)}}' : window.location.href='{{route('product.list')}}')" class="btn btn-sm btn-outline-danger" value="delete">Apagar</a>
+								</div>
 							</td>
 						</tr>
 					@endforeach
+
 				</tbody>
 			</table>
+			<div align="center">
+				
+			</div>
+			<nav aria-label="Page navigation example">
+			  <ul class="pagination">
+			  	@foreach($products_list->links() as $link)
+			    	<li class="page-item">
+			    		<a class="page-link" href="#">{{ $link }}</a>
+		    		</li>
+			    @endforeach
+			  </ul>
+			</nav>
 		</div>
 	</div>
 	

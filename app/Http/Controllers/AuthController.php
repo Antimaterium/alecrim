@@ -20,13 +20,13 @@ class AuthController extends Controller
 
     public function attempt(LoginRequest $request) {
 
-        $credentials    = $request->only(['email', 'password']);
+        $credentials = $request->only(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {
             return redirect()->back()->withInput();
         }
 
-        return redirect('/');
+            return redirect('/');    
 
     }
 
