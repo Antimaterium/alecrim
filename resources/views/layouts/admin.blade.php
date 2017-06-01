@@ -42,7 +42,7 @@
 			<a class="navbar-brand" href="/">Alecrim</a>
 
 			<ul class="nav navbar-nav navbar-right">              
-				<li id="user-name">{{ Auth::user()->name }}</li>
+				<li id="user-name">{{ substr(Auth::user()->name, 0, 10) . '...' }}</li>
                	<li class="dropdown" id="logout">
                    <a href="#" class="dropdown-toggle link" data-toggle="dropdown" role="button" aria-expanded="false">
             			<i class="material-icons" >exit_to_app</i>

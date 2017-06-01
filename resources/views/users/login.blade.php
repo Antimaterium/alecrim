@@ -71,7 +71,7 @@
                                 </div>
                             </div>
     
-                            <!-- <div class="form-group">
+                            <div class="form-group hidden-sm-up ">
                                 <div class="col-md-6 col-md-offset-4">
                                     <div class="checkbox">
                                         <label>
@@ -80,17 +80,17 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div> -->
+                            </div>
     
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="pull-right btn btn-primary">
                                         Entrar
                                     </button>
     
-                                    <!-- <a class="btn btn-link" href="#">
+                                    <a class="btn btn-link hidden-sm-up " href="#">
                                         Esqueceu a senha?
-                                    </a> -->
+                                    </a>
                                 </div>
                             </div>
                         </form>

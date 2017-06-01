@@ -8,11 +8,18 @@ body {
     top: 15px;
 }
 
-#user-name {
-	float: right;
+.dropdown-menu {
+	min-width: 60px !important;
+    padding: 5px 0 5px 15px !important;
+    left: -10px !important;
 }
 
-
+#user-name {
+	color: #fafafa;
+    position: absolute;
+    right: 80px;
+    top: 15px;
+}
 
 .link {
 	list-style: none;
