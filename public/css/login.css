@@ -1,0 +1,28 @@
+body {
+	background-image: url('../img/login-page.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+}
+
+.card-height {
+    height: 100vh;	
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-height h1 {
+	font-size: 30px;
+	text-align: center;
+	color: #efefef;
+	margin-bottom: 12px;
+}
+
+.card {
+	background-color: rgba(255, 255, 255, .5) !important; 
+}
+
+.label-login {
+	font-weight: 600;
+}

@@ -22,11 +22,13 @@ class AuthController extends Controller
 
         $credentials = $request->only(['email', 'password']);
 
-        if (!Auth::attempt($credentials)) {
-            return redirect()->back()->withInput();
-        }
-
+        //se as credências coincidirem no banco, eu logo o usuário 
+        if (Auth::attempt($credentials)) {
+            //redirecionand o usuário para o dashboard
             return redirect('/');    
+        }
+        //redirecionand o usuário para a página anterior(login)
+        return redirect()->back()->withInput();
 
     }
 

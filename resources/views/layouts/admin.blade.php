@@ -15,6 +15,8 @@
 	    <!-- stylesheet CSS -->
 	    <link href="/css/stylesheet.css" type="text/css" rel="stylesheet"/>
 
+	    <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
 
 		<!-- BOOTSTRAP -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
@@ -38,18 +40,20 @@
 		<nav class="navbar navbar-toggleable-md navbar-inverse" style="background-color: #000;">
 			
 			<a class="navbar-brand" href="/">Alecrim</a>
+
 			<ul class="nav navbar-nav navbar-right">              
-               <li class="dropdown" id="logout">
+				<li id="user-name">{{ Auth::user()->name }}</li>
+               	<li class="dropdown" id="logout">
                    <a href="#" class="dropdown-toggle link" data-toggle="dropdown" role="button" aria-expanded="false">
             			<i class="material-icons" >exit_to_app</i>
                    </a>
                              
                    <ul class="dropdown-menu" role="menu">
                        <li>
-                           <a href="/logout">Logout</a>
+                           <a href="/logout"> Sair</a>
                        </li>
                    </ul>
-               </li>
+               	</li>
              
           </ul>
 
@@ -66,7 +70,7 @@
 	                <li>
 	                    <a href="#product-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
 	                    	Produtos
-	                    	<i class="material-icons">keyboard_arrow_down</i>
+	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
 	                    <ul class="link collapse" id="product-menu" aria-expanded="false">
 	                    	<li>
@@ -78,15 +82,15 @@
 	                    </ul>
 	                </li>
 	                <!-- <li>
-	                                    <a href="#">Fornecedores</a>
-	                                </li>
-	                                <li>
-	                                     <a href="#">Caixa</a>
-	                                </li>	 -->                
+                        <a href="#">Fornecedores</a>
+                    </li>
+                    <li>
+                         <a href="#">Caixa</a>
+                    </li>	 -->                
 	                <li>
 	                    <a href="#employee-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
 	                    	Funcionários
-	                    	<i class="material-icons">keyboard_arrow_down</i>
+	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
 	                    <ul class="link collapse" id="employee-menu" aria-expanded="false">
 	                    	<li><a href="/cadastrar-usuario">Cadastrar</a></li>

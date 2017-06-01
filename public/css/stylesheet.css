@@ -8,7 +8,19 @@ body {
     top: 15px;
 }
 
+#user-name {
+	float: right;
+}
+
+
+
 .link {
 	list-style: none;
 	color: white;
+}
+
+.menu-left-side-icon{
+    position: absolute;
+    right: 2px;
+    margin: 8px;
 }

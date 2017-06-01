@@ -10,6 +10,8 @@
 
     <title>{{ config('app.name', 'Alecrim') }}</title>
 
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+
     <!-- BOOTSTRAP -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -27,18 +29,20 @@
 
 <body>
     <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+
+        <div class="row card-height">
+            <div class="col-md-4 ">
                 <div class="card">
-                    <div class="card-header">Login</div>
                     <div class="card-block">
+                        <h1 class="text-uppercase" >Login</h1>
+
                         <form class="form-horizontal" role="form" method="POST" action="/login">
                             {{ csrf_field() }}
     
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-mail</label>
+                                <label for="email" class="col-md-4 control-label label-login">E-mail</label>
     
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <input id="email" type="email" class="form-control form-control-danger" name="email" value="{{ old('email') }}" required autofocus>
     
                                     @if ($errors->has('email'))
@@ -52,9 +56,9 @@
                             </div>
     
                             <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
-                                <label for="password" class="col-md-4 control-label">Senha</label>
+                                <label for="password" class="col-md-4 control-label label-login">Senha</label>
     
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <input id="password" type="password" class="form-control form-control-danger" name="password" required>
     
                                     @if ($errors->has('password'))
@@ -67,7 +71,7 @@
                                 </div>
                             </div>
     
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
                                     <div class="checkbox">
                                         <label>
@@ -76,7 +80,7 @@
                                         </label>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
     
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
@@ -84,9 +88,9 @@
                                         Entrar
                                     </button>
     
-                                    <a class="btn btn-link" href="#">
+                                    <!-- <a class="btn btn-link" href="#">
                                         Esqueceu a senha?
-                                    </a>
+                                    </a> -->
                                 </div>
                             </div>
                         </form>
@@ -94,6 +98,7 @@
                 </div>
             </div>
         </div>
+    
     </div>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>

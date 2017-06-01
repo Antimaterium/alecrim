@@ -15,11 +15,11 @@ class Authorizator
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
-        /*if (Auth::guard($guard)->check()) {
-            return redirect('/home');
-        }*/
+        // if (!$request->is('login') && Auth::guest()) {
+        //     return redirect('login');
+        // }
 
         return $next($request);
     }

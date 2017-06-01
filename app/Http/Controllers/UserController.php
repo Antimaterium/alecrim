@@ -10,6 +10,10 @@ use Session;
 class UserController extends Controller
 {
 
+/*    public function __construct(){
+        $this->middleware('Authorizator');
+    }*/
+
     public function index()
     {
         $users_list = User::all();
