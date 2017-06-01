@@ -22,13 +22,6 @@
 					<th>Preço</th>
 					<th>Ações</th>
 				</thead>
-				<tfoot>
-					<th>Nome</th>
-					<th>Descrição</th>
-					<th>Quantidade</th>
-					<th>Preço</th>
-					<th>Ações</th>
-				</tfoot>
 				<tbody>
 					@foreach ($products_list as $product)
 						<tr class="{{ $product->product_quantity <= 1 ? 'bg-danger' : ''}}">

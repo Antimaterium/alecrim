@@ -9,7 +9,7 @@
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 		<!-- END MATERIAL ICONS -->
 
-		 <!-- Custom CSS -->
+		<!-- Custom CSS -->
 	    <link href="/css/simple-sidebar.css" type="text/css" rel="stylesheet"/>
 
 	    <!-- stylesheet CSS -->
@@ -37,7 +37,7 @@
 
 	<body>
 
-		<nav class="navbar navbar-toggleable-md navbar-inverse" style="background-color: #000;">
+		<nav class="navbar navbar-toggleable-md navbar-inverse header-dashboard">
 			
 			<a class="navbar-brand" href="/">Alecrim</a>
 
@@ -59,7 +59,7 @@
 
 		</nav>
 
-		<div id="wrapper" class="toggled">
+		<div id="wrapper" class="toggled body">
 
 	        <!-- Sidebar -->
 	        <div id="sidebar-wrapper">

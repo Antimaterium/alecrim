@@ -12,13 +12,20 @@ class ProductController extends Controller
 
     public function index() {
 
-        $products_list = Product::paginate(2);
+            //verifica usuario esta logado ou não
+            if(\Auth::guest()){
+                return redirect('login');
+            }
+        $products_list = Product::paginate(10);
         return view('products/list-products')->with('products_list', $products_list);
 
     }
 
     public function create() {
-       
+        //verifica usuario esta logado ou não
+    if(\Auth::guest()){
+        return redirect('login');
+    }  
        return view('products/add-product');
 
     }
@@ -31,14 +38,20 @@ class ProductController extends Controller
     }
 
     public function show($id) {
-        
+        //verifica usuario esta logado ou não
+        if(\Auth::guest()){
+            return redirect('login');
+        }
         $product = Product::find($id);
         return view('products/details-product')->with('product',$product);
 
     }
 
     public function edit($id) {
-
+        //verifica usuario esta logado ou não
+        if(\Auth::guest()){
+            return redirect('login');
+        }
         $product = Product::find($id);
 
         if (!$product) {
@@ -54,6 +67,10 @@ class ProductController extends Controller
     }
 
     public function update(ProductRequest $request, $id) {
+            //verifica usuario esta logado ou não
+            if(\Auth::guest()){
+                return redirect('login');
+            }
         Product::find($id)->update($request->all());
 
         Session::flash('flash_message', [
@@ -64,6 +81,10 @@ class ProductController extends Controller
     }
 
     public function destroy($id) {
+        //verifica usuario esta logado ou não
+        if(\Auth::guest()){
+            return redirect('login');
+        }
     
         $product = Product::find($id);
         $product->delete();

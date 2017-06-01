@@ -2,6 +2,19 @@ body {
 	background: #f8f8f8;
 }
 
+.header-dashboard{
+    background-color: #000;
+    position: fixed !important;
+    height: 50px;
+    width: 100%;
+    z-index: 99999;
+    top: 0;
+}
+
+.body {
+    margin-top: 50px;
+}
+
 #logout {
 	position: absolute;
     right: 15px;

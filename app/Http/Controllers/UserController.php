@@ -9,23 +9,31 @@ use Session;
 
 class UserController extends Controller
 {
-
-/*    public function __construct(){
-        $this->middleware('Authorizator');
-    }*/
-
+   
     public function index()
     {
+            //verifica usuario esta logado ou não
+            if(\Auth::guest()){
+                return redirect('login');
+            }
         $users_list = User::all();
         return view('users/show-users')->with('users_list', $users_list);
     }
 
     public function create() {
+        //verifica usuario esta logado ou não
+    if(\Auth::guest()){
+        return redirect('login');
+    }
         return view('users/user-register');
     }
 
     public function store(UserRequest $request)
     {
+        //verifica usuario esta logado ou não
+        if(\Auth::guest()){
+          return redirect('login');
+        }
         User::create($request->all()); 
         return redirect('/listar-usuarios')->withInput();
     }
@@ -37,6 +45,10 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        //verifica usuario esta logado ou não
+        if(\Auth::guest()){
+            return redirect('login');
+        }
         $user = User::find($id);
         if(!$user){
            
@@ -52,6 +64,10 @@ class UserController extends Controller
 
     public function update(Request $request,$id)
     {
+              //verifica usuario esta logado ou não
+            if(\Auth::guest()){
+                return redirect('login');
+            }
             User::find($id)->update($request->all());
         
            // User::create($request->all());
@@ -67,6 +83,10 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        //verifica usuario esta logado ou não
+        if(\Auth::guest()){
+         return redirect('login');
+        }   
         $user = User::find($id);
         $user->delete();
         Session::flash('flash_message',[

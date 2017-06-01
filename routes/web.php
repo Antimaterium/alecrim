@@ -1,6 +1,10 @@
 <?php
 //HOME
 Route::get('/', function () {
+	//verifica usuario esta logado ou não
+	    if(Auth::guest()){
+	        return redirect('login');
+	    }
 		return view('/home');  
 });
 

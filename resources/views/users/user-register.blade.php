@@ -85,7 +85,8 @@
                     @endif
                 </div>
 
-				<button class="btn btn-primary" type="submit">Cadastrar</button>
+				<button class="btn btn-success" type="submit">Cadastrar</button>
+                <a href="/listar-usuarios" class="btn btn-primary">Cancelar</a>
 			</form>
 		</div>
 	</div>

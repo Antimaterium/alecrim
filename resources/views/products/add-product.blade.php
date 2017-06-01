@@ -55,7 +55,8 @@
                         </span>
                     @endif
 				</div>
-				<button class="btn btn-primary" type="submit">Adicionar</button>
+				<button class="btn btn-success" type="submit">Adicionar</button>
+				<a href="/lista-produtos" class="btn btn-primary">Cancelar</a>
 			</form>
 		</div>
 	</div>

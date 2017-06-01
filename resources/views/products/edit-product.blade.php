@@ -59,7 +59,8 @@
                         </span>
                     @endif
 				</div>
-				<button class="btn btn-primary" type="submit">Salvar</button>
+				<button class="btn btn-success" type="submit">Salvar</button>
+				<a href="/lista-produtos" class="btn btn-primary">Cancelar</a>
 			</form>
 		</div>
 	</div>
