@@ -1,10 +1,10 @@
 <?php
 
-namespace alecrim\Http\Controllers;
+namespace Alecrim\Http\Controllers;
 
 use Illuminate\Http\Request;
-use alecrim\User;
-use alecrim\Http\Requests\UserRequest;
+use Alecrim\User;
+use Alecrim\Http\Requests\UserRequest;
 use Session;
 
 class UserController extends Controller

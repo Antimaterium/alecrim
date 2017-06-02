@@ -1,8 +1,8 @@
 <?php
 
-namespace alecrim\Http\Controllers\Auth;
+namespace Alecrim\Http\Controllers\Auth;
 
-use alecrim\Http\Controllers\Controller;
+use Alecrim\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class ResetPasswordController extends Controller

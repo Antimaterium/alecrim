@@ -12,7 +12,7 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(alecrim\User::class, function (Faker\Generator $faker) {
+$factory->define(Alecrim\User::class, function (Faker\Generator $faker) {
     static $password;
 
     return [

@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model' => alecrim\User::class,
+        'model' => Alecrim\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

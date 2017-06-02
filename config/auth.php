@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => alecrim\User::class,
+            'model' => Alecrim\User::class,
         ],
 
         // 'users' => [

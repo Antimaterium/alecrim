@@ -1,9 +1,9 @@
 <?php
 
-namespace alecrim\Http\Controllers\Auth;
+namespace Alecrim\Http\Controllers\Auth;
 
-use alecrim\User;
-use alecrim\Http\Controllers\Controller;
+use Alecrim\User;
+use Alecrim\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 

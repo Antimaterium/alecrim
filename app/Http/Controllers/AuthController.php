@@ -1,9 +1,9 @@
 <?php
 
-namespace alecrim\Http\Controllers;
+namespace Alecrim\Http\Controllers;
 
 use Illuminate\Http\Request;
-use alecrim\Http\Requests\LoginRequest;
+use Alecrim\Http\Requests\LoginRequest;
 use Auth;
 
 class AuthController extends Controller

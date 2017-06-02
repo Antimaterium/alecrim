@@ -1,6 +1,6 @@
 <?php
 
-namespace alecrim\Http\Requests;
+namespace Alecrim\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -15,7 +15,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email'     => 'required|max:100|email',
-            'password'  => 'required|min:6|max:16'
+            'password'  => 'required|min:8|max:16'
         ];
     }
 

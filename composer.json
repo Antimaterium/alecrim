@@ -19,7 +19,7 @@
             "database"
         ],
         "psr-4": {
-            "alecrim\\": "app/"
+            "Alecrim\\": "app/"
         }
     },
     "autoload-dev": {

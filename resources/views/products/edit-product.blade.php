@@ -48,9 +48,7 @@
 				</div>
 				<div class="form-group {{ $errors->has('product_description') ? 'has-danger' : '' }}">
 					<label for="">Descrição</label>
-					<textarea class="form-control" name="product_description">
-						{{ $product->product_description }}
-					</textarea> 
+					<textarea class="form-control" name="product_description">{{$product->product_description }}</textarea> 
 					@if ($errors->has('product_description'))
                         <span class="help-block">
                             <div class="form-control-feedback">

@@ -1,6 +1,6 @@
 <?php
 
-namespace alecrim\Exceptions;
+namespace Alecrim\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;

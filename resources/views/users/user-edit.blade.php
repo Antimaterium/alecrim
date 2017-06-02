@@ -39,7 +39,7 @@
 					@endif
 				</div>
 
-				<div class="form-group{{ $errors->has('permission') ? ' has-danger' : '' }}">
+				<!-- <div class="form-group{{ $errors->has('permission') ? ' has-danger' : '' }}">
 					<label for="">Perfil</label>
 					<div class="">
 						<select name="permission" id="permission" class="form-control" value="{{$user->permission}}">
@@ -85,7 +85,7 @@
 							</div>
 						</span>
 					@endif
-				</div>
+				</div> -->
 				
 				<button class="btn btn-success" type="submit">Salvar</button>
 				<a href="/listar-usuarios" class="btn btn-primary">Cancelar</a>

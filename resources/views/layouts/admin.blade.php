@@ -17,7 +17,6 @@
 
 	    <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
 
-
 		<!-- BOOTSTRAP -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
 		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -127,6 +126,8 @@
 	    // });
 	    </script>
 
+		<script src="jquery.js"></script>
+		<script src="jquery.validate.js"></script>
 		
 	</body>
 

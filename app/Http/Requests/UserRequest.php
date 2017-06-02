@@ -1,6 +1,6 @@
 <?php
 
-namespace alecrim\Http\Requests;
+namespace Alecrim\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 

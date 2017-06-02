@@ -1,6 +1,6 @@
 <?php
 
-namespace alecrim\Http\Middleware;
+namespace Alecrim\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;

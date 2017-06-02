@@ -1,11 +1,11 @@
 <?php
 
-namespace alecrim\Http\Controllers;
+namespace Alecrim\Http\Controllers;
 
 use Request;
 use Session;
-use alecrim\Product;
-use alecrim\Http\Requests\ProductRequest;
+use Alecrim\Product;
+use Alecrim\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {

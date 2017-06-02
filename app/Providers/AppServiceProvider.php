@@ -1,6 +1,6 @@
 <?php
 
-namespace alecrim\Providers;
+namespace Alecrim\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

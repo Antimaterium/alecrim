@@ -171,11 +171,11 @@ return [
         /*
          * Application Service Providers...
          */
-        alecrim\Providers\AppServiceProvider::class,
-        alecrim\Providers\AuthServiceProvider::class,
-        // alecrim\Providers\BroadcastServiceProvider::class,
-        alecrim\Providers\EventServiceProvider::class,
-        alecrim\Providers\RouteServiceProvider::class,
+        Alecrim\Providers\AppServiceProvider::class,
+        Alecrim\Providers\AuthServiceProvider::class,
+        // Alecrim\Providers\BroadcastServiceProvider::class,
+        Alecrim\Providers\EventServiceProvider::class,
+        Alecrim\Providers\RouteServiceProvider::class,
 
     ],
 
