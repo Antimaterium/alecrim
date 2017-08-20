@@ -1,0 +1,46 @@
+body {
+	background: #f8f8f8;
+}
+
+.header-dashboard{
+    background-color: #000;
+    position: fixed !important;
+    height: 50px;
+    width: 100%;
+    z-index: 1;
+    top: 0;
+}
+
+.body {
+    margin-top: 50px;
+}
+
+#logout {
+	position: absolute;
+    right: 15px;
+    top: 15px;
+}
+
+.dropdown-menu {
+	min-width: 60px !important;
+    padding: 5px 0 5px 15px !important;
+    left: -10px !important;
+}
+
+#user-name {
+	color: #fafafa;
+    position: absolute;
+    right: 80px;
+    top: 15px;
+}
+
+.link {
+	list-style: none;
+	color: white;
+}
+
+.menu-left-side-icon{
+    position: absolute;
+    right: 2px;
+    margin: 8px;
+}
