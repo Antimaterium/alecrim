@@ -80,12 +80,14 @@
 	                    	</li>
 	                    </ul>
 	                </li>
+	           
 	                <!-- <li>
                         <a href="#">Fornecedores</a>
                     </li>
                     <li>
                          <a href="#">Caixa</a>
-                    </li>	 -->                
+                    </li>
+                    	 -->                
 	                <li>
 	                    <a href="#employee-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
 	                    	Funcionários
@@ -96,7 +98,7 @@
 	                    	<li><a href="/listar-usuarios">Listar</a></li>
 	                    </ul>
 	                </li>
-	            </ul>
+	              </ul>
 	        </div>
 	        <!-- /#sidebar-wrapper -->
 
