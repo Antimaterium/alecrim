@@ -12,10 +12,10 @@ class UserController extends Controller
    
     public function index()
     {
-            //verifica usuario esta logado ou não
-            if(\Auth::guest()){
-                return redirect('login');
-            }
+        //verifica usuario esta logado ou não
+        if(\Auth::guest()){
+            return redirect('login');
+        }
         $users_list = User::all();
         return view('users/show-users')->with('users_list', $users_list);
     }

@@ -1,0 +1,17 @@
+
+                                                                               
+  [Illuminate\Database\QueryException]                                         
+  SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'products' a  
+  lready exists (SQL: create table `products` (`id` int unsigned not null aut  
+  o_increment primary key, `products_id` int unsigned not null, `item_name` v  
+  archar(45) not null, `item_description` varchar(255) not null, `item_price`  
+   double(8, 2) not null, `created_at` timestamp null, `updated_at` timestamp  
+   null) default character set utf8mb4 collate utf8mb4_unicode_ci)             
+                                                                               
+
+                                                                               
+  [PDOException]                                                               
+  SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'products' a  
+  lready exists                                                                
+                                                                               
+
