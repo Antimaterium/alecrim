@@ -13,7 +13,7 @@ class Itens extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('items', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('products_id')->unsigned();
             $table->foreign('products_id')->references('id')->on('products');
@@ -22,7 +22,8 @@ class Itens extends Migration
             $table->float('item_price');
 
             $table->timestamps();
-        });    }
+        });    
+    }
 
     /**
      * Reverse the migrations.
@@ -31,6 +32,6 @@ class Itens extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('items');
     }
 }
