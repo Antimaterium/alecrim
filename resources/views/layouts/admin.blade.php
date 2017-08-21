@@ -128,8 +128,8 @@
 	    // });
 	    </script>
 
-		<script src="jquery.js"></script>
-		<script src="jquery.validate.js"></script>
+		<!--<script src="jquery.js"></script>
+		<script src="jquery.validate.js"></script>-->
 		
 	</body>
 
