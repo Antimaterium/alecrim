@@ -16,4 +16,8 @@ class Product extends Model
     	'created_at'
     ];
 
+    public function items() {
+    	return $this->belongsToMany(Item::class);
+    }
+
 }

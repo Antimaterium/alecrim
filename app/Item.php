@@ -14,4 +14,8 @@ class Item extends Model
     	'updated_at', 
     	'created_at'
     ];
+
+    public function products() {
+    	return $this->belongsToMany(Product::class);
+    }
 }

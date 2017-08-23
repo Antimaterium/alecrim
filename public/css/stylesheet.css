@@ -44,3 +44,7 @@ body {
     right: 2px;
     margin: 8px;
 }
+
+#list_products li {
+    padding: 5px;
+}

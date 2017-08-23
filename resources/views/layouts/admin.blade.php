@@ -24,6 +24,8 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 		<!-- END BOOTSTRAP -->
 
+		<script src="/js/app.js"></script>
+
 	   
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -33,6 +35,7 @@
 	    <![endif]-->
 		
 	</head>
+
 
 	<body>
 
@@ -66,6 +69,20 @@
 	                <!-- <li>
 	                    <a href="#">Pedidos</a>
 	                </li> -->
+	                <li>
+	                    <a href="#item-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
+	                    	Itens
+	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
+                    	</a>
+	                    <ul class="link collapse" id="item-menu" aria-expanded="false">
+	                    	<li>
+	                    		<a href="/items/adicionar">Cadastrar</a>	
+	                    	</li>
+	                    	<li>
+	                    		<a href="/items/index">Listar</a>
+	                    	</li>
+	                    </ul>
+	                </li>
 	                <li>
 	                    <a href="#product-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
 	                    	Produtos
@@ -107,7 +124,7 @@
 	            <div class="container-fluid">
 	                <div class="row">
 	                    <div class="col-lg-12">
-					    	<div class="container">
+					    	<div class="container" id="app">
 								@yield('content')
 							</div>
 	                    </div>
@@ -127,6 +144,8 @@
 	    //     $("#wrapper").toggleClass("toggled");
 	    // });
 	    </script>
+
+	    @yield('project-scripts')
 
 		<!--<script src="jquery.js"></script>
 		<script src="jquery.validate.js"></script>-->

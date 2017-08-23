@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Session;
 use Alecrim\Item;
-
+use Alecrim\Product;
 
 class ItemController extends Controller
 {
@@ -18,22 +18,34 @@ class ItemController extends Controller
 
     public function adicionar()
     {
+        //$products = Product::all();
+        //return view('items.adicionar', compact('products'));
         return view('items.adicionar');
     }
     public function salvar(Request $request)
     {
-        $dados = $request->all();
+        // dados do request
+        $data = $request->all();
+        //items
+        $item = new Item();
+        $item->item_name = $data['item_name'];
+        $item->item_description = $data['item_description'];
+        $item->item_categoria = $data['item_category'];
+        $item->item_price = $data['item_price'];
+        $item->save();
 
-        $registro = new Item();
-        $registro->item_name = $dados['item_name'];
-        $registro->item_description = $dados['item_description'];
-        $registro->item_categoria = $dados['item_categoria'];
-        $registro->item_price = $dados['item_price'];
+        //products
+        $product = new Product();
+        $idProducts = $data['products'];
 
-        $registro->save();
+        foreach ($idProducts as $key => $value) {
+            $product->id = $value;
+            $product->items()->attach($item);
+        }
+    
+       Session::flash('mensagem',['msg'=>'Registro Criado com sucesso!','class'=>'green white-text']);
 
-       \Session::flash('mensagem',['msg'=>'Registro Criado com sucesso!','class'=>'green white-text']);
-       return redirect()->route('items.index');
+       return response()->json(200);
     }
 
     public function editar($id)
@@ -52,7 +64,7 @@ class ItemController extends Controller
         $registro->item_price = $dados['item_price'];
         $registro->update();
 
-        \Session::flash('mensagem',['msg'=>'Registro Atualizado com sucesso!','class'=>'green white-text']);
+        Session::flash('mensagem',['msg'=>'Registro Atualizado com sucesso!','class'=>'green white-text']);
        return redirect()->route('items.index');
     }
 
@@ -60,7 +72,15 @@ class ItemController extends Controller
     {
           Item::find($id)->delete();
 
-        \Session::flash('mensagem',['msg'=>'Registro Deletado com sucesso!','class'=>'green white-text']);
+        Session::flash('mensagem',['msg'=>'Registro Deletado com sucesso!','class'=>'green white-text']);
        return redirect()->route('items.index');
     } 
+
+    public function searchProducts() {
+
+        $products = Product::all();
+
+        return response()->json($products);
+
+    }
 }

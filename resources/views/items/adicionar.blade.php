@@ -10,7 +10,7 @@
 		<form action="{{route('items.salvar')}}" method="post">
 			{{csrf_field()}}
 			@include('items._form')	
-			<button class="btn btn-primary">Adicionar</button>	
+			<button class="btn btn-primary" id="add_item">Adicionar</button>	
 		</form>
 		
 	</div>
