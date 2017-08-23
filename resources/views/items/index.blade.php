@@ -7,7 +7,7 @@
 	<h1>Listagem de Itens</h1>
 	<div class="card">		
 		<div class="card-header">
-			Produtos
+			Items
 		</div>
 		<div class="card-block">
 			<table class="table table-bordered">

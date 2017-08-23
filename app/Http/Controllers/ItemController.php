@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Session;
 use Alecrim\Item;
+use Alecrim\Http\Requests\ItemRequest;
 
 
 class ItemController extends Controller
@@ -20,7 +21,7 @@ class ItemController extends Controller
     {
         return view('items.adicionar');
     }
-    public function salvar(Request $request)
+    public function salvar(ItemRequest $request)
     {
         $dados = $request->all();
 
@@ -42,7 +43,7 @@ class ItemController extends Controller
         return view('items.editar', compact('registro'));
     }
 
-    public function atualizar(Request $request, $id)
+    public function atualizar(ItemRequest $request, $id)
     {
         $registro = Item::find($id);
         $dados = $request->all();

@@ -24,7 +24,6 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 		<!-- END BOOTSTRAP -->
 
-	   
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	    <!--[if lt IE 9]>
@@ -79,8 +78,7 @@
 	                    		<a href="/lista-produtos">Listar</a>
 	                    	</li>
 	                    </ul>
-	                </li>
-	           
+	                </li>        
 	                <!-- <li>
                         <a href="#">Fornecedores</a>
                     </li>
