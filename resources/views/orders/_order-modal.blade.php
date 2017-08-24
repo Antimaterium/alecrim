@@ -10,7 +10,7 @@
 	      	</div>
 	      	<div class="modal-body">
 	      		<div class="row">		      			
-		        	<form class="col-lg-6">
+		        	<form class="col-lg-6" method="post">
 		        		{{csrf_field()}}
 		        	  	<div class="form-group">
 		        	  		<div class="row">
@@ -35,28 +35,26 @@
 
 			      		<hr>
 			      		<fieldset>
-			      			<legend>Incluir itens</legend>
+			      			<legend>Incluir itens</legend>			  
 
-			        	  	<div class="form-group">
-			        	  		<div class="row">
-				        	  		<div class="col-lg-2">
-				        	  			<label for="quantity">Qtd</label>
-				        	  			<input type="text" class="form-control form-control-sm col-lg-12" name="quantity" id="quantity">
-				        	  		</div>        
-					        	    <div class="col-lg-10">
-					        	    	<label for="item">Item</label>
-					        	    	<input type="text" class="form-control form-control-sm" name="name" id="item" placeholder="Digite o nome do item">
-					        	    </div>
-			        	  		</div> 	
+			        	  	<div class="row">	
+			        	  		<div class="col-lg-12">		
+			        	  			<div class="form-group">
+			        	  				<div class="row">
+			        	  					<div class="col-lg-2">
+			        	  						<label for="quantity">Qtd</label>
+			        	  						<input type="text" class="form-control form-control-sm" name="quantity" id="quantity" value="1">
+			        	  					</div>   
+			        	  					<div class="col-lg-6">		
+			        	  						<label for="item">Item</label>
+					        	    			<input type="text" name="items" id="items" class="form-control form-control-sm"/>
+			        	  					</div>     	  					
+			        	  				</div>
+			        	  			</div>
+			        	  		</div>	      			
 			        	  	</div>
-			        	  	<div class="form-group">		        	  		
-				        	  	<div class="row">							
-					        	    	    
-				        	  	</div>
-			        	  	</div>
-
 			        	  	<div class="form-group">		 
-								<textarea class="form-control" cols="10" rows="3" readonly></textarea>
+								<textarea class="form-control" name="item_description" id="item_description" cols="10" rows="3" readonly></textarea>
 			        	  	</div>
 			        	  	<div class="btn-group">
 			        	  		<button id="add_item" class="btn btn-sm btn-success">Adicionar ao Pedido</button>
@@ -65,32 +63,17 @@
 	        	  	</form>
 
 		      		<fieldset class="col-lg-6">
-		      			<legend>Pedido 00111</legend>
-			        	<table class="table table-bordered">
+		      			<legend>Items do pedido</legend>
+			        	<table class="table table-bordered table-sm table-hover">
 						  	<thead>
 						    	<tr>
 								    <th>Item</th>
 								    <th>Valor</th>
 						    	</tr>
 							</thead>
-							<tbody>
-							    <tr>
-							      	<td>Mark</td>
-							      	<td>
-							      		<button class="btn btn-sm btn-danger">						
-							      			<i class="material-icons">remove</i>
-							      		</button>
-					      			</td>
-							    </tr>							    
-							    <tr>
-							      	<td>Mark</td>
-							      	<td>
-							      		<button class="btn btn-sm btn-danger">						
-							      			<i class="material-icons">remove</i>
-							      		</button>
-					      			</td>
-							    </tr>							    
-						  </tbody>
+							<tbody id="table-items-body">
+							    				
+						  	</tbody>
 						</table>
 		      		</fieldset>
 	      		</div>
@@ -109,12 +92,15 @@
 	<script>
 		$(document).ready(function() {
 
-			// GET \
-			var selectedItems = [];
+			// GET ITEM
+			var selectdItemsList = [];
+			var itemSelected  = {};
+			var itemNameFieldValue = $('#item_name').val();
+
 			var options = {
 				url: "/orders/search-items",
 				getValue: "item_name",
-				requestDelay: 500,
+				requestDelay: 400,
 			 	list: {
 			  		maxNumberOfElements: 10, 
 				  	sort: { 
@@ -125,11 +111,22 @@
 				  	},
 				  	onChooseEvent: function() {
 				  		//var value = $('#products').getSelectedItemData().id;
-				  		var item = $('#item').getItemData(0);
-				  		//adicionando novo produto a lista e ao array
-						$('#list_items').append('<li class="list-group-item">'+ ''product.product_name + ' - '+ product.product_price +'<button class="btn btn-sm btn-danger btn-remove-product" value="'+ product.id +'" onclick="removeProduct()">Remover</button></li>');
-						selectdProducts.push(product.id);
-						$("#products").val('');
+
+				  		var quantity = $('#quantity').val();
+				  		var item = $('#items').getItemData(0);
+				  		var description = item.item_description;
+
+				  		var totalItems = quantity * item.item_price;
+
+				  		$('#item_description').empty();
+				  		$('#item_description').append(description);
+
+				  		itemSelected = {
+				  			item: item,
+				  			quantity: quantity,
+				  			totalItems: totalItems
+				  		};
+				  		
 				  	}
 			  	},
 				template: {
@@ -139,58 +136,33 @@
 					}
 				}
 			};
+			$("#items").easyAutocomplete(options);
+			// FIM GET ITEM
 
-			$("#item").easyAutocomplete(options);
-
-			// SEND AJAX
-			$("#add_item").on('click', function(event){
+			$('#add_item').on('click', function(event){
 				event.preventDefault();
-
-				// pegando os valores dos campos
-				let itemName 		= $("#item_name").val();
-				let itemDescription = $("#item_description").val();
-				let itemCategory 	= $("#item_categoria").val();
-				let itemPrice 		= $("#item_price").val();
-				let token			= $("input[name*='_token']").val();
-
-				// objeto data que será enviado no ajax
-				let data = {
-					item_name: itemName,
-					item_description: itemDescription,
-					item_category: itemCategory,
-					item_price: itemPrice,
-					products: selectdProducts,
-					_token: token
+				console.log(itemSelected.quantity)
+				if (itemSelected.quantity === 0 || itemSelected.quantity === undefined) {
+					alert("Digite uma quantidade");
+				}else if(itemNameFieldValue === undefined){
+					alert(itemNameFieldValue);
+				}else{
+					console.log(itemNameFieldValue);
+			  		//adicionando novo produto a lista e ao array
+					$('#table-items-body').append('<tr>'
+					      	+ '<td>' + itemSelected.quantity + "x " + itemSelected.item.item_name + '</td>'
+					      	+ '<td>'
+					      		+ " R$" + itemSelected.totalItems						
+					      		+ '<button class="btn btn-sm btn-danger btn-icons">'
+					      			+ '<i class="material-icons">remove</i>'
+					      		+ '</button>'
+			      			+ '</td>'
+					    + '</tr>');
+					selectdItemsList.push(itemSelected.item.id);					
 				}
-
-				//requisição assincrona para gravar os dados
-				$.ajax({
-		            type: "POST",
-		            url: '/items/salvar',
-		            data: data,
-		            dataType: 'json',
-		            success: function( msg ) {
-		                window.location.href = "/items/index";
-		            }
-		        });
-
 			});
 
 		});
-
-		var listClass = document.getElementsByClassName("btn-primary");
-
-		function addEventListenerList(list, event, fn) {
-		    for (var i = 0, len = list.length; i < len; i++) {
-		        list[i].addEventListener(event, fn);
-		    }
-		}
-
-		addEventListenerList(listClass, 'click', function(event) {
-			event.preventDefault();
-			alert('jksdjas');
-		}); 
-
 		
 	</script>
 @endsection

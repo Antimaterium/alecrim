@@ -59,7 +59,7 @@
 			var options = {
 				url: "/items/search-products",
 				getValue: "product_name",
-				requestDelay: 500,
+				requestDelay: 400,
 			 	list: {
 			  		maxNumberOfElements: 10, 
 				  	sort: { 
@@ -118,10 +118,8 @@
 		                window.location.href = "/items/index";
 		            },
 		            error: function(errors) {
-		            	$.each(errors, function(i, error) {
-		            	   
-		            	   
-		            	});
+		            	console.log(typeof(errors))
+
 		            }
 		        });
 

@@ -48,3 +48,7 @@ body {
 #list_products li {
     padding: 5px;
 }
+
+.btn-icons {
+    padding: 0 3px !important;
+}
