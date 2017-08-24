@@ -32,7 +32,7 @@ class ItemController extends Controller
         $item = new Item();
         $item->item_name = $data['item_name'];
         $item->item_description = $data['item_description'];
-        $item->item_categoria = $data['item_category'];
+        $item->item_category = $data['item_category'];
         $item->item_price = $data['item_price'];
         $item->save();
 

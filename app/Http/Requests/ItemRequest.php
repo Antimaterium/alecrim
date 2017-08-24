@@ -26,7 +26,7 @@ class ItemRequest extends FormRequest
         return [
             'item_name'             => 'required|min:2|max:45',
             'item_description'      => 'required|min:5|max:255',
-            'item_categoria'        => 'required|min:5|max:255',
+            'item_category'        => 'required|min:5|max:255',
             'item_price'            => 'required|numeric'
         ];
     }
@@ -43,8 +43,8 @@ class ItemRequest extends FormRequest
             'item_description.max'       => 'Digite no maximo 255 caracteres',
             'item_description.min'       => 'Digite no mínimo 5 caracteres',
             //categoria
-            'item_categoria.required'  => 'Selecione o campo',
-            'item_categoria.min'       => 'Digite no mínimo 5 caracteres',
+            'item_category.required'  => 'Selecione o campo',
+            'item_category.min'       => 'Digite no mínimo 5 caracteres',
             //price
             'item_price.required'        => 'Preencha o campo ',
             'item_price.numeric'         => 'Digite apenas numeros',

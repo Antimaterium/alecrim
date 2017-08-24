@@ -116,6 +116,12 @@
 		            dataType: 'json',
 		            success: function( msg ) {
 		                window.location.href = "/items/index";
+		            },
+		            error: function(errors) {
+		            	$.each(errors, function(i, error) {
+		            	   
+		            	   
+		            	});
 		            }
 		        });
 
@@ -123,19 +129,5 @@
 
 		});
 
-		var listClass = document.getElementsByClassName("btn-primary");
-
-		function addEventListenerList(list, event, fn) {
-		    for (var i = 0, len = list.length; i < len; i++) {
-		        list[i].addEventListener(event, fn);
-		    }
-		}
-
-		addEventListenerList(listClass, 'click', function(event) {
-			event.preventDefault();
-			alert('jksdjas');
-		}); 
-
-		
 	</script>
 @endsection
