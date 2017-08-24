@@ -30,7 +30,7 @@ Route::put('edita-produtos/{id}', ['uses' => 'ProductController@update', 'as' =>
 Route::get('lista-produtos/detalhes/{id}', 'ProductController@show');
 Route::get('lista-produtos/remove/{id}', ['uses' => 'ProductController@destroy', 'as' => 'product.destroy']);
 
-//itens
+//ITEMS
 Route::get('/items/index',['as'=>'items.index', 'uses'=> 'ItemController@index']);
 Route::get('/items/adicionar',['as'=>'items.adicionar', 'uses'=> 'ItemController@adicionar']);
 Route::post('/items/salvar',['as'=>'items.salvar', 'uses'=> 'ItemController@salvar']);
@@ -38,3 +38,6 @@ Route::get('/items/editar/{id}',['as'=>'items.editar', 'uses'=> 'ItemController@
 Route::put('/items/atualizar/{id}',['as'=>'items.atualizar', 'uses'=> 'ItemController@atualizar']);
 Route::get('/items/deletar/{id}',['as'=>'items.deletar', 'uses'=> 'ItemController@deletar']);
 Route::get('/items/search-products', ['as' => 'items.searchProducts', 'uses' => 'ItemController@searchProducts']);
+
+// ORDERS
+Route::get('/orders/search-items', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
