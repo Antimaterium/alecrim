@@ -17,7 +17,7 @@ class CreateItems extends Migration
             $table->increments('id');
             $table->string('item_name');
             $table->string('item_description');
-            $table->string('item_categoria');
+            $table->string('item_category');
             $table->integer('item_price');
             $table->timestamps();
         });

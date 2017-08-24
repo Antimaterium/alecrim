@@ -11,11 +11,11 @@ class AlterTableInUserPermission extends Migration
      *
      * @return void
      */
-        public function up()
+    public function up()
     {
-       schema::table('users', function(Blueprint $table ){
-         $table->smallInteger('permission');
-     });
+        schema::table('users', function(Blueprint $table ){
+            $table->smallInteger('permission');
+        });
     }
 
     /**
@@ -25,6 +25,8 @@ class AlterTableInUserPermission extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('permission');
+        });
     }
 }
