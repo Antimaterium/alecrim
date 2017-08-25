@@ -62,7 +62,7 @@ class ItemController extends Controller
         $dados = $request->all();
         $registro->item_name = $dados['item_name'];
         $registro->item_description = $dados['item_description'];
-        $registro->item_categoria = $dados['item_categoria'];
+        $registro->item_category = $dados['item_category'];
         $registro->item_price = $dados['item_price'];
         $registro->update();
 

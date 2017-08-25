@@ -41,3 +41,5 @@ Route::get('/items/search-products', ['as' => 'items.searchProducts', 'uses' => 
 
 // ORDERS
 Route::get('/orders/search-items', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
+Route::get('/orders/index',['as'=>'orders.index','uses'=>'OrderController@index']);
+Route::get('/orders/details-orders/{id?}',['uses'=>'OrderController@show','as'=>'orders.show']);

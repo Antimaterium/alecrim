@@ -94,6 +94,7 @@
 	                <!-- <li>
                         <a href="#">Fornecedores</a>
                     </li>
+                    
                     <li>
                          <a href="#">Caixa</a>
                     </li>

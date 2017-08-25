@@ -3,17 +3,31 @@
 namespace Alecrim\Http\Controllers;
 
 use Alecrim\Item;
-
-/*use Session;
+use Alecrim\Order;
+use Session;
 use Alecrim\Product;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
-use Alecrim\Http\Requests\ItemRequest;*/
+use Alecrim\Http\Requests\ItemRequest;
 
 class OrderController extends Controller
 {
-  	
+    public function index()
+    {
+        $registros = Order::all();
+        return view('orders.index', compact('registros'));
+    }
+  	public function show($id) 
+    {
+        //verifica usuario esta logado ou não
+        if(\Auth::guest()){
+            return redirect('login');
+        }
+        $orders = Order::find($id);
+        return view('details-orders')->with('orders',$order);
+
+    }
     /*public function store(OrderRequest $request)
     {
         // dados do request

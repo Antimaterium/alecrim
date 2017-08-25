@@ -7,8 +7,8 @@
 					<input type="text" name="item_name" id="item_name" class="form-control form-control-sm" value="{{isset($registro->item_name) ? $registro->item_name : ''}}">
 				</div>
 				<div class="col-lg-4">							
-					<label>Categoria</label>
-					<input type="text" name="item_categoria" id="item_categoria" class="form-control form-control-sm" value="{{isset($registro->item_categoria) ? $registro->item_categoria : ''}}">
+					<label>categoria</label>
+					<input type="text" name="item_category" id="item_category" class="form-control form-control-sm" value="{{isset($registro->item_category) ? $registro->item_category : ''}}">
 				</div>
 			</div>
 		</div>
@@ -94,7 +94,7 @@
 				// pegando os valores dos campos
 				let itemName 		= $("#item_name").val();
 				let itemDescription = $("#item_description").val();
-				let itemCategory 	= $("#item_categoria").val();
+				let itemCategory 	= $("#item_category").val();
 				let itemPrice 		= $("#item_price").val();
 				let token			= $("input[name*='_token']").val();
 

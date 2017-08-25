@@ -23,7 +23,7 @@
 						<tr>
 							<td> {{ $registro->item_name }}</td>
 							<td> {{ $registro->item_description }}</td>
-							<td> {{ $registro->item_categoria }}</td>
+							<td> {{ $registro->item_category }}</td>
 							<td> {{ $registro->item_price }}</td>
 							<td>
 								<div class="btn-group">
