@@ -4,43 +4,42 @@ namespace Alecrim\Http\Controllers;
 
 use Alecrim\Item;
 
-/*use Session;
-use Alecrim\Product;
+// use Session;
+// use Alecrim\Product;
 
-use App\Http\Requests;
-use Illuminate\Http\Request;
-use Alecrim\Http\Requests\ItemRequest;*/
+// use App\Http\Requests;
+// use Illuminate\Http\Request;
+// use Alecrim\Http\Requests\ItemRequest;
 
 class OrderController extends Controller
 {
   	
-    /*public function save(ItemRequest $request)
+    /*public function store(OrderRequest $request)
     {
         // dados do request
         $data = $request->all();
         //items
-        $item = new Item();
-        $item->item_name = $data['item_name'];
-        $item->item_description = $data['item_description'];
-        $item->item_categoria = $data['item_category'];
-        $item->item_price = $data['item_price'];
+        $order = new Order();
+        $order->order_table = $data['order_table'];
+        $order->order_paid = $data['order_paid'];
+        $order->order_total = $data['order_total'];
         $item->save();
 
         //products
-        $product = new Product();
-        $idProducts = $data['products'];
+        $item = new Item();
+        $idItems = $data['items'];
 
         foreach ($idProducts as $key => $value) {
-            $product->id = $value;
-            $product->items()->attach($item);
+            $items->id = $value;
+            $items->items()->attach($order);
         }
     
        Session::flash('mensagem',['msg'=>'Registro Criado com sucesso!','class'=>'green white-text']);
 
        return response()->json(200);
-    }
+    }*/
 
-    public function editar($id)
+    /*public function editar($id)
     {
         $registro = Item::find($id);
         return view('items.editar', compact('registro'));

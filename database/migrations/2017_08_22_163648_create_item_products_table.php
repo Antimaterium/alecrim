@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateItemProduct extends Migration
+class CreateItemProductsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,9 +16,9 @@ class CreateItemProduct extends Migration
         Schema::create('item_product', function (Blueprint $table) {
 
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products');
-
             $table->integer('item_id')->unsigned();
+
+            $table->foreign('product_id')->references('id')->on('products');         
             $table->foreign('item_id')->references('id')->on('items');
 
         });
