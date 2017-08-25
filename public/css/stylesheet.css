@@ -52,3 +52,7 @@ body {
 .btn-icons {
     padding: 0 3px !important;
 }
+
+.easy-autocomplete.eac-description {
+    width: 100% !important;
+}

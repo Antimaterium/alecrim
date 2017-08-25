@@ -22,4 +22,9 @@ class Item extends Model
      public function orders() {
         return $this->belongsToMany(Order::class);
     }
+
+    /*public function getItemPriceAttribute($value)
+    {
+        return number_format($value, 2, ',', '.');
+    }*/
 }
