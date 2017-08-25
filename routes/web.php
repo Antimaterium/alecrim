@@ -44,4 +44,4 @@ Route::get('/items/detalhes/{id}',['as'=>'items.details', 'uses'=> 'ItemControll
 
 // ORDERS
 Route::get('/pedidos/busca-itens', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
-// Route::get('/pedidos/salvar', ['as' => 'orders.store', 'uses' => 'OrderController@store']);
+Route::post('/pedidos/salvar', ['as' => 'orders.store', 'uses' => 'OrderController@store']);

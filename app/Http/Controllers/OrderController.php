@@ -3,41 +3,38 @@
 namespace Alecrim\Http\Controllers;
 
 use Alecrim\Item;
-
+use Alecrim\Order;
+use App\Http\Requests;
 // use Session;
-// use Alecrim\Product;
+use Illuminate\Http\Request;
 
-// use App\Http\Requests;
-// use Illuminate\Http\Request;
-// use Alecrim\Http\Requests\ItemRequest;
 
 class OrderController extends Controller
 {
   	
-    /*public function store(OrderRequest $request)
+    public function store(Request $request)
     {
         // dados do request
         $data = $request->all();
         //items
         $order = new Order();
-        $order->order_table = $data['order_table'];
-        $order->order_paid = $data['order_paid'];
-        $order->order_total = $data['order_total'];
-        $item->save();
+        $order->user_id = $data['atendent'];        
+        $order->order_table = $data['table'];
+        $order->order_paid = $data['paid'];
+        $order->order_total = $data['total'];
+        $order->save();
 
         //products
-        $item = new Item();
+        $items = new Item();
         $idItems = $data['items'];
 
-        foreach ($idProducts as $key => $value) {
+        foreach ($idItems as $key => $value) {
             $items->id = $value;
-            $items->items()->attach($order);
+            $items->orders()->attach($order);
         }
-    
-       Session::flash('mensagem',['msg'=>'Registro Criado com sucesso!','class'=>'green white-text']);
 
        return response()->json(200);
-    }*/
+    }
 
     /*public function editar($id)
     {

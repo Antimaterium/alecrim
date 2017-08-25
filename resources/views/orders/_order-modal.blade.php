@@ -30,19 +30,19 @@
 
 		        	  			<div class="col-lg-5">
 		        	  				<label for="exampleInputEmail1">Atendente</label>
-		        	  				<select name="" id="" class="form-control form-control-sm">
+		        	  				<select name="" id="atendent" class="form-control form-control-sm">
 		        	  					<option value="">Selecione</option>
 		        	  					@foreach($users as $user)
 											<option value="{{$user->id}}">{{$user->name}}</option>
 		        	  					@endforeach
 		        	  				</select>
 		        	  			</div>
-
+<!--
 		        	  			<div class="col-lg-4">				        	  				
-				        	    	<label for="table">Pedido</label>
-				        	    	<input type="text" class="form-control form-control-sm" id="table" readonly>
+				        	    	<label for="order">Pedido</label>
+				        	    	<input type="text" class="form-control form-control-sm" id="order" readonly>
 		        	  			</div>
-
+-->
 		        	  		</div>
 		        	  	</div>
 
@@ -95,22 +95,22 @@
 
 
 						<div class="col-lg-12 order-values">
-						
+						<!--
 							<div class="row">
 								<div class="col-lg-9">Total Pago</div>
-								<div class="col-lg-3"></div>
+								<div class="col-lg-3"> R$<span>----</span></div>
 							</div>
 
 							<div class="row">
 								<div class="col-lg-9">Susbtotal</div>
-								<div class="col-lg-3"></div>
+								<div class="col-lg-3"> R$<span>----</span></div>
 							</div>
 
+						-->
 							<div class="row">
 								<div class="col-lg-9">Total</div>
-								<div class="col-lg-3"></div>
+								<div class="col-lg-3" >R$<span id="total"> 0 </span></div>
 							</div>
-
 						</div>
 		      		</fieldset>
 
@@ -134,7 +134,8 @@
 			// GET ITEM
 			var selectdItemsList = [];
 			var itemSelected  = {};
-			// var itemNameFieldValue = $('#item_name').val();
+			var total = $('#total').text();
+			var totalFloat = parseFloat(total);
 
 			var options = {
 				url: "/pedidos/busca-itens",
@@ -163,7 +164,7 @@
 				  		var totalItems = quantity * item.item_price;
 
 				  		$('#item_description').empty();
-				  		$('#item_description').append(description);
+				  		$('#item_description').append(description);				  		
 
 				  		itemSelected = {
 				  			item: item,
@@ -188,7 +189,10 @@
 
 			$('#add_item').on('click', function(event){
 
-				event.preventDefault();				
+				event.preventDefault();		
+
+				totalFloat += itemSelected.totalItems;
+				$('#total').html(totalFloat);		
 
 		  		//adicionando novo produto a lista e ao array
 				$('#items_order').append(
@@ -214,27 +218,45 @@
 			      	
 				);
 
-				selectdItemsList.push(itemSelected.item.id);					
+				selectdItemsList.push(itemSelected.item.id);									
 				
 			});
 
-			/*$('#save_order').on('click', function(event) {
+			$('#save_order').on('click', function(event) {
+
+				event.preventDefault();
+
+				let atendent = $('#atendent').val();
+				let table    = $('#table').val();
+				let token 	 = $('input[name*="_token"]').val();
+
+
+				let data = {
+					table: table,
+					atendent: atendent,
+					total: totalFloat,
+					items: selectdItemsList,
+					paid: 0,
+					_token: token
+				};
+
+				console.log(data)
 				
 				//requisição assincrona para gravar os dados
 				$.ajax({
 		            type: "POST",
-		            url: '/orders/salvar',
+		            url: '/pedidos/salvar',
 		            data: data,
 		            dataType: 'json',
 		            success: function( msg ) {
-		                // window.location.href = "/items/index";
+		                alert('Pedido inserido com sucesso');
 		            },
 
 		            error: function(errors) {
 		            	console.log(typeof(errors))
 		            }
 		        });
-			});*/
+			});
 
 		});	
 	</script>
