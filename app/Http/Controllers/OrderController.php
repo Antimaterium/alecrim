@@ -14,16 +14,15 @@ use Alecrim\Http\Requests\ItemRequest;*/
 class OrderController extends Controller
 {
   	
-    /*public function save(ItemRequest $request)
+    /*public function store(OrderRequest $request)
     {
         // dados do request
         $data = $request->all();
         //items
-        $item = new Item();
-        $item->item_name = $data['item_name'];
-        $item->item_description = $data['item_description'];
-        $item->item_categoria = $data['item_category'];
-        $item->item_price = $data['item_price'];
+        $order = new Order();
+        $order->order_table = $data['order_table'];
+        $order->order_paid = $data['order_paid'];
+        $order->order_total = $data['order_total'];
         $item->save();
 
         //products

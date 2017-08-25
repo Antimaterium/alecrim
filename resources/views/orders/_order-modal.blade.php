@@ -142,11 +142,7 @@
 			$('#add_item').on('click', function(event){
 				event.preventDefault();
 				console.log(itemSelected.quantity)
-				if (itemSelected.quantity === 0 || itemSelected.quantity === undefined) {
-					alert("Digite uma quantidade");
-				}else if(itemNameFieldValue === undefined){
-					alert(itemNameFieldValue);
-				}else{
+				
 					console.log(itemNameFieldValue);
 			  		//adicionando novo produto a lista e ao array
 					$('#table-items-body').append('<tr>'
@@ -159,7 +155,7 @@
 			      			+ '</td>'
 					    + '</tr>');
 					selectdItemsList.push(itemSelected.item.id);					
-				}
+				
 			});
 
 		});
