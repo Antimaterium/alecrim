@@ -4,11 +4,11 @@
 			<div class="row">
 				<div class="col-lg-8">
 					<label>Nome</label>
-					<input type="text" name="item_name" id="item_name" class="form-control form-control-sm" value="{{isset($registro->item_name) ? $registro->item_name : ''}}">
+					<input placeholder="Digite o nome do item" type="text" name="item_name" id="item_name" class="form-control form-control-sm" value="{{isset($registro->item_name) ? $registro->item_name : ''}}">
 				</div>
 				<div class="col-lg-4">							
 					<label>Categoria</label>
-					<input type="text" name="item_categoria" id="item_categoria" class="form-control form-control-sm" value="{{isset($registro->item_categoria) ? $registro->item_categoria : ''}}">
+					<input placeholder="Entre com a Categoria" type="text" name="item_categoria" id="item_categoria" class="form-control form-control-sm" value="{{isset($registro->item_categoria) ? $registro->item_categoria : ''}}">
 				</div>
 			</div>
 		</div>
@@ -21,7 +21,7 @@
 			<div class="row">
 				<div class="col-lg-6">		
 					<label>Produtos</label>
-					<input type="text" name="products" id="products" class="form-control form-control-sm" value="{{isset($products->item_produtos) ? $products->item_produtos : ''}}"/>
+					<input placeholder="Escolha os Produtos" type="text" name="products" id="products" class="required" class="form-control form-control-sm" value="{{isset($products->item_produtos) ? $products->item_produtos : ''}}"/>
 				</div>
 				<div class="col-lg-6">									
 					<ul class="list-group" id="list_products">
@@ -39,11 +39,11 @@
 			<div class="row">
 				<div class="col-lg-10">		
 					<label>Descrição</label>
-					<input type="text" name="item_description" id="item_description" class="form-control form-control-sm" value="{{isset($registro->item_description) ? $registro->item_description : ''}}">					
+					<input placeholder="Entre com a Descrição" type="text" name="item_description" id="item_description" class="form-control form-control-sm" value="{{isset($registro->item_description) ? $registro->item_description : ''}}">					
 				</div>
 				<div class="col-lg-2">
 					<label>Valor</label>
-					<input type="text" name="item_price" id="item_price" class="form-control form-control-sm" value="{{isset($registro->item_price) ? $registro->item_price : ''}}">
+					<input placeholder="Entre com o Valor" type="text" name="item_price" id="item_price" class="form-control form-control-sm" value="{{isset($registro->item_price) ? $registro->item_price : ''}}">
 				</div>
 			</div>
 		</div>
@@ -127,7 +127,30 @@
 
 			});
 
+			$( "#form_items").validate({
+    debug: true,
+    rules: {
+      item_name: {
+       	 required: true,
+                   // remote: 'check-email.php' //Deve utilizar um arquivo (por exemplo: check-email.php) para verificar algo, e assim retornar um boolean true ou false para satisfazer esta opção;
+      			},
+                  item_categoria:{
+                  				required: true,
+                                  min: 10,
+                                 max: 15,
+                                 
+                                
+                  },
+                 
+    },
+    messages:{
+                    //exemplo
+       
+    }
+  }); 
+	
 		});
 
 	</script>
+
 @endsection
