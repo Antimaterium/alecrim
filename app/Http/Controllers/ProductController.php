@@ -26,6 +26,7 @@ class ProductController extends Controller
     if(\Auth::guest()){
         return redirect('login');
     }  
+
        return view('products/add-product');
 
     }
@@ -33,6 +34,9 @@ class ProductController extends Controller
     public function store(ProductRequest $request) {
 
         Product::create($request->all()); 
+        
+        \Session::flash('mensagem',['msg'=>'Produto Cadastrado com Sucesso.','class'=>'red white-text']);
+
         return redirect('/lista-produtos')->withInput();
 
     }
