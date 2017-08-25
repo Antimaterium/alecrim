@@ -21,9 +21,10 @@
 		        	  			<div class="col-lg-5">
 		        	  				<label for="exampleInputEmail1">Atendente</label>
 		        	  				<select name="" id="" class="form-control form-control-sm">
-		        	  					<option value="">SELECIONE</option>
-		        	  					<option value="x">João</option>
-		        	  					<option value="y">Maria</option>
+		        	  					<option value="">Selecione</option>
+		        	  					@foreach($users as $user)
+											<option value="{{$user->id}}">{{$user->name}}</option>
+		        	  					@endforeach
 		        	  				</select>
 		        	  			</div>
 		        	  			<div class="col-lg-4">				        	  				
@@ -112,8 +113,10 @@
 				  	onChooseEvent: function() {
 				  		//var value = $('#products').getSelectedItemData().id;
 
+				  		var index = $("#items").getSelectedItemIndex();
 				  		var quantity = $('#quantity').val();
-				  		var item = $('#items').getItemData(0);
+
+				  		var item = $('#items').getItemData(index);
 				  		var description = item.item_description;
 
 				  		var totalItems = quantity * item.item_price;

@@ -84,8 +84,10 @@
 				  		enabled: true
 				  	},
 				  	onChooseEvent: function() {
+
+				  		var index = $("#products").getSelectedItemIndex();
 				  		//var value = $('#products').getSelectedItemData().id;
-				  		var product = $('#products').getItemData(0);
+				  		var product = $('#products').getItemData(index);
 				  		//adicionando novo produto a lista e ao array
 						$('#list_products').append('<li class="list-group-item">'+ product.product_name + ' - '+ product.product_price +'<button class="btn btn-sm btn-danger btn-remove-product" value="'+ product.id +'" onclick="removeProduct()">Remover</button></li>');
 						selectdProducts.push(product.id);

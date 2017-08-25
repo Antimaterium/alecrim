@@ -79,10 +79,12 @@ class ItemController extends Controller
 
     public function deletar($id)
     {
-          Item::find($id)->delete();
+        $item = Item::find($id);
+        $item->products()->detach();
+        $item->delete();
 
         Session::flash('mensagem',['msg'=>'Registro Deletado com sucesso!','class'=>'green white-text']);
-       return redirect()->route('items.index');
+        return redirect()->route('items.index');
     } 
 
     public function searchProducts() {

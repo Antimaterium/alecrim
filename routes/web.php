@@ -2,10 +2,11 @@
 //HOME
 Route::get('/', function () {
 	//verifica usuario esta logado ou não
-	    if(Auth::guest()){
-	        return redirect('login');
-	    }
-		return view('/home');  
+    if(Auth::guest()){
+        return redirect('login');
+    }
+    $users = Alecrim\User::all();
+	return view('/home')->with('users', $users);  
 });
 
 //Authenticators
