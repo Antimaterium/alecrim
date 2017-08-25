@@ -34,26 +34,33 @@ class ItemController extends Controller
         $item->item_description = $data['item_description'];
         $item->item_category = $data['item_category'];
         $item->item_price = $data['item_price'];
-        $item->save();
 
         //products
         $product = new Product();
         $idProducts = $data['products'];
+        $item->save();
 
         foreach ($idProducts as $key => $value) {
             $product->id = $value;
             $product->items()->attach($item);
         }
     
-       Session::flash('mensagem',['msg'=>'Registro Criado com sucesso!','class'=>'green white-text']);
+        Session::flash('mensagem',['msg'=>'Registro Criado com sucesso!','class'=>'green white-text']);
 
-       return response()->json(200);
+        return response()->json(200);
     }
 
     public function editar($id)
     {
-        $registro = Item::find($id);
-        return view('items.editar', compact('registro'));
+        $item = Item::find($id);
+        $products = $item->products;
+        return view('items/editar', compact('item'));
+    }
+
+    public function showDetails($id) {
+        $item = Item::find($id);
+        $products = $item->products;
+        return view('items/details', compact('item'));
     }
 
     public function atualizar(ItemRequest $request, $id)

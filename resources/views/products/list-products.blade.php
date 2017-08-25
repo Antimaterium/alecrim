@@ -14,7 +14,7 @@
 			Produtos
 		</div>
 		<div class="card-block">
-			<table class="table table-bordered">
+			<table class="table table-bordered table-sm table-hover">
 				<thead>
 					<th>Nome</th>
 					<th>Descrição</th>

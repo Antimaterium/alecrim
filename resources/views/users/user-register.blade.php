@@ -3,7 +3,7 @@
 @section('content')
 <section class="create-user">
 	
-	<h1>Cadastrar Usuário</h1>
+	<h1>Cadastrar Funcionário</h1>
 	
 	<div class="card">
 		<div class="card-header">
@@ -15,7 +15,7 @@
 
 				<div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
 					<label for="">Nome</label>
-					<input class="form-control" name="name" type="text">
+					<input class="form-control form-control-sm" name="name" type="text">
 
 					@if ($errors->has('name'))
                         <span class="help-block">
@@ -28,7 +28,7 @@
 
 				<div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
 					<label for="">E-mail</label>
-					<input class="form-control" name="email" type="email">
+					<input class="form-control form-control-sm" name="email" type="email">
 					@if ($errors->has('email'))
                         <span class="help-block">
                             <div class="form-control-feedback">
@@ -41,7 +41,7 @@
 				<div class="form-group{{ $errors->has('permission') ? ' has-danger' : '' }}">
 					<label for="">Perfil</label>
 					<div class="">
-                        <select name="permission" id="permission" class="form-control">
+                        <select name="permission" id="permission" class="form-control form-control-sm">
                             <option selected disabled="" value="">Selecione</option>
                             <option value="1">Administrador</option>
                             <option value="2">Gerente</option>
@@ -60,7 +60,7 @@
 				<div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                     <label for="password" class="col-md-4 control-label">Senha</label>
                     <div class="">
-                        <input id="password" type="password" class="form-control" name="password">
+                        <input id="password" type="password" class="form-control form-control-sm" name="password">
                     </div>
 					@if ($errors->has('password'))
                         <span class="help-block">
@@ -74,7 +74,7 @@
                 <div class="form-group{{ $errors->has('password_confirmation') ? ' has-danger' : '' }}">
                     <label for="password-confirm" class="col-md-4 control-label">Confirmar senha</label>
                     <div class="">
-                        <input id="password_confirmation" type="password" class="form-control" name="password_confirmation">
+                        <input id="password_confirmation" type="password" class="form-control form-control-sm" name="password_confirmation">
                     </div>
 					@if ($errors->has('password_confirmation'))
                         <span class="help-block">

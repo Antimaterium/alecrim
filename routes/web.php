@@ -38,6 +38,8 @@ Route::get('/items/editar/{id}',['as'=>'items.editar', 'uses'=> 'ItemController@
 Route::put('/items/atualizar/{id}',['as'=>'items.atualizar', 'uses'=> 'ItemController@atualizar']);
 Route::get('/items/deletar/{id}',['as'=>'items.deletar', 'uses'=> 'ItemController@deletar']);
 Route::get('/items/search-products', ['as' => 'items.searchProducts', 'uses' => 'ItemController@searchProducts']);
+Route::get('/items/detalhes/{id}',['as'=>'items.details', 'uses'=> 'ItemController@showDetails']);
+
 
 // ORDERS
 Route::get('/orders/search-items', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);

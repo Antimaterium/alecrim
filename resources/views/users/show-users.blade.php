@@ -8,13 +8,13 @@
 			Usuário {{ old('nome') }} foi adicionado com sucesso!
 		</div>	
 	@endif
-	<h1>Listagem de Usuários</h1>
+	<h1>Listagem de Funcionários</h1>
 	<div class="card">		
 		<div class="card-header">
-			Usuários
+			Funcionário
 		</div>
 		<div class="card-block">
-			<table class="table table-bordered">
+			<table class="table table-bordered table-sm table-hover">
 				<thead>
 					<th>Nome</th>
 					<th>E-mail</th>

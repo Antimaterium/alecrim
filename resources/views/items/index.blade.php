@@ -10,11 +10,11 @@
 			Items
 		</div>
 		<div class="card-block">
-			<table class="table table-bordered">
+			<table class="table table-bordered table-sm table-hover">
 				<thead>
 					<th>Nome</th>
 					<th>Descrição</th>
-					<th>categoria</th>
+					<th>Categoria</th>
 					<th>Preço</th>
 					<th>Ações</th>
 				</thead>
@@ -23,7 +23,7 @@
 						<tr>
 							<td> {{ $registro->item_name }}</td>
 							<td> {{ $registro->item_description }}</td>
-							<td> {{ $registro->item_categoria }}</td>
+							<td> {{ $registro->item_category }}</td>
 							<td> {{ $registro->item_price }}</td>
 							<td>
 								<div class="btn-group">

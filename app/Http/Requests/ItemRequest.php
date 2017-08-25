@@ -43,7 +43,7 @@ class ItemRequest extends FormRequest
             'item_description.max'       => 'Digite no maximo 255 caracteres',
             'item_description.min'       => 'Digite no mínimo 5 caracteres',
             //categoria
-            'item_category.required'  => 'Selecione o campo',
+            'item_category.required'  => 'Selecione um valor',
             'item_category.min'       => 'Digite no mínimo 5 caracteres',
             //price
             'item_price.required'        => 'Preencha o campo ',

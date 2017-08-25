@@ -13,7 +13,7 @@
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				<div class="form-group {{ $errors->has('product_name') ? 'has-danger' : '' }}">
 					<label for="">Nome</label>
-					<input class="form-control" name="product_name" type="text">
+					<input class="form-control form-control-sm" name="product_name" type="text">
 					@if ($errors->has('product_name'))
                         <span class="help-block">
                             <div class="form-control-feedback">
@@ -24,7 +24,7 @@
 				</div>
 				<div class="form-group {{ $errors->has('product_price') ? 'has-danger' : '' }}">
 					<label for="">Valor</label>
-					<input class="form-control" name="product_price" type="text">
+					<input class="form-control form-control-sm" name="product_price" type="text">
 					@if ($errors->has('product_price'))
                         <span class="help-block">
                             <div class="form-control-feedback">
@@ -35,7 +35,7 @@
 				</div>
 				<div class="form-group {{ $errors->has('product_quantity') ? 'has-danger' : '' }}">
 					<label for="">Quantidade</label>
-					<input class="form-control" name="product_quantity" type="text">
+					<input class="form-control form-control-sm" name="product_quantity" type="text">
 					@if ($errors->has('product_quantity'))
                         <span class="help-block">
                             <div class="form-control-feedback">
@@ -46,7 +46,7 @@
 				</div>
 				<div class="form-group {{ $errors->has('product_description') ? 'has-danger' : '' }}">
 					<label for="">Descrição</label>
-					<textarea class="form-control" name="product_description" type="text"></textarea> 
+					<textarea class="form-control form-control-sm" name="product_description" type="text"></textarea> 
 					@if ($errors->has('product_description'))
                         <span class="help-block">
                             <div class="form-control-feedback">

@@ -52,6 +52,7 @@ class ProductController extends Controller
         if(\Auth::guest()){
             return redirect('login');
         }
+        
         $product = Product::find($id);
 
         if (!$product) {
