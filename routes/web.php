@@ -5,7 +5,8 @@ Route::get('/', function () {
 	    if(Auth::guest()){
 	        return redirect('login');
 	    }
-		return view('/home');  
+	    $users = Alecrim\User::all();
+		return view('/home')->with('users', $users);  
 });
 
 //Authenticators
@@ -40,6 +41,7 @@ Route::get('/items/deletar/{id}',['as'=>'items.deletar', 'uses'=> 'ItemControlle
 Route::get('/items/search-products', ['as' => 'items.searchProducts', 'uses' => 'ItemController@searchProducts']);
 
 // ORDERS
-Route::get('/orders/search-items', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
 Route::get('/orders/index',['as'=>'orders.index','uses'=>'OrderController@index']);
 Route::get('/orders/details-orders/{id?}',['uses'=>'OrderController@show','as'=>'orders.show']);
+Route::get('/pedidos/busca-itens', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
+// Route::get('/pedidos/salvar', ['as' => 'orders.store', 'uses' => 'OrderController@store']);

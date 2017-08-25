@@ -14,6 +14,7 @@
 
 	    <!-- stylesheet CSS -->
 	    <link href="/css/stylesheet.css" type="text/css" rel="stylesheet"/>
+	    <link href="/css/order.css" type="text/css" rel="stylesheet"/>	    
 
 	    <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
 
@@ -148,13 +149,13 @@
 	    @yield('project-scripts')
 	    
 		<!-- Menu Toggle Script -->
-	    <script>
-	    // script para fazer o toggle do side-bar
-	    // $("#menu-toggle").click(function(e) {
-	    //     e.preventDefault();
-	    //     $("#wrapper").toggleClass("toggled");
-	    // });
-	    </script>
+	   <!--  <script>
+		   script para fazer o toggle do side-bar
+		   $("#menu-toggle").click(function(e) {
+		       e.preventDefault();
+		       $("#wrapper").toggleClass("toggled");
+		   });
+	   </script> -->
 		
 	</body>
 

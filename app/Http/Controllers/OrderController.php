@@ -3,6 +3,7 @@
 namespace Alecrim\Http\Controllers;
 
 use Alecrim\Item;
+
 use Alecrim\Order;
 use Session;
 use Alecrim\Product;
@@ -40,20 +41,20 @@ class OrderController extends Controller
         $item->save();
 
         //products
-        $product = new Product();
-        $idProducts = $data['products'];
+        $item = new Item();
+        $idItems = $data['items'];
 
         foreach ($idProducts as $key => $value) {
-            $product->id = $value;
-            $product->items()->attach($item);
+            $items->id = $value;
+            $items->items()->attach($order);
         }
     
        Session::flash('mensagem',['msg'=>'Registro Criado com sucesso!','class'=>'green white-text']);
 
        return response()->json(200);
-    }
+    }*/
 
-    public function editar($id)
+    /*public function editar($id)
     {
         $registro = Item::find($id);
         return view('items.editar', compact('registro'));

@@ -57,38 +57,57 @@
 			// GET PRODUCTS
 			var selectdProducts = [];
 			var options = {
+
 				url: "/items/search-products",
 				getValue: "product_name",
 				requestDelay: 400,
+
 			 	list: {
-			  		maxNumberOfElements: 10, 
+			  		maxNumberOfElements: 10,
+
 				  	sort: { 
 		  				enabled: true 
 		  			}, 
+
 				  	match: {
 				  		enabled: true
 				  	},
+
 				  	onChooseEvent: function() {
+
 				  		//var value = $('#products').getSelectedItemData().id;
 				  		var product = $('#products').getItemData(0);
+
 				  		//adicionando novo produto a lista e ao array
-						$('#list_products').append('<li class="list-group-item">'+ product.product_name + ' - '+ product.product_price +'<button class="btn btn-sm btn-danger btn-remove-product" value="'+ product.id +'" onclick="removeProduct()">Remover</button></li>');
+						$('#list_products')
+							.append('<li class="list-group-item">'
+										+ product.product_name + ' - '+ product.product_price 
+										+'<button class="btn btn-sm btn-danger btn-remove-product" value="'
+										+ product.id 
+										+'" onclick="removeProduct()">Remover</button></li>'
+						);
+
 						selectdProducts.push(product.id);
+
 						$("#products").val('');
+
 				  	}
 			  	},
+
 				template: {
 					type: "description",
 					fields: {
 						description: "product_price"
 					}
 				}
+
 			};
 
 			$("#products").easyAutocomplete(options);
 
 			// SEND AJAX
 			$("#add_item").on('click', function(event){
+				
 				event.preventDefault();
 
 				// pegando os valores dos campos
