@@ -31,6 +31,6 @@ class CreateItemCategorys extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('item_categorys');        
     }
 }

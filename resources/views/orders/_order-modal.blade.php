@@ -18,19 +18,17 @@
 
 		        	<form class="col-lg-6" method="post">
 
-		        		{{csrf_field()}}
-
 		        	  	<div class="form-group">
 		        	  		<div class="row">
 
 		        	  			<div class="col-lg-3">				        	  				
 				        	    	<label for="table">Mesa</label>
-				        	    	<input type="text" class="form-control form-control-sm" id="table">
+				        	    	<input type="text" class="form-control form-control-sm" id="table" value="0">
 		        	  			</div>
 
 		        	  			<div class="col-lg-5">
 		        	  				<label for="exampleInputEmail1">Atendente</label>
-		        	  				<select name="" id="atendent" class="form-control form-control-sm">
+		        	  				<select name="atendent" id="atendent" class="form-control form-control-sm">
 		        	  					<option value="">Selecione</option>
 		        	  					@foreach($users as $user)
 											<option value="{{$user->id}}">{{$user->name}}</option>
@@ -108,8 +106,17 @@
 
 						-->
 							<div class="row">
+								
+									<div class="input-group">							
+								      	<span class="input-group-addon">Pago</span>								      	
+								      	<input type="text" name="paid" id="paid" class="form-control form-control-sm" placeholder="R$00,00">					
+								    </div>
+								
+							</div>
+							<div class="row">
 								<div class="col-lg-9">Total</div>
 								<div class="col-lg-3" >R$<span id="total"> 0 </span></div>
+								<input type="hidden" name="total" id="order_total" class="form-control">
 							</div>
 						</div>
 		      		</fieldset>
@@ -141,7 +148,6 @@
 				url: "/pedidos/busca-itens",
 				getValue: "item_name",
 				requestDelay: 400,
-
 			 	list: {
 			  		maxNumberOfElements: 10, 
 
@@ -163,8 +169,7 @@
 
 				  		var totalItems = quantity * item.item_price;
 
-				  		$('#item_description').empty();
-				  		$('#item_description').append(description);				  		
+				  		$('#item_description').html(description);				  		
 
 				  		itemSelected = {
 				  			item: item,
@@ -184,6 +189,7 @@
 				}
 			};
 
+
 			$("#items").easyAutocomplete(options);
 			// FIM GET ITEM
 
@@ -193,6 +199,7 @@
 
 				totalFloat += itemSelected.totalItems;
 				$('#total').html(totalFloat);		
+				$('#order_total').val(totalFloat);		
 
 		  		//adicionando novo produto a lista e ao array
 				$('#items_order').append(
@@ -215,32 +222,33 @@
 				      		+ '</div>'
 				      	+ '</div>'
 				    + '</div>'
-			      	
 				);
 
-				selectdItemsList.push(itemSelected.item.id);									
+				selectdItemsList.push(itemSelected.item.id);	
+				//limpando os campos de items
+				$("#items").val('');
+				$('#item_description').empty();
+				itemSelected = {};
 				
 			});
 
 			$('#save_order').on('click', function(event) {
-
+				// previnindo a ação default do botão
 				event.preventDefault();
 
+				//pegando os valores dos campos
 				let atendent = $('#atendent').val();
 				let table    = $('#table').val();
-				let token 	 = $('input[name*="_token"]').val();
-
-
+				
+				// dados que serão enviados
 				let data = {
 					table: table,
 					atendent: atendent,
-					total: totalFloat,
+					order_total: totalFloat,
 					items: selectdItemsList,
 					paid: 0,
-					_token: token
+					_token: "{{ csrf_token() }}"
 				};
-
-				console.log(data)
 				
 				//requisição assincrona para gravar os dados
 				$.ajax({
@@ -248,14 +256,24 @@
 		            url: '/pedidos/salvar',
 		            data: data,
 		            dataType: 'json',
-		            success: function( msg ) {
-		                alert('Pedido inserido com sucesso');
+		            success: function( data ) {
+		            	//limpando todos os campos
+						$('#items_order').empty();		     
+						$('#table').val(0);
+						$('input[name*="_token"]').val('');
+						$('#total').html(0);        
+						$('input[name*="_token"]').val(data.csrf_token);   						
+						selectdItemsList = [];
+						
+						// alert da mensagem de sucesso
+		                alert('Pedido inserido com sucesso');		                
 		            },
-
 		            error: function(errors) {
-		            	console.log(typeof(errors))
+		            	alert("erro")
+		            	console.log(errors)
 		            }
 		        });
+								
 			});
 
 		});	

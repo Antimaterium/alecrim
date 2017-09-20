@@ -5,6 +5,7 @@ namespace Alecrim\Http\Controllers;
 use Alecrim\Item;
 use Alecrim\Order;
 use App\Http\Requests;
+use Alecrim\Http\Requests\OrderRequest;
 // use Session;
 use Illuminate\Http\Request;
 
@@ -12,8 +13,7 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
   	
-    public function store(Request $request)
-    {
+    public function store(OrderRequest $request) {
         // dados do request
         $data = $request->all();
         //items
@@ -21,7 +21,7 @@ class OrderController extends Controller
         $order->user_id = $data['atendent'];        
         $order->order_table = $data['table'];
         $order->order_paid = $data['paid'];
-        $order->order_total = $data['total'];
+        $order->order_total = $data['order_total'];
         $order->save();
 
         //products
@@ -33,7 +33,8 @@ class OrderController extends Controller
             $items->orders()->attach($order);
         }
 
-       return response()->json(200);
+       return response()->json(['ok' => 200]);
+
     }
 
     /*public function editar($id)

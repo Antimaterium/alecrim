@@ -18,7 +18,7 @@ class CreateOrdersTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('order_table');
-            $table->float('order_paid');
+            $table->float('order_paid')->default(0);
             $table->float('order_total');
 
             $table->foreign('user_id')->references('id')->on('users');
