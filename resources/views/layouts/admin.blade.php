@@ -60,10 +60,7 @@
 
 	        <!-- Sidebar -->
 	        <div id="sidebar-wrapper">
-	            <ul class="sidebar-nav">
-	                <!-- <li>
-	                    <a href="#">Pedidos</a>
-	                </li> -->
+	            <ul class="sidebar-nav">					
 	                <li>
 	                    <a href="#item-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
 	                    	Itens
@@ -78,6 +75,20 @@
 	                    	</li>
 	                    </ul>
 	                </li>
+					<li>
+						<a href="#order-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
+	                    	Pedidos
+	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
+                    	</a>
+	                    <ul class="link collapse" id="order-menu" aria-expanded="false">
+	                    	<li>
+	                    		<a href="/pedidos/pagos">Pagos</a>	
+	                    	</li>
+	                    	<li>
+	                    		<a href="/pedidos/pendetes">Em aberto</a>
+	                    	</li>
+	                    </ul>
+					</li>
 	                <li>
 	                    <a href="#product-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
 	                    	Produtos

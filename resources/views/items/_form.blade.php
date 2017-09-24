@@ -9,7 +9,14 @@
 				</div>
 				<div class="col-lg-4" id="category">							
 					<label>Categoria</label>
-					<input type="text" name="item_category" id="item_category" class="form-control form-control-sm" value="{{ isset($item->item_category) ? $item->item_category : ''}}">
+					<select name="item_category" id="item_category" class="form-control form-control-sm" value="{{ isset($item->item_category) ? $item->item_category : ''}}">
+						<option value="" selected disabled>Selecione</option>
+						<option value="Bebidas alcoólicas">Bebidas alcoólicas</option>
+						<option value="Bebidas não alcoólicas">Bebidas não alcoólicas</option>
+						<option value="Lanches">Lanches</option>
+						<option value="Porções">Porções</option>
+						<option value="Pratos">Pratos</option>
+					</select>
 					<div id="category_error_message"></div>
 				</div>
 			</div>

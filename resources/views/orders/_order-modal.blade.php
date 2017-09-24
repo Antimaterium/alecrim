@@ -29,7 +29,7 @@
 		        	  			<div class="col-lg-5">
 		        	  				<label for="exampleInputEmail1">Atendente</label>
 		        	  				<select name="atendent" id="atendent" class="form-control form-control-sm">
-		        	  					<option value="">Selecione</option>
+		        	  					<option value="" selected disabled>Selecione</option>
 		        	  					@foreach($users as $user)
 											<option value="{{$user->id}}">{{$user->name}}</option>
 		        	  					@endforeach
@@ -69,7 +69,7 @@
 			        	  	</div>
 
 			        	  	<div class="form-group">		 
-								<textarea class="form-control" name="item_description" id="item_description" cols="10" rows="3" readonly></textarea>
+								<textarea class="form-control" name="item_description" id="item_description" cols="10" rows="3" disabled></textarea>
 			        	  	</div>
 
 			        	  	<div class="btn-group">
@@ -127,7 +127,8 @@
 		    <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
 		        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar Pedido</button> -->
-		        <button id="save_order" type="button" class="btn btn-primary">Salvar Pedido</button>
+		        <button type="button" class="btn btn-primary send_ajax" id="save_order" value="pendente">Salvar Pedido</button>
+				<button type="button" class="btn btn-success send_ajax" id="close_order" value="pago" disabled>Fechar Pedido</button>
 		    </div>
 
     	</div>
@@ -137,6 +138,25 @@
 @section('project-scripts')
 	<script>
 		$(document).ready(function() {
+
+			$('#paid').on('keyup', function() {
+				let paidVal 	= $('#paid').val();
+				let totalVal 	= $('#order_total').val();
+
+				if(paidVal == totalVal) {
+					$('#close_order').prop("disabled", false);
+					$('#save_order').prop("disabled", false);					
+				}else if(paidVal < totalVal){
+					$('#close_order').prop("disabled", true);
+					$('#save_order').prop("disabled", false);					
+				}else if(paidVal > totalVal) {
+					alert("O valor pago é maior que o valor total");
+					$('#close_order').prop("disabled", true);
+					$('#save_order').prop("disabled", true);
+					
+				}
+
+			});
 
 			// GET ITEM
 			var selectdItemsList = [];
@@ -224,21 +244,31 @@
 				    + '</div>'
 				);
 
-				selectdItemsList.push(itemSelected.item.id);	
+				selectdItemsList.push(itemSelected);
+
+				
+				console.log(selectdItemsList[0]);	
+				/* console.log(selectdItemsList[0].item.id);	 */
+
 				//limpando os campos de items
 				$("#items").val('');
 				$('#item_description').empty();
+				$('#quantity').val(1);
 				itemSelected = {};
 				
+				$("#items").focus();
+
 			});
 
-			$('#save_order').on('click', function(event) {
+			$('.send_ajax').on('click', function(event) {
 				// previnindo a ação default do botão
 				event.preventDefault();
 
 				//pegando os valores dos campos
-				let atendent = $('#atendent').val();
-				let table    = $('#table').val();
+				let atendent 		= $('#atendent').val();
+				let table    		= $('#table').val();
+				let order_status 	= $(event.target).val();
+				let paid			= $('#paid').val();
 				
 				// dados que serão enviados
 				let data = {
@@ -246,7 +276,8 @@
 					atendent: atendent,
 					order_total: totalFloat,
 					items: selectdItemsList,
-					paid: 0,
+					paid: paid,
+					order_status: order_status,
 					_token: "{{ csrf_token() }}"
 				};
 				
@@ -258,12 +289,17 @@
 		            dataType: 'json',
 		            success: function( data ) {
 		            	//limpando todos os campos
+						$('#quantity').val(1);
 						$('#items_order').empty();		     
 						$('#table').val(0);
 						$('input[name*="_token"]').val('');
 						$('#total').html(0);        
-						$('input[name*="_token"]').val(data.csrf_token);   						
+						$('input[name*="_token"]').val(data.csrf_token);  
+						$('#paid').val(''); 
+						$('#close_order').prop("disabled", true);	
+						totalFloat = 0;
 						selectdItemsList = [];
+						data = {};
 						
 						// alert da mensagem de sucesso
 		                alert('Pedido inserido com sucesso');		                
