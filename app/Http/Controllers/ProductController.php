@@ -28,12 +28,12 @@ class ProductController extends Controller
     if(\Auth::guest()){
         return redirect('login');
     }  
+
        return view('products/add-product');
 
     }
 
     public function store(ProductRequest $request) {
-
 
         $product    = new Product();
         $provider   = array('provider_name' => $request['provider_name']);

@@ -25,9 +25,12 @@ class AuthController extends Controller
         //se as credências coincidirem no banco, eu logo o usuário 
         if (Auth::attempt($credentials)) {
             //redirecionand o usuário para o dashboard
+            \Session::flash('mensagem',['msg'=>'login realizado com sucesso!','class'=>'green white-text']);
             return redirect('/');    
         }
         //redirecionand o usuário para a página anterior(login)
+        \Session::flash('mensagem',['msg'=>'Confira seus dados.','class'=>'red white-text']);
+          
         return redirect()->back()->withInput();
 
     }

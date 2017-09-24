@@ -58,7 +58,6 @@
 				<div class="col-lg-10" id="description">		
 					<label>Descrição</label>
 					<input type="text" name="item_description" id="item_description" class="form-control form-control-sm" value="{{ isset($item->item_description) ? $item->item_description : '' }}">					
-					<div id="description_error_message"></div>
 				</div>
 				<div class="col-lg-2" id="price">
 					<label>Valor</label>
@@ -229,6 +228,6 @@
 			});
 
 		});		
-
 	</script>
+
 @endsection
