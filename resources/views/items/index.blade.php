@@ -29,6 +29,7 @@
 								<div class="btn-group">
 									<a href="{{ route('items.editar',$registro->id) }}" class="btn btn-sm btn-outline-warning">Editar</a>	
 									<a href="javascript:(confirm('Apagar esse resgistro?') ? window.location.href='{{route('items.deletar',$registro->id)}}' : window.location.href='{{route('items.index')}}')" class="btn btn-sm btn-outline-danger" value="delete">Apagar</a>
+									<a href="{{ route('items.details',$registro->id) }}" class="btn btn-sm btn-outline-warning">Detalhes</a>	
 								</div>
 							</td>
 						</tr>
