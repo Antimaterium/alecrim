@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->integer('order_table');
             $table->float('order_paid')->default(0);
             $table->float('order_total');
+            $table->string('order_status', 20);
 
             $table->foreign('user_id')->references('id')->on('users');
 

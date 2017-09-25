@@ -60,10 +60,7 @@
 
 	        <!-- Sidebar -->
 	        <div id="sidebar-wrapper">
-	            <ul class="sidebar-nav">
-	                <!-- <li>
-	                    <a href="#">Pedidos</a>
-	                </li> -->
+	            <ul class="sidebar-nav">					
 	                <li>
 	                    <a href="#item-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
 	                    	Itens
@@ -78,6 +75,20 @@
 	                    	</li>
 	                    </ul>
 	                </li>
+					<li>
+						<a href="#order-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
+	                    	Pedidos
+	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
+                    	</a>
+	                    <ul class="link collapse" id="order-menu" aria-expanded="false">
+	                    	<li>
+	                    		<a href="/pedidos/pagos">Pagos</a>	
+	                    	</li>
+	                    	<li>
+	                    		<a href="/pedidos/pendetes">Em aberto</a>
+	                    	</li>
+	                    </ul>
+					</li>
 	                <li>
 	                    <a href="#product-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
 	                    	Produtos
@@ -95,6 +106,7 @@
 	                <!-- <li>
                         <a href="#">Fornecedores</a>
                     </li>
+                    
                     <li>
                          <a href="#">Caixa</a>
                     </li>
@@ -137,12 +149,12 @@
 	    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-		
-		<!-- Inclusão do Plugin jQuery Validation-->
-	    <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
 
 		<!-- Inclusão do app.js -->
 		<script src="/js/app.js"></script>		
+		
+		<!-- Inclusão do Plugin jQuery Validation-->
+	    <script src="/assets/dist/jquery.validate.min.js"></script>
 
 	    <!-- Inclusão dos scripts utilizados nas views -->
 	    @yield('project-scripts')

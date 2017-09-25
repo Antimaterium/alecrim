@@ -7,17 +7,10 @@
 	<h1>Listagem de Itens</h1>
 	<div class="card">		
 		<div class="card-header">
-			Items
+			Itens
 		</div>
 		<div class="card-block">
 			<table class="table table-bordered table-sm table-hover">
-				<thead>
-					<th>Nome</th>
-					<th>Descrição</th>
-					<th>Categoria</th>
-					<th>Preço</th>
-					<th>Ações</th>
-				</thead>
 				<tbody>
 					@foreach ($registros as $registro)
 						<tr>
@@ -37,6 +30,7 @@
 
 				</tbody>
 			</table>
+
 			<div align="center">
 				
 			</div>
