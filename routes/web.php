@@ -6,7 +6,13 @@ Route::get('/', function () {
         return redirect('login');
     }
     $users = Alecrim\User::all();
-	return view('/home')->with('users', $users);  
+    $openOrders = Alecrim\Order::
+    where([
+        ['order_table', '>' , 0 ],
+        ['order_status', '=' , 'pendente' ]
+    ])
+    ->get();
+	return view('/home', compact('users', 'openOrders'));  
 });
 
 //Authenticators

@@ -15,6 +15,7 @@
 	    <!-- stylesheet CSS -->
 	    <link href="/css/stylesheet.css" type="text/css" rel="stylesheet"/>
 	    <link href="/css/order.css" type="text/css" rel="stylesheet"/>	    
+	    <link href="/css/home.css" type="text/css" rel="stylesheet"/>	    
 
 	    <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
 
