@@ -45,6 +45,7 @@ class ProductController extends Controller
         $product->product_quantity                      = $request['product_quantity'];
         $product->product_purchase_price                = $request['product_purchase_price'];
         $product->product_acceptable_minimum_quantity   = $request['product_acceptable_minimum_quantity'];
+        $provider->provider_name                        = $request['provider_name'];
 
         if (!empty($provider['provider_name'])) {
             $product->provider()->create($provider);
@@ -62,7 +63,8 @@ class ProductController extends Controller
         }
         $product = Product::find($id);
         return view('products/details-product')->with('product',$product);
-
+        $provider = Provider::find($id);
+        return view('products/details-product')->with('provider',$provider);
     }
 
     public function edit($id) {
@@ -86,10 +88,7 @@ class ProductController extends Controller
     }
 
     public function update(ProductRequest $request, $id) {
-            //verifica usuario esta logado ou não
-            if(\Auth::guest()){
-                return redirect('login');
-            }
+            
         Product::find($id)->update($request->all());
 
         Session::flash('flash_message', [

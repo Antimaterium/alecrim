@@ -36,6 +36,8 @@
 									<div class="btn-group">
 										<a href="{{ route('product.edit',$product->id) }}" class="btn btn-sm btn-outline-warning">Editar</a>	
 										<a href="javascript:(confirm('Apagar esse resgistro?') ? window.location.href='{{route('product.destroy',$product->id)}}' : window.location.href='{{route('product.list')}}')" class="btn btn-sm btn-outline-danger" value="delete">Apagar</a>
+										<a href="{{ route('product.show',$product->id) }}" class="btn btn-sm btn-outline-warning">Detalhes</a>
+										
 									</div>
 								</td>
 							</tr>
