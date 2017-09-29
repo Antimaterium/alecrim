@@ -41,10 +41,12 @@ class OrderController extends Controller
                 $item->products[$key2]->product_quantity -= $value['quantity'];
                 $item->products[$key2]->save(); 
             }
+
+
             $item->orders()->attach($order);
         }
 
-       return response()->json(['ok' => 200]);
+       return response()->json(['order' => $order]);
 
     }
 

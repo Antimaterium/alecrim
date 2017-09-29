@@ -149,11 +149,6 @@
 				}else if(paidVal < totalVal){
 					$('#close_order').prop("disabled", true);
 					$('#save_order').prop("disabled", false);					
-				}else if(paidVal > totalVal) {
-					alert("O valor pago é maior que o valor total");
-					$('#close_order').prop("disabled", true);
-					$('#save_order').prop("disabled", true);
-					
 				}
 
 			});
@@ -287,13 +282,15 @@
 		            url: '/pedidos/salvar',
 		            data: data,
 		            dataType: 'json',
-		            success: function( json ) {
+		            success: function( order ) {		    		          
 
-						$('#content_tables')
-							.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ data +')">'
-										+'<span>'+ data.table +'</span>'
-										+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
-									+'</a>');
+		            	if (order.order.order_table > 0 && order.order.order_status == 'pendente') {
+							$('#content_tables')
+								.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ order.order +')">'
+											+'<span>'+ order.order.order_table +'</span>'
+											+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
+										+'</a>');		            		
+		            	}
 
 		            	//limpando todos os campos
 						$('#quantity').val(1);

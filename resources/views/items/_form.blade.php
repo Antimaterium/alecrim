@@ -230,7 +230,7 @@
 		});		
 	</script>
 
-	@section('project-scripts')
+
 <script>
     $(document).ready(function(){
 
@@ -242,9 +242,6 @@
                     maxlength: 100
                 },
                 item_category: {
-                    required: true,
-                },
-                products: {
                     required: true,
                 },
                 item_description: {
@@ -266,9 +263,6 @@
                 item_category: {
                     required: "Campo obrigatório",
                 },
-                products: {
-                    required: "Campo obrigatório",
-                },
                 item_description: {
                     required: "Campo obrigatório",
                     minlength: "No mínimo 3 caractéres",
@@ -284,7 +278,7 @@
 
     });
 </script>
-@stop
+
 
 
 @endsection

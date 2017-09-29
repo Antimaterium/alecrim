@@ -140,53 +140,54 @@
 	</div>
 
 	
-		<script>
+	<script>	
 
-			function openOrder(obj){
-				$.ajax({
-					type: 'GET',
-					contentType: 'json',
-					url: '/pedidos/pendentes/'+obj.id,
-					success: function(data) {
-						$('#opened_table').val(obj.order_table);
-						$('#opened_order_total').val(obj.order_total);
-						$('#opened_total').text(obj.order_total);
-						$('#opened_paid').val(obj.order_paid);
+		function openOrder(obj){
 
-						data.forEach(function(element, index) {
-					  		//adicionando novo produto a lista e ao array
-							$('#opened_items_order').append(
-								'<div class="row item">'
-							      	+ '<div class="col-lg-12">' 
-							      		+ element.item_name 
-							      	+ '</div>'
+			$.ajax({
+				type: 'GET',
+				contentType: 'json',
+				url: '/pedidos/pendentes/'+obj.id,
+				success: function(data) {
+					$('#opened_table').val(obj.order_table);
+					$('#opened_order_total').val(obj.order_total);
+					$('#opened_total').text(obj.order_total);
+					$('#opened_paid').val(obj.order_paid);
 
-							      	+ '<div class="col-lg-12">' 
-							      		+ '<div class="row">' 
+					data.forEach(function(element, index) {
+				  		//adicionando novo produto a lista e ao array
+						$('#opened_items_order').append(
+							'<div class="row item">'
+						      	+ '<div class="col-lg-12">' 
+						      		+ element.item_name 
+						      	+ '</div>'
 
-								      		+ '<div class="col-lg-9 ">' 
-								      			+ '1' + "x " + element.item_price
-								      		+ '</div>'
+						      	+ '<div class="col-lg-12">' 
+						      		+ '<div class="row">' 
 
-								      		+ '<div class="col-lg-3">' 
-								      			+ " R$" + obj.order_total
-								      		+ '</div>'
-
+							      		+ '<div class="col-lg-9 ">' 
+							      			+ '1' + "x " + element.item_price
 							      		+ '</div>'
-							      	+ '</div>'
-							    + '</div>'
-							);
-							
-						});
 
-					},
-					error: function(err) {
-						console.error(err);
-					}
-				});
-			}
-		</script>
-	
+							      		+ '<div class="col-lg-3">' 
+							      			+ " R$" + obj.order_total
+							      		+ '</div>'
+
+						      		+ '</div>'
+						      	+ '</div>'
+						    + '</div>'
+						);
+						
+					});
+
+				},
+				error: function(err) {
+					console.error(err);
+				}
+			});
+		}
+	</script>
+
 	<input type="hidden" name="_token" value="{{ csrf_token() }}">
 	@include('orders._order-modal')	
 
