@@ -9,7 +9,7 @@
 			Adicionar
 		</div>
 		<div class="card-block">
-			<form action="/adiciona-produtos" method="post">
+			<form id="formProductAdd" action="/adiciona-produtos" method="post">
 				<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				<div class="row">
 					<div class="col-lg-10">
@@ -171,4 +171,92 @@ $(document).ready(function(){
 	});
 });
 </script>
+
+@section('project-scripts')
+<script>
+    $(document).ready(function(){
+
+        $('#formProductAdd').validate({
+            rules: {
+                product_name: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 100
+                },
+                product_price: {
+                    required: true,
+                    minlength: 1,
+                },
+                product_description: {
+                    required: true,
+                    minlength: 10,
+                    maxlength: 100,
+                },
+
+                product_acceptable_minimum_quantity: {
+                    required: true,
+                    minlength: 1,
+                },
+                product_packing: {
+                    required: true,
+                },
+                product_quantity: {
+                	required: true,
+                	minlength: 1,
+                },
+                product_purchase_price: {
+                	required: true,
+                	minlength: 1,
+                },
+                provider_name: {
+                	required: true,
+                	minlength: 2,
+                    maxlength: 100
+                }
+            },
+            messages: {
+                product_name: {
+                    required: "Campo obrigatório",
+                    minlength: "No mínimo 10 caractéres",
+                    maxlength: "No máximo 100 caractéres",
+                },
+
+                product_price: {
+                    required: "Campo obrigatório",
+                    minlength: "Quantidade minima deve ser maior que zero",
+                    
+                },
+                product_description: {
+                    required: "Campo obrigatório",
+                    minlength: "No mínimo 10 caractéres",
+                    maxlength: "No máximo 100 caractéres",
+                    
+                },
+                product_acceptable_minimum_quantity: {
+                    required: "Selecione uma opção",
+                    minlength: "Quantidade minima deve ser maior que zero",
+                },
+                product_packing: {              
+                    required: "Selecione uma opção",
+                },
+                product_quantity: {
+                	required: "Campo obrigatório",
+                	minlength: "Quantidade deve ser maior que zero",
+                },
+                product_purchase_price: {
+                	required: "Campo obrigatório",
+                	minlength: "valor deve ser maior que zero",
+                },
+                provider_name: {
+                	required: "Informe um fornecedor",
+                	minlength: "No mínimo 2 caractéres",
+                    maxlength: "No máximo 100 caractéres",
+                }
+            }
+        });
+
+    });
+</script>
+@stop
+
 @stop

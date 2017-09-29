@@ -115,6 +115,5 @@ class ProductController extends Controller
         return redirect('/lista-produtos')->withInput();
 
     }
-
     
 }

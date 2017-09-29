@@ -262,7 +262,7 @@ $.extend( $.validator, {
 		messages: {},
 		groups: {},
 		rules: {},
-		errorClass: "error",
+		errorClass: "has-danger",
 		pendingClass: "pending",
 		validClass: "valid",
 		errorElement: "label",
