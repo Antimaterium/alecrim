@@ -230,4 +230,61 @@
 		});		
 	</script>
 
+	@section('project-scripts')
+<script>
+    $(document).ready(function(){
+
+        $('#form_items').validate({
+            rules: {
+                item_name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                item_category: {
+                    required: true,
+                },
+                products: {
+                    required: true,
+                },
+                item_description: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100,
+                },
+                item_price: {
+                    required: true,
+                    minlength: 1,
+                },
+            },
+            messages: {
+                item_name: {
+                    required: "Campo obrigatório",
+                    minlength: "No mínimo 3 caractéres",
+                    maxlength: "No máximo 100 caractéres",
+                },
+                item_category: {
+                    required: "Campo obrigatório",
+                },
+                products: {
+                    required: "Campo obrigatório",
+                },
+                item_description: {
+                    required: "Campo obrigatório",
+                    minlength: "No mínimo 3 caractéres",
+                    maxlength: "No máximo 100 caractéres",
+                },
+                item_price: {              
+                    required: "Campo obrigatório",
+                	minlength: "valor deve ser maior que zero",
+                },
+
+            },
+        });
+
+    });
+</script>
+@stop
+
+
 @endsection
