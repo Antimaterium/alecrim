@@ -36,7 +36,7 @@
                     <div class="card-block">
                         <h1 class="text-uppercase" >Login</h1>
 
-                        <form class="form-horizontal" role="form" method="POST" action="/login">
+                        <form id="frm_login" class="form-horizontal" role="form" method="POST" action="/login">
                             {{ csrf_field() }}
     
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
@@ -101,7 +101,43 @@
     
     </div>
     <!-- Scripts -->
+@section('project-scripts')
+<script>
+    $(document).ready(function(){
+
+        $('#frm_login').validate({
+            rules: {
+                email: {
+                    required: true,
+                    email: true,
+                },
+                password: {
+                    required: true,
+                },
+            },
+            messages: {
+                email: {
+                    required: "O campo email é obrigatorio.",
+                    email: "O campo email deve conter um email válido.",
+                },
+                password: {
+                    required: "Campo obrigatório",
+                },
+                
+            },
+        });
+
+    });
+</script>
+@stop
+
+
     <script src="{{ asset('js/app.js') }}"></script>
+
+
+
+
+
 </body>
 </html>
 
