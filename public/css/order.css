@@ -6,7 +6,7 @@
 	height: 90%;
 }
 
-#items_order {
+#items_order, #opened_items_order {
 	height: 320px;
     overflow-y: auto;
 }

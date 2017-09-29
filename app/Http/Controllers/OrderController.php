@@ -78,4 +78,9 @@ class OrderController extends Controller
         return response()->json($items);
 
     }
+
+    public function opened($id) {
+        $order = Order::find($id)->items;
+        return response()->json($order);
+    }
 }

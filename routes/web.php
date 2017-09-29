@@ -53,10 +53,8 @@ Route::get('/orders/index',['as'=>'orders.index','uses'=>'OrderController@index'
 Route::get('/orders/details-orders/{id?}',['uses'=>'OrderController@show','as'=>'orders.show']);
 Route::get('/pedidos/busca-itens', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
 Route::post('/pedidos/salvar', ['as' => 'orders.store', 'uses' => 'OrderController@store']);
-/*<<<<<<< HEAD
-=======
 Route::get('/pedidos/pagos', ['as' => 'orders.paid', 'uses' => 'OrderController@showPaidOrders']);
 Route::get('/pedidos/pendetes', ['as' => 'orders.pending', 'uses' => 'OrderController@showPendingOrders']);
 Route::get('/pedidos/deletar/{id}', ['as' => 'order.destroy', 'uses' => 'OrderController@destroy']);
->>>>>>> 7e8bd6405846f5bbc400ca28b8299ea9a3b04213
-*/
+Route::get('/pedidos/pendentes/{id}', ['as' => 'order.opened', 'uses' => 'OrderController@opened']);
+

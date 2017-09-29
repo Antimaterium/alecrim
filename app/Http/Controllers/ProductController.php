@@ -45,7 +45,7 @@ class ProductController extends Controller
         $product->product_quantity                      = $request['product_quantity'];
         $product->product_purchase_price                = $request['product_purchase_price'];
         $product->product_acceptable_minimum_quantity   = $request['product_acceptable_minimum_quantity'];
-        $provider->provider_name                        = $request['provider_name'];
+        $provider['provider_name']                      = $request['provider_name'];
 
         if (!empty($provider['provider_name'])) {
             $product->provider()->create($provider);

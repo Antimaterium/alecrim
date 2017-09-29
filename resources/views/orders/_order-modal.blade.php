@@ -287,7 +287,14 @@
 		            url: '/pedidos/salvar',
 		            data: data,
 		            dataType: 'json',
-		            success: function( data ) {
+		            success: function( json ) {
+
+						$('#content_tables')
+							.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ data +')">'
+										+'<span>'+ data.table +'</span>'
+										+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
+									+'</a>');
+
 		            	//limpando todos os campos
 						$('#quantity').val(1);
 						$('#items_order').empty();		     
