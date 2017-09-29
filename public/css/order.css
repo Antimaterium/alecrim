@@ -6,7 +6,7 @@
 	height: 90%;
 }
 
-#items_order {
+#items_order, #opened_items_order {
 	height: 320px;
     overflow-y: auto;
 }
@@ -16,10 +16,6 @@
 }
 
 .order-values {
-	border-top: 1px solid #babebf;
     text-align: right;
-}
-
-.order-values {
 	margin: 5px 0;
 }

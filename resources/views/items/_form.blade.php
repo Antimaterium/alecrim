@@ -2,13 +2,22 @@
 	<div class="col-lg-12">		
 		<div class="form-group">
 			<div class="row">
-				<div class="col-lg-8">
+				<div class="col-lg-8" id="name">
 					<label>Nome</label>
-					<input placeholder="Digite o nome do item" type="text" name="item_name" id="item_name" class="form-control form-control-sm" value="{{isset($registro->item_name) ? $registro->item_name : ''}}">
+					<input type="text" name="item_name" id="item_name" class="form-control form-control-sm" value="{{ isset($item->item_name) ? $item->item_name : ''}}">
+					<div id="name_error_message"></div>
 				</div>
-				<div class="col-lg-4">							
-					<label>categoria</label>
-					<input type="text" name="item_category" id="item_category" class="form-control form-control-sm" value="{{isset($registro->item_category) ? $registro->item_category : ''}}">
+				<div class="col-lg-4" id="category">							
+					<label>Categoria</label>
+					<select name="item_category" id="item_category" class="form-control form-control-sm" value="{{ isset($item->item_category) ? $item->item_category : ''}}">
+						<option value="" selected disabled>Selecione</option>
+						<option value="Bebidas alcoólicas">Bebidas alcoólicas</option>
+						<option value="Bebidas não alcoólicas">Bebidas não alcoólicas</option>
+						<option value="Lanches">Lanches</option>
+						<option value="Porções">Porções</option>
+						<option value="Pratos">Pratos</option>
+					</select>
+					<div id="category_error_message"></div>
 				</div>
 			</div>
 		</div>
@@ -19,13 +28,22 @@
 	<div class="col-lg-12">		
 		<div class="form-group">
 			<div class="row">
-				<div class="col-lg-6">		
+				<div class="col-lg-6" id="product">		
 					<label>Produtos</label>
-					<input placeholder="Escolha os Produtos" type="text" name="products" id="products" class="required" class="form-control form-control-sm" value="{{isset($products->item_produtos) ? $products->item_produtos : ''}}"/>
+					<input type="text" name="products" id="products" class="form-control form-control-sm"/>
+					<div id="product_error_message"></div>
 				</div>
 				<div class="col-lg-6">									
 					<ul class="list-group" id="list_products">
-						
+						@if(isset($item->products))
+							<ul class="list-group">
+								@foreach($item->products as $product)
+									<li class="list-group-item">
+										{{$product->product_name}} - {{ $product->product_price }}
+									</li>
+								@endforeach
+							</ul>
+						@endif
 					</ul>
 				</div>
 			</div>
@@ -37,13 +55,14 @@
 	<div class="col-lg-12">		
 		<div class="form-group">
 			<div class="row">
-				<div class="col-lg-10">		
+				<div class="col-lg-10" id="description">		
 					<label>Descrição</label>
-					<input placeholder="Entre com a Descrição" type="text" name="item_description" id="item_description" class="form-control form-control-sm" value="{{isset($registro->item_description) ? $registro->item_description : ''}}">					
+					<input type="text" name="item_description" id="item_description" class="form-control form-control-sm" value="{{ isset($item->item_description) ? $item->item_description : '' }}">					
 				</div>
-				<div class="col-lg-2">
+				<div class="col-lg-2" id="price">
 					<label>Valor</label>
-					<input placeholder="Entre com o Valor" type="text" name="item_price" id="item_price" class="form-control form-control-sm" value="{{isset($registro->item_price) ? $registro->item_price : ''}}">
+					<input type="text" name="item_price" id="item_price" class="form-control form-control-sm" value="{{ isset($item->item_price) ? $item->item_price : ''}}">
+					<div id="price_error_message"></div>
 				</div>
 			</div>
 		</div>
@@ -52,10 +71,12 @@
 
 @section('project-scripts')
 	<script>
+
 		$(document).ready(function() {
 
 			// GET PRODUCTS
 			var selectdProducts = [];
+
 			var options = {
 
 				url: "/items/search-products",
@@ -75,8 +96,9 @@
 
 				  	onChooseEvent: function() {
 
-				  		//var value = $('#products').getSelectedItemData().id;
-				  		var product = $('#products').getItemData(0);
+
+				  		var index = $("#products").getSelectedItemIndex();
+				  		var product = $('#products').getItemData(index);
 
 				  		//adicionando novo produto a lista e ao array
 						$('#list_products')
@@ -136,38 +158,133 @@
 		            success: function( msg ) {
 		                window.location.href = "/items/index";
 		            },
-		            error: function(errors) {
-		            	console.log(typeof(errors))
+		            error: function(errors) {	
+		            	
+		            	if (errors.responseJSON.item_category !== undefined) {
+		            		$('#category').addClass('has-danger');
+		            		$('#category_error_message').html('<span class="help-block">'
+								                            + '<div class="form-control-feedback">'
+								                                + errors.responseJSON.item_category
+								                            + '</div>'
+								                        + '</span>');
+		            	}else {
+		            		$('#category').removeClass('has-danger');
+    	            		$('#category_error_message').html('');
+		            	}
+
+		            	if (errors.responseJSON.item_name !== undefined) {
+		            		$('#name').addClass('has-danger');
+		            		$('#name_error_message').html('<span class="help-block">'
+								                            + '<div class="form-control-feedback">'
+								                                + errors.responseJSON.item_name
+								                            + '</div>'
+								                        + '</span>');
+		            	}else {
+		            		$('#name').removeClass('has-danger');
+    	            		$('#name_error_message').html('');
+		            	}		       
+
+		            	if (errors.responseJSON.item_description !== undefined) {
+		            		$('#description').addClass('has-danger');
+		            		$('#description_error_message').html('<span class="help-block">'
+								                            + '<div class="form-control-feedback">'
+								                                + errors.responseJSON.item_description
+								                            + '</div>'
+								                        + '</span>');
+		            	}else {
+		            		$('#description').removeClass('has-danger');
+    	            		$('#description_error_message').html('');
+		            	}
+
+		            	if (errors.responseJSON.item_price !== undefined) {
+		            		$('#price').addClass('has-danger');
+		            		$('#price_error_message').html('<span class="help-block">'
+								                            + '<div class="form-control-feedback">'
+								                                + errors.responseJSON.item_price
+								                            + '</div>'
+								                        + '</span>');
+		            	}else {
+		            		$('#price').removeClass('has-danger');
+    	            		$('#price_error_message').html('');
+		            	}		        		  
+
+    		        	if (selectdProducts.length === 0) {
+    		            		$('#product').addClass('has-danger');
+    		            		$('#product_error_message').html('<span class="help-block">'
+    							                            + '<div class="form-control-feedback">'
+    							                                + "Escolha pelo menos um produto"
+    							                            + '</div>'
+    							                        + '</span>');
+    	            	}else{
+    	            		$('#product').removeClass('has-danger');
+    	            		$('#product_error_message').html('');
+    	            	}		
 
 		            }
-		        });
+
+
+		        });		        
 
 			});
 
-			$( "#form_items").validate({
-    debug: true,
-    rules: {
-      item_name: {
-       	 required: true,
-                   // remote: 'check-email.php' //Deve utilizar um arquivo (por exemplo: check-email.php) para verificar algo, e assim retornar um boolean true ou false para satisfazer esta opção;
-      			},
-                  item_categoria:{
-                  				required: true,
-                                  min: 10,
-                                 max: 15,
-                                 
-                                
-                  },
-                 
-    },
-    messages:{
-                    //exemplo
-       
-    }
-  }); 
-	
-		});
-
+		});		
 	</script>
+
+	@section('project-scripts')
+<script>
+    $(document).ready(function(){
+
+        $('#form_items').validate({
+            rules: {
+                item_name: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100
+                },
+                item_category: {
+                    required: true,
+                },
+                products: {
+                    required: true,
+                },
+                item_description: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 100,
+                },
+                item_price: {
+                    required: true,
+                    minlength: 1,
+                },
+            },
+            messages: {
+                item_name: {
+                    required: "Campo obrigatório",
+                    minlength: "No mínimo 3 caractéres",
+                    maxlength: "No máximo 100 caractéres",
+                },
+                item_category: {
+                    required: "Campo obrigatório",
+                },
+                products: {
+                    required: "Campo obrigatório",
+                },
+                item_description: {
+                    required: "Campo obrigatório",
+                    minlength: "No mínimo 3 caractéres",
+                    maxlength: "No máximo 100 caractéres",
+                },
+                item_price: {              
+                    required: "Campo obrigatório",
+                	minlength: "valor deve ser maior que zero",
+                },
+
+            },
+        });
+
+    });
+</script>
+@stop
+
 
 @endsection

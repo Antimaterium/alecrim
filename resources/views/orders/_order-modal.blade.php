@@ -18,31 +18,29 @@
 
 		        	<form class="col-lg-6" method="post">
 
-		        		{{csrf_field()}}
-
 		        	  	<div class="form-group">
 		        	  		<div class="row">
 
 		        	  			<div class="col-lg-3">				        	  				
 				        	    	<label for="table">Mesa</label>
-				        	    	<input type="text" class="form-control form-control-sm" id="table">
+				        	    	<input type="text" class="form-control form-control-sm" id="table" value="0">
 		        	  			</div>
 
 		        	  			<div class="col-lg-5">
 		        	  				<label for="exampleInputEmail1">Atendente</label>
-		        	  				<select name="" id="" class="form-control form-control-sm">
-		        	  					<option value="">Selecione</option>
+		        	  				<select name="atendent" id="atendent" class="form-control form-control-sm">
+		        	  					<option value="" selected disabled>Selecione</option>
 		        	  					@foreach($users as $user)
 											<option value="{{$user->id}}">{{$user->name}}</option>
 		        	  					@endforeach
 		        	  				</select>
 		        	  			</div>
-
+<!--
 		        	  			<div class="col-lg-4">				        	  				
-				        	    	<label for="table">Pedido</label>
-				        	    	<input type="text" class="form-control form-control-sm" id="table" readonly>
+				        	    	<label for="order">Pedido</label>
+				        	    	<input type="text" class="form-control form-control-sm" id="order" readonly>
 		        	  			</div>
-
+-->
 		        	  		</div>
 		        	  	</div>
 
@@ -71,7 +69,7 @@
 			        	  	</div>
 
 			        	  	<div class="form-group">		 
-								<textarea class="form-control" name="item_description" id="item_description" cols="10" rows="3" readonly></textarea>
+								<textarea class="form-control" name="item_description" id="item_description" cols="10" rows="3" disabled></textarea>
 			        	  	</div>
 
 			        	  	<div class="btn-group">
@@ -95,22 +93,31 @@
 
 
 						<div class="col-lg-12 order-values">
-						
+						<!--
 							<div class="row">
 								<div class="col-lg-9">Total Pago</div>
-								<div class="col-lg-3"></div>
+								<div class="col-lg-3"> R$<span>----</span></div>
 							</div>
 
 							<div class="row">
 								<div class="col-lg-9">Susbtotal</div>
-								<div class="col-lg-3"></div>
+								<div class="col-lg-3"> R$<span>----</span></div>
 							</div>
 
+						-->
+							<div class="row">
+								
+									<div class="input-group">							
+								      	<span class="input-group-addon">Pago</span>								      	
+								      	<input type="text" name="paid" id="paid" class="form-control form-control-sm" placeholder="R$00,00">					
+								    </div>
+								
+							</div>
 							<div class="row">
 								<div class="col-lg-9">Total</div>
-								<div class="col-lg-3"></div>
+								<div class="col-lg-3" >R$<span id="total"> 0 </span></div>
+								<input type="hidden" name="total" id="order_total" class="form-control">
 							</div>
-
 						</div>
 		      		</fieldset>
 
@@ -120,7 +127,8 @@
 		    <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
 		        <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar Pedido</button> -->
-		        <button id="save_order" type="button" class="btn btn-primary">Salvar Pedido</button>
+		        <button type="button" class="btn btn-primary send_ajax" id="save_order" value="pendente">Salvar Pedido</button>
+				<button type="button" class="btn btn-success send_ajax" id="close_order" value="pago" disabled>Fechar Pedido</button>
 		    </div>
 
     	</div>
@@ -131,16 +139,35 @@
 	<script>
 		$(document).ready(function() {
 
+			$('#paid').on('keyup', function() {
+				let paidVal 	= $('#paid').val();
+				let totalVal 	= $('#order_total').val();
+
+				if(paidVal == totalVal) {
+					$('#close_order').prop("disabled", false);
+					$('#save_order').prop("disabled", false);					
+				}else if(paidVal < totalVal){
+					$('#close_order').prop("disabled", true);
+					$('#save_order').prop("disabled", false);					
+				}else if(paidVal > totalVal) {
+					alert("O valor pago é maior que o valor total");
+					$('#close_order').prop("disabled", true);
+					$('#save_order').prop("disabled", true);
+					
+				}
+
+			});
+
 			// GET ITEM
 			var selectdItemsList = [];
 			var itemSelected  = {};
-			// var itemNameFieldValue = $('#item_name').val();
+			var total = $('#total').text();
+			var totalFloat = parseFloat(total);
 
 			var options = {
 				url: "/pedidos/busca-itens",
 				getValue: "item_name",
 				requestDelay: 400,
-
 			 	list: {
 			  		maxNumberOfElements: 10, 
 
@@ -153,16 +180,16 @@
 				  	},
 
 				  	onChooseEvent: function() {
-				  		//var value = $('#products').getSelectedItemData().id;
-				  		var index = $('#items').getSelectedItemIndex();
+
+				  		var index = $("#items").getSelectedItemIndex();
 				  		var quantity = $('#quantity').val();
+
 				  		var item = $('#items').getItemData(index);
 				  		var description = item.item_description;
 
 				  		var totalItems = quantity * item.item_price;
 
-				  		$('#item_description').empty();
-				  		$('#item_description').append(description);
+				  		$('#item_description').html(description);				  		
 
 				  		itemSelected = {
 				  			item: item,
@@ -182,12 +209,17 @@
 				}
 			};
 
+
 			$("#items").easyAutocomplete(options);
 			// FIM GET ITEM
 
 			$('#add_item').on('click', function(event){
 
-				event.preventDefault();				
+				event.preventDefault();		
+
+				totalFloat += itemSelected.totalItems;
+				$('#total').html(totalFloat);		
+				$('#order_total').val(totalFloat);		
 
 		  		//adicionando novo produto a lista e ao array
 				$('#items_order').append(
@@ -210,30 +242,82 @@
 				      		+ '</div>'
 				      	+ '</div>'
 				    + '</div>'
-			      	
 				);
 
-				selectdItemsList.push(itemSelected.item.id);					
+				selectdItemsList.push(itemSelected);
+
 				
+				console.log(selectdItemsList[0]);	
+				/* console.log(selectdItemsList[0].item.id);	 */
+
+				//limpando os campos de items
+				$("#items").val('');
+				$('#item_description').empty();
+				$('#quantity').val(1);
+				itemSelected = {};
+				
+				$("#items").focus();
+
 			});
 
-			/*$('#save_order').on('click', function(event) {
+			$('.send_ajax').on('click', function(event) {
+				// previnindo a ação default do botão
+				event.preventDefault();
+
+				//pegando os valores dos campos
+				let atendent 		= $('#atendent').val();
+				let table    		= $('#table').val();
+				let order_status 	= $(event.target).val();
+				let paid			= $('#paid').val();
+				
+				// dados que serão enviados
+				let data = {
+					table: table,
+					atendent: atendent,
+					order_total: totalFloat,
+					items: selectdItemsList,
+					paid: paid,
+					order_status: order_status,
+					_token: "{{ csrf_token() }}"
+				};
 				
 				//requisição assincrona para gravar os dados
 				$.ajax({
 		            type: "POST",
-		            url: '/orders/salvar',
+		            url: '/pedidos/salvar',
 		            data: data,
 		            dataType: 'json',
-		            success: function( msg ) {
-		                // window.location.href = "/items/index";
-		            },
+		            success: function( json ) {
 
+						$('#content_tables')
+							.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ data +')">'
+										+'<span>'+ data.table +'</span>'
+										+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
+									+'</a>');
+
+		            	//limpando todos os campos
+						$('#quantity').val(1);
+						$('#items_order').empty();		     
+						$('#table').val(0);
+						$('input[name*="_token"]').val('');
+						$('#total').html(0);        
+						$('input[name*="_token"]').val(data.csrf_token);  
+						$('#paid').val(''); 
+						$('#close_order').prop("disabled", true);	
+						totalFloat = 0;
+						selectdItemsList = [];
+						data = {};
+						
+						// alert da mensagem de sucesso
+		                alert('Pedido inserido com sucesso');		                
+		            },
 		            error: function(errors) {
-		            	console.log(typeof(errors))
+		            	alert("erro")
+		            	console.log(errors)
 		            }
 		        });
-			});*/
+								
+			});
 
 		});	
 	</script>

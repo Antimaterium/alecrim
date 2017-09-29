@@ -3,7 +3,7 @@
 @section('content')
 <section class="create-user">
 	
-	<h1>Manutenção de Usuários</h1>
+	<h1>Manutenção de Funcionário</h1>
 	
 	<div class="card">
 		<div class="card-header">

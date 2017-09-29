@@ -2,11 +2,17 @@
 //HOME
 Route::get('/', function () {
 	//verifica usuario esta logado ou não
-	    if(Auth::guest()){
-	        return redirect('login');
-	    }
-	    $users = Alecrim\User::all();
-		return view('/home')->with('users', $users);  
+    if(Auth::guest()){
+        return redirect('login');
+    }
+    $users = Alecrim\User::all();
+    $openOrders = Alecrim\Order::
+    where([
+        ['order_table', '>' , 0 ],
+        ['order_status', '=' , 'pendente' ]
+    ])
+    ->get();
+	return view('/home', compact('users', 'openOrders'));  
 });
 
 //Authenticators
@@ -28,7 +34,7 @@ Route::get('adiciona-produtos', 'ProductController@create');
 Route::post('adiciona-produtos', 'ProductController@store');
 Route::get('edita-produtos/{id}', ['uses' => 'ProductController@edit', 'as' => 'product.edit']);
 Route::put('edita-produtos/{id}', ['uses' => 'ProductController@update', 'as' => 'product.update']);
-Route::get('lista-produtos/detalhes/{id}', 'ProductController@show');
+Route::get('lista-produtos/detalhes/{id}',['uses' => 'ProductController@show', 'as' => 'product.show']);
 Route::get('lista-produtos/remove/{id}', ['uses' => 'ProductController@destroy', 'as' => 'product.destroy']);
 
 //ITEMS
@@ -39,9 +45,15 @@ Route::get('/items/editar/{id}',['as'=>'items.editar', 'uses'=> 'ItemController@
 Route::put('/items/atualizar/{id}',['as'=>'items.atualizar', 'uses'=> 'ItemController@atualizar']);
 Route::get('/items/deletar/{id}',['as'=>'items.deletar', 'uses'=> 'ItemController@deletar']);
 Route::get('/items/search-products', ['as' => 'items.searchProducts', 'uses' => 'ItemController@searchProducts']);
+Route::get('/items/detalhes/{id}',['as'=>'items.details', 'uses'=> 'ItemController@showDetails']);
+
 
 // ORDERS
 Route::get('/orders/index',['as'=>'orders.index','uses'=>'OrderController@index']);
 Route::get('/orders/details-orders/{id?}',['uses'=>'OrderController@show','as'=>'orders.show']);
 Route::get('/pedidos/busca-itens', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
-// Route::get('/pedidos/salvar', ['as' => 'orders.store', 'uses' => 'OrderController@store']);
+Route::post('/pedidos/salvar', ['as' => 'orders.store', 'uses' => 'OrderController@store']);
+Route::get('/pedidos/pagos', ['as' => 'orders.paid', 'uses' => 'OrderController@showPaidOrders']);
+Route::get('/pedidos/pendetes', ['as' => 'orders.pending', 'uses' => 'OrderController@showPendingOrders']);
+Route::get('/pedidos/deletar/{id}', ['as' => 'order.destroy', 'uses' => 'OrderController@destroy']);
+Route::get('/pedidos/pendentes/{id}', ['as' => 'order.opened', 'uses' => 'OrderController@opened']);

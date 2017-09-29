@@ -13,7 +13,7 @@
 		</div>
 	<div class="card-block">	
 	
-				<form action="{{ route('items.atualizar', $registro->id) }}" method="post">
+				<form id="form_items" action="{{ route('items.atualizar', $item->id) }}" method="post">
 				{{ csrf_field() }}
 				
 				<input type="hidden" name="_method" value="put">
