@@ -18,6 +18,7 @@ class OrderController extends Controller
 
         // dados do request
         $data = $request->all();
+        
         // order
         $order = new Order();
         $order->user_id = $data['atendent'];        
@@ -40,10 +41,11 @@ class OrderController extends Controller
             foreach($item->products as $key2 => $value2) {
                 $item->products[$key2]->product_quantity -= $value['quantity'];
                 $item->products[$key2]->save(); 
+                
+                $item->orders()->attach($order, ['item_quantity' => $value['quantity']]);
             }
 
 
-            $item->orders()->attach($order);
         }
 
        return response()->json(['order' => $order]);
