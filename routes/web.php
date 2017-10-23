@@ -7,11 +7,11 @@ Route::get('/', function () {
     }
     $users = Alecrim\User::all();
     $openOrders = Alecrim\Order::
-    where([
-        ['order_table', '>' , 0 ],
-        ['order_status', '=' , 'pendente' ]
-    ])
-    ->get();
+                    where([
+                        ['order_table', '>' , 0 ],
+                        ['order_status', '=' , 'pendente' ]
+                    ])
+                    ->get();
 	return view('/home', compact('users', 'openOrders'));  
 });
 
@@ -46,7 +46,6 @@ Route::put('/items/atualizar/{id}',['as'=>'items.atualizar', 'uses'=> 'ItemContr
 Route::get('/items/deletar/{id}',['as'=>'items.deletar', 'uses'=> 'ItemController@deletar']);
 Route::get('/items/search-products', ['as' => 'items.searchProducts', 'uses' => 'ItemController@searchProducts']);
 Route::get('/items/detalhes/{id}',['as'=>'items.details', 'uses'=> 'ItemController@showDetails']);
-
 
 // ORDERS
 Route::get('/orders/index',['as'=>'orders.index','uses'=>'OrderController@index']);

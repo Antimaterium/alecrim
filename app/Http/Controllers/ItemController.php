@@ -26,24 +26,29 @@ class ItemController extends Controller
     }
     public function salvar(ItemRequest $request)
     {
-        // dados do request
-        $data = $request->all();
         
-        //items
-        $item = new Item();
+        $data               = $request->all();   // dados do request
+        $products           = $data['products']; // array de produtos retornados da view
+        $idProducts         = array();           // array dos ids de produtos
+        $quantityProducts   = array();           // array da quantidade dos produtos
+        $item               = new Item();        // items
+        $product            = new Product();     // products
+
+        
         $item->item_name = $data['item_name'];
         $item->item_description = $data['item_description'];
         $item->item_category = $data['item_category'];
         $item->item_price = $data['item_price'];
-        
-        //products
-        $product = new Product();
-        $idProducts = $data['products'];
         $item->save();
         
+        foreach ($products as $key => $value) {
+            $idProducts[$key]       = $value['product_id'];
+            $quantityProducts[$key] = $value['product_quantity'];
+        }
+
         foreach ($idProducts as $key => $value) {
             $product->id = $value;
-            $product->items()->attach($item);
+            $product->items()->attach($item, ['product_quantity' => $quantityProducts[$key]]);
         }
         
         Session::flash('mensagem',['msg'=>'Registro Criado com sucesso!','class'=>'green white-text']);

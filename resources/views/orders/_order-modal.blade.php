@@ -2,7 +2,6 @@
 <div class="modal fade" id="order_modal" tabindex="-1" role="dialog" aria-labelledby="order_modal_title" aria-hidden="true">
   	<div class="modal-dialog modal-lg" role="document">
     	<div class="modal-content">
-
 	      	<div class="modal-header">
 
 	        	<h5 class="modal-title" id="order_modal_title">Criar Pedido</h5>
@@ -24,6 +23,7 @@
 		        	  			<div class="col-lg-3">				        	  				
 				        	    	<label for="table">Mesa</label>
 				        	    	<input type="text" class="form-control form-control-sm" id="table" value="0">
+				        	    	<span id="error_table"></span>
 		        	  			</div>
 
 		        	  			<div class="col-lg-5">
@@ -139,6 +139,34 @@
 	<script>
 		$(document).ready(function() {
 
+			var selectdItemsList	= [];			 	  // array de items
+			var tableOrderList		= [];				  // array de mesas ocupadas
+			var itemSelected  		= {};				  // objeto do item selecionado
+			var tableSelected 		= "";				  // mesa selecionada
+			var total 				= $('#total').text(); // valor total do pedido
+			var totalFloat			= parseFloat(total);  // valor total convertido em float
+			var openedOrders 		= <?= $openOrders ?>; // pedidos em aberto
+
+			// iterando as orders para preencher o array de mesas ocupadas
+			openedOrders.forEach( function(order, index) {
+				tableOrderList[index] = order.order_table;
+			});
+
+			// evento de inserção de caractéres no campo mesa
+			$('#table').on('keyup', function() {
+				tableSelected = parseInt($('#table').val());
+				
+				// se for maior ou igual a zero significa que o ele já existe no array
+				if (tableOrderList.indexOf(tableSelected) >= 0 ) {
+					$('#error_table').html("Mesa indisponível");
+				}
+				else {
+					$('#error_table').empty();
+				}	
+					
+			});
+
+			// validando os botões de salvar e fechar pedido
 			$('#paid').on('keyup', function() {
 				let paidVal 	= $('#paid').val();
 				let totalVal 	= $('#order_total').val();
@@ -153,12 +181,7 @@
 
 			});
 
-			// GET ITEM
-			var selectdItemsList = [];
-			var itemSelected  = {};
-			var total = $('#total').text();
-			var totalFloat = parseFloat(total);
-
+			// opções do easy autocomplete
 			var options = {
 				url: "/pedidos/busca-itens",
 				getValue: "item_name",
@@ -178,10 +201,8 @@
 
 				  		var index = $("#items").getSelectedItemIndex();
 				  		var quantity = $('#quantity').val();
-
 				  		var item = $('#items').getItemData(index);
 				  		var description = item.item_description;
-
 				  		var totalItems = quantity * item.item_price;
 
 				  		$('#item_description').html(description);				  		
@@ -203,11 +224,11 @@
 					}
 				}
 			};
-
-
+			// efetuando a busva
 			$("#items").easyAutocomplete(options);
-			// FIM GET ITEM
 
+	
+			// evento do botão de inserir a lista do pedido
 			$('#add_item').on('click', function(event){
 
 				event.preventDefault();		
@@ -241,33 +262,36 @@
 
 				selectdItemsList.push(itemSelected);
 
-				
-				console.log(selectdItemsList[0]);	
-				/* console.log(selectdItemsList[0].item.id);	 */
-
 				//limpando os campos de items
 				$("#items").val('');
 				$('#item_description').empty();
 				$('#quantity').val(1);
-				itemSelected = {};
-				
+				itemSelected = {};				
 				$("#items").focus();
 
 			});
 
+			// evento de click para inseriri o pedido
 			$('.send_ajax').on('click', function(event) {
 				// previnindo a ação default do botão
 				event.preventDefault();
 
 				//pegando os valores dos campos
 				let atendent 		= $('#atendent').val();
-				let table    		= $('#table').val();
 				let order_status 	= $(event.target).val();
 				let paid			= $('#paid').val();
 				
+				if (tableOrderList.indexOf(tableSelected) >= 0) {
+					$('#error_table').html("Mesa indisponível");
+					return;
+				}
+				else {
+					$('#error_table').empty();	
+				}
+
 				// dados que serão enviados
 				let data = {
-					table: table,
+					table: tableSelected,
 					atendent: atendent,
 					order_total: totalFloat,
 					items: selectdItemsList,
@@ -275,21 +299,22 @@
 					order_status: order_status,
 					_token: "{{ csrf_token() }}"
 				};
-				
+
 				//requisição assincrona para gravar os dados
 				$.ajax({
 		            type: "POST",
 		            url: '/pedidos/salvar',
 		            data: data,
 		            dataType: 'json',
-		            success: function( order ) {		    		          
-
+		            success: function( order ) {		 
+		            	// verificando se o pedido inserido é um pedido em aberto com uma mesa relacionada
 		            	if (order.order.order_table > 0 && order.order.order_status == 'pendente') {
 							$('#content_tables')
 								.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ order.order +')">'
 											+'<span>'+ order.order.order_table +'</span>'
 											+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
-										+'</a>');		            		
+										+'</a>');		      
+							openedOrders.push(order.order);  	
 		            	}
 
 		            	//limpando todos os campos
@@ -301,16 +326,16 @@
 						$('input[name*="_token"]').val(data.csrf_token);  
 						$('#paid').val(''); 
 						$('#close_order').prop("disabled", true);	
-						totalFloat = 0;
-						selectdItemsList = [];
-						data = {};
+						totalFloat 			= 0;  // zerando o total
+						selectdItemsList 	= []; // limpando o arrau de items selecionados
+						data 				= {}; // limpando o objeto data
 						
 						// alert da mensagem de sucesso
 		                alert('Pedido inserido com sucesso');		                
 		            },
 		            error: function(errors) {
-		            	alert("erro")
-		            	console.log(errors)
+		            	alert("erro");
+		            	console.log(errors);
 		            }
 		        });
 								

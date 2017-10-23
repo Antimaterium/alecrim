@@ -2,10 +2,10 @@
 
 @section('content')
 
-<div class="container">	
+<div class="container-fluid">	
 	
 	<section class="add-product">
-<div class="container">
+<div class="container-fluid">
 	<h1>Editar Items</h1>
 	<div class="card">
 		<div class="card-header">

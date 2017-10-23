@@ -3,8 +3,8 @@
 @section('content')
   
 <section class="add-product">
-  <div class="container">
-  	<h1>Cadastro de Items</h1>
+  <div class="container-fluid">
+  	<h1>Cadastro de Itens</h1>
   	<div class="card">
   		<div class="card-header">
   			Adicionar

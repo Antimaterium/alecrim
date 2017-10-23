@@ -112,10 +112,10 @@
 							<div class="col-lg-12 opened_order-values">
 								<div class="row">
 									
-										<div class="input-group">							
-									      	<span class="input-group-addon">Pago</span>								      	
-									      	<input type="text" name="opened_paid" id="opened_paid" class="form-control form-control-sm" placeholder="R$00,00" disabled>					
-									    </div>
+									<div class="input-group">							
+								      	<span class="input-group-addon">Pago</span>								      	
+								      	<input type="text" name="opened_paid" id="opened_paid" class="form-control form-control-sm" placeholder="R$00,00" disabled>					
+								    </div>
 									
 								</div>
 								<div class="row">

@@ -131,7 +131,7 @@
 	            <div class="container-fluid">
 	                <div class="row">
 	                    <div class="col-lg-12">
-					    	<div class="container" id="app">
+					    	<div class="container-fluid" id="app">
 								@yield('content')
 							</div>
 	                    </div>

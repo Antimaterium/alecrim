@@ -4,8 +4,8 @@
     box-shadow: 2px 2px 5px #6b6b6b;
     border-radius: 50%;
     position: fixed;    
-    right: 30px;
-    bottom: 30px;
+    right: 4%;
+    bottom: 6%;
 }
 
 #btn_open_order_modal > .material-icons {

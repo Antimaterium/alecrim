@@ -4,12 +4,12 @@
 			<div class="row">
 				<div class="col-lg-8" id="name">
 					<label>Nome</label>
-					<input type="text" name="item_name" id="item_name" class="form-control form-control-sm" value="{{ isset($item->item_name) ? $item->item_name : ''}}">
+					<input type="text" name="item_name" id="item_name" class="form-control form-control-sm" value="{{ isset($item->item_name) ? $item->item_name : ''}}"  tabindex="1">
 					<div id="name_error_message"></div>
 				</div>
 				<div class="col-lg-4" id="category">							
 					<label>Categoria</label>
-					<select name="item_category" id="item_category" class="form-control form-control-sm" value="{{ isset($item->item_category) ? $item->item_category : ''}}">
+					<select name="item_category" id="item_category" class="form-control form-control-sm" value="{{ isset($item->item_category) ? $item->item_category : ''}}" tabindex="2">
 						<option value="" selected disabled>Selecione</option>
 						<option value="Bebidas alcoólicas">Bebidas alcoólicas</option>
 						<option value="Bebidas não alcoólicas">Bebidas não alcoólicas</option>
@@ -28,21 +28,24 @@
 	<div class="col-lg-12">		
 		<div class="form-group">
 			<div class="row">
+				<div class="col-lg-1" id="product">		
+					<label>Qtd.</label>
+					<input type="number" name="quantity" id="quantity" class="form-control form-control-sm"  tabindex="3"/>
+					<div id="quantity_error_message"></div>
+				</div>
 				<div class="col-lg-6" id="product">		
 					<label>Produtos</label>
-					<input type="text" name="products" id="products" class="form-control form-control-sm"/>
+					<input type="text" name="products" id="products" class="form-control form-control-sm" disabled="true"  tabindex="4"/>
 					<div id="product_error_message"></div>
 				</div>
-				<div class="col-lg-6">									
+				<div class="col-lg-5">									
 					<ul class="list-group" id="list_products">
-						@if(isset($item->products))
-							<ul class="list-group">
-								@foreach($item->products as $product)
-									<li class="list-group-item">
-										{{$product->product_name}} - {{ $product->product_price }}
-									</li>
-								@endforeach
-							</ul>
+						@if(isset($item->products))							
+							@foreach($item->products as $product)
+								<li class="list-group-item">
+									{{$product->product_name}} - {{ $product->product_price }}
+								</li>
+							@endforeach							
 						@endif
 					</ul>
 				</div>
@@ -57,11 +60,11 @@
 			<div class="row">
 				<div class="col-lg-10" id="description">		
 					<label>Descrição</label>
-					<input type="text" name="item_description" id="item_description" class="form-control form-control-sm" value="{{ isset($item->item_description) ? $item->item_description : '' }}">					
+					<input type="text" name="item_description" id="item_description" class="form-control form-control-sm" value="{{ isset($item->item_description) ? $item->item_description : '' }}"  tabindex="5">					
 				</div>
 				<div class="col-lg-2" id="price">
 					<label>Valor</label>
-					<input type="text" name="item_price" id="item_price" class="form-control form-control-sm" value="{{ isset($item->item_price) ? $item->item_price : ''}}">
+					<input type="text" name="item_price" id="item_price" class="form-control form-control-sm" value="{{ isset($item->item_price) ? $item->item_price : ''}}"  tabindex="6">
 					<div id="price_error_message"></div>
 				</div>
 			</div>
@@ -74,8 +77,15 @@
 
 		$(document).ready(function() {
 
-			// GET PRODUCTS
-			var selectdProducts = [];
+			var quantity = 0;
+			var selectdProducts = []; // GET PRODUCTS
+
+			$('#quantity').on('keyup', function() {
+				quantity = $('#quantity').val();
+				if (quantity != '' && quantity > 0) $('#products').prop("disabled", false);
+				else $('#products').prop("disabled", true);
+			});
+
 
 			var options = {
 
@@ -103,16 +113,23 @@
 				  		//adicionando novo produto a lista e ao array
 						$('#list_products')
 							.append('<li class="list-group-item">'
-										+ product.product_name + ' - '+ product.product_price 
+										+ quantity + 'X - ' + product.product_name + ' - R$'+ product.product_price 
 										+'<button class="btn btn-sm btn-danger btn-remove-product" value="'
 										+ product.id 
 										+'" onclick="removeProduct()">Remover</button></li>'
 						);
 
-						selectdProducts.push(product.id);
+						selectdProducts.push(
+							{
+								"product_id":product.id, 
+								"product_quantity": quantity
+							}
+						);
 
 						$("#products").val('');
-
+						$('#quantity').val(''); 
+						$("#quantity").focus();
+						$('#products').prop("disabled", true);
 				  	}
 			  	},
 
