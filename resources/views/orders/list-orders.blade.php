@@ -33,6 +33,7 @@
 									<div class="btn-group">
 										<a href="{{ route('product.edit',$order->id) }}" class="btn btn-sm btn-outline-warning">Editar</a>	
 										<a href="javascript:(confirm('Apagar esse pedido?') ? window.location.href='{{route('order.destroy',$order->id)}}' : window.location.href='{{route('orders.paid')}}')" class="btn btn-sm btn-outline-danger" value="delete">Apagar</a>
+										<a href="{{ route('orders.show',$order->id) }}" class="btn btn-sm btn-outline-warning">Detalhes</a>	
 									</div>
 								</td>
 							</tr>

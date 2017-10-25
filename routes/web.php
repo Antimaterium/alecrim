@@ -49,7 +49,7 @@ Route::get('/items/detalhes/{id}',['as'=>'items.details', 'uses'=> 'ItemControll
 
 // ORDERS
 Route::get('/orders/index',['as'=>'orders.index','uses'=>'OrderController@index']);
-Route::get('/orders/details-orders/{id?}',['uses'=>'OrderController@show','as'=>'orders.show']);
+Route::get('/orders/details-orders/{id?}',['as'=>'orders.show','uses'=>'OrderController@show']);
 Route::get('/pedidos/busca-itens', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
 Route::post('/pedidos/salvar', ['as' => 'orders.store', 'uses' => 'OrderController@store']);
 Route::get('/pedidos/pagos', ['as' => 'orders.paid', 'uses' => 'OrderController@showPaidOrders']);

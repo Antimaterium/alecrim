@@ -88,4 +88,10 @@ class OrderController extends Controller
         $order = Order::find($id)->items;
         return response()->json($order);
     }
+
+    public function show($id){
+        $order = Order::find($id);
+        $order_items = $order->items;
+        return view('orders/details-orders', compact('order'));
+    }
 }
