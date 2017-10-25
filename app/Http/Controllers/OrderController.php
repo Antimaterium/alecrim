@@ -16,11 +16,12 @@ class OrderController extends Controller
   	
     public function store(OrderRequest $request) {
 
-        $data           = $request->all();  // dados da requisição
+
+        $data           = $request->all();  // dados da requisição    
         $items          = $data['items'];   // item list
         $order          = new Order();      // nova instancia de Order
         $item           = new Item();       // nova instancia de Item
-        
+
         // order
         $order->user_id         = $data['atendent'];        
         $order->order_table     = $data['table'];
@@ -35,10 +36,10 @@ class OrderController extends Controller
             $item->id = $value['item']['id'];
             // iterating products
             foreach($item->products as $key2 => $value2) {
-                $item->products[$key2]->product_quantity -= $value['quantity'];
-                $item->products[$key2]->save(); 
+                $products_by_item_quantity = $item->products[$key2]->pivot->product_quantity;
+                $item->products[$key2]->product_quantity -= ($value['quantity'] * $products_by_item_quantity);
+                $item->products[$key2]->save();
             }
-
             $item->orders()->attach($order, ['item_quantity' => $value['quantity']]);
 
         }

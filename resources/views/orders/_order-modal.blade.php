@@ -15,7 +15,7 @@
 	      	<div class="modal-body">
 	      		<div class="row">
 
-		        	<form class="col-lg-6" method="post">
+		        	<form class="col-lg-6" method="post" id="form_order_modal">
 
 		        	  	<div class="form-group">
 		        	  		<div class="row">
@@ -26,7 +26,7 @@
 				        	    	<span id="error_table"></span>
 		        	  			</div>
 
-		        	  			<div class="col-lg-5">
+		        	  			<div class="col-lg-5" id="atendent_div">
 		        	  				<label for="exampleInputEmail1">Atendente</label>
 		        	  				<select name="atendent" id="atendent" class="form-control form-control-sm">
 		        	  					<option value="" selected disabled>Selecione</option>
@@ -34,6 +34,7 @@
 											<option value="{{$user->id}}">{{$user->name}}</option>
 		        	  					@endforeach
 		        	  				</select>
+		        	  				<div id="atendent_error_message"></div>
 		        	  			</div>
 <!--
 		        	  			<div class="col-lg-4">				        	  				
@@ -58,9 +59,10 @@
 			        	  						<input type="text" class="form-control form-control-sm" name="quantity" id="quantity" value="1">
 			        	  					</div>   
 
-			        	  					<div class="col-lg-10">		
+			        	  					<div class="col-lg-10" id="item_div">		
 			        	  						<label for="items">Item</label>
 					        	    			<input type="text" name="items" id="items" class="form-control form-control-sm"/>
+					        	    			<div id="item_error_message"></div>
 			        	  					</div> 
 
 			        	  				</div>
@@ -73,7 +75,7 @@
 			        	  	</div>
 
 			        	  	<div class="btn-group">
-			        	  		<button id="add_item" class="btn btn-sm btn-success">Adicionar ao Pedido</button>
+			        	  		<button id="add_item" class="btn btn-sm btn-success" disabled>Adicionar ao Pedido</button>
 			        	  	</div>
 
 			      		</fieldset>
@@ -205,7 +207,8 @@
 				  		var description = item.item_description;
 				  		var totalItems = quantity * item.item_price;
 
-				  		$('#item_description').html(description);				  		
+				  		$('#item_description').html(description);		
+				  		$('#add_item').prop("disabled", false);
 
 				  		itemSelected = {
 				  			item: item,
@@ -268,6 +271,7 @@
 				$('#quantity').val(1);
 				itemSelected = {};				
 				$("#items").focus();
+				$('#add_item').prop("disabled", true);
 
 			});
 
@@ -318,14 +322,20 @@
 		            	}
 
 		            	//limpando todos os campos
-						$('#quantity').val(1);
-						$('#items_order').empty();		     
-						$('#table').val(0);
-						$('input[name*="_token"]').val('');
 						$('#total').html(0);        
-						$('input[name*="_token"]').val(data.csrf_token);  
+						$('#table').val(0);
+						$('#quantity').val(1);
 						$('#paid').val(''); 
+						$('#items').val('');
+						$('input[name*="_token"]').val('');
+						$('#items_order').empty();		     
+						$('#item_description').empty();		     
+						$('#item_error_message').empty();
+						$('#atendent_error_message').empty();
+						$('#atendent_div').removeClass('has-danger');
 						$('#close_order').prop("disabled", true);	
+						$('#item_div').removeClass('has-danger');
+						$('input[name*="_token"]').val(data.csrf_token);  
 						totalFloat 			= 0;  // zerando o total
 						selectdItemsList 	= []; // limpando o arrau de items selecionados
 						data 				= {}; // limpando o objeto data
@@ -334,8 +344,30 @@
 		                alert('Pedido inserido com sucesso');		                
 		            },
 		            error: function(errors) {
-		            	alert("erro");
-		            	console.log(errors);
+		            	
+    		        	if (errors.responseJSON.atendent !== undefined) {
+		            		$('#atendent_div').addClass('has-danger');
+		            		$('#atendent_error_message').html('<span class="help-block">'
+									                            + '<div class="form-control-feedback">'
+									                                + 'Obrigatório'
+									                            + '</div>'
+									                        + '</span>');
+		            	}else {
+		            		$('#atendent_div').removeClass('has-danger');
+    	            		$('#atendent_error_message').empty();
+		            	}	
+
+		            	if (errors.responseJSON.items !== undefined) {
+		            		$('#item_div').addClass('has-danger');
+		            		$('#item_error_message').html('<span class="help-block">'
+									                            + '<div class="form-control-feedback">'
+									                                + 'Escolha pelo menos um item'
+									                            + '</div>'
+									                        + '</span>');
+		            	}else {
+		            		$('#item_div').removeClass('has-danger');
+    	            		$('#item_error_message').empty();
+		            	}	
 		            }
 		        });
 								
