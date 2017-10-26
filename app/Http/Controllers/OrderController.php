@@ -90,9 +90,10 @@ class OrderController extends Controller
         return response()->json($order);
     }
 
-    public function show($id){
+    public function details($id){
         $order = Order::find($id);
         $order_items = $order->items;
-        return view('orders/details-orders', compact('order'));
+
+        return view('orders/details', compact('order'));
     }
 }

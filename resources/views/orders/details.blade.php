@@ -7,7 +7,7 @@
       <h3>Detalhes do Pedido</h3>
     </div>
     <div class="card-block">
-      <h4 class="card-title">{{$order->item_name}}</h1>
+      <h4 class="card-title">Mesa n°{{$order->order_table}}</h1>
       <ul class="list-group">
            
           </br>
