@@ -11,7 +11,7 @@ body a {
     color: #000;
 }
 
-body a:hover, body a:focus {
+.sidebar-nav a:hover {
     color: #333;
     font-weight: bold;
     background-color: #333;
