@@ -48,7 +48,7 @@ Route::get('/items/search-products', ['as' => 'items.searchProducts', 'uses' => 
 Route::get('/items/detalhes/{id}',['as'=>'items.details', 'uses'=> 'ItemController@showDetails']);
 
 // ORDERS
-// Route::get('/orders/index',['as'=>'orders.index','uses'=>'OrderController@index']);
+//Route::get('/orders/index',['as'=>'orders.index','uses'=>'OrderController@index']);
 Route::get('/pedidos/detalhes/{id?}',['as'=>'orders.details','uses'=>'OrderController@details']);
 Route::get('/pedidos/busca-itens', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
 Route::post('/pedidos/salvar', ['as' => 'orders.store', 'uses' => 'OrderController@store']);
