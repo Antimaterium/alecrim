@@ -16,7 +16,7 @@
 				<li class="list-group-item">Custo por Unidade: R$ {{$product->unit_price}}</li>
 				<li class="list-group-item">Quantidade: {{$product->product_quantity}}</li>
 				<li class="list-group-item">Quantidade Minima Estoque: {{$product->product_acceptable_minimum_quantity}}</li>
-				<li class="list-group-item">Fornecedor: {{$product->provider_name}}</li>
+				<li class="list-group-item">Fornecedor: {{$provider->provider_name}}</li>
 			</ul>
 		</div>
 			<a href="/lista-produtos" class="btn btn-primary">Voltar</a>

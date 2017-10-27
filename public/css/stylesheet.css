@@ -77,3 +77,7 @@ body a.link {
 .easy-autocomplete.eac-description {
     width: 100% !important;
 }
+
+.lable-error{
+    color: #d9534f !important
+}
