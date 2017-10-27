@@ -34,6 +34,6 @@
         
 
 
-      <a href="/items/index" class="btn btn-primary">Voltar</a>
+      <a href="/pedidos/pendetes" class="btn btn-primary">Voltar</a>
 </section>
 @stop

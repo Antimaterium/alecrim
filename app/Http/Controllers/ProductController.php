@@ -62,9 +62,10 @@ class ProductController extends Controller
             return redirect('login');
         }
         $product = Product::find($id);
-        return view('products/details-product')->with('product',$product);
         $provider = Provider::find($id);
-        return view('products/details-product')->with('provider',$provider);
+        return view('products/details-product')->with('product',$product)->with('provider',$provider);
+        
+        //return view('products/details-product')->with('provider',$provider);
     }
 
     public function edit($id) {
@@ -74,7 +75,7 @@ class ProductController extends Controller
         }
         
         $product = Product::find($id);
-
+        $provider = Product::find($id);
         if (!$product) {
             Session::flash('flash_message', [
                 'msg'   => 'Este produto não existe.',
@@ -83,7 +84,7 @@ class ProductController extends Controller
             return redirect()->route('/lista-produtos');    
         }
 
-        return view('products/edit-product', compact('product'));
+        return view('products/edit-product', compact('product','provider'));
 
     }
 
