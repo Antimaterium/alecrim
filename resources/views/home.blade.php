@@ -394,7 +394,7 @@
 			
 			//------------------------ ORDER -------------------------------- ORDER ------------------------------------- ORDER -------------------//
 
-
+			
 			var selectdItemsList	= [];			 	  		// array de items
 			var tableOrderList		= [];				  		// array de mesas ocupadas
 			var itemSelected  		= {};				  		// objeto do item selecionado
