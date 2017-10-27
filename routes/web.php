@@ -1,18 +1,27 @@
 <?php
+use Alecrim\User;
+use Alecrim\Order;
+
 //HOME
 Route::get('/', function () {
 	//verifica usuario esta logado ou não
     if(Auth::guest()){
         return redirect('login');
     }
-    $users = Alecrim\User::all();
-    $openOrders = Alecrim\Order::
+    $data =  array();
+    $users      = User::all();
+    $orders     = Order::
                     where([
                         ['order_table', '>' , 0 ],
                         ['order_status', '=' , 'pendente' ]
                     ])
                     ->get();
-	return view('/home', compact('users', 'openOrders'));  
+    $data['order'] = $orders;
+    $data['users'] = $users;
+    foreach ($orders as $key => $value) {
+        $data['order'][$key]['items'] = $value->items;
+    }
+    return view('/home')->with('data', $data);  
 });
 
 //Authenticators

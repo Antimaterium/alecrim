@@ -16,7 +16,6 @@ class OrderController extends Controller
   	
     public function store(OrderRequest $request) {
 
-
         $data           = $request->all();  // dados da requisição    
         $items          = $data['items'];   // item list
         $order          = new Order();      // nova instancia de Order
@@ -43,7 +42,7 @@ class OrderController extends Controller
             $item->orders()->attach($order, ['item_quantity' => $value['quantity']]);
 
         }
-        return response()->json(['order' => $order]);
+        return response()->json(['order' => ['order' => $order, 'items' => $order->items]]);
 
     }
 
