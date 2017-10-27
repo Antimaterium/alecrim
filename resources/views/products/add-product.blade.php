@@ -112,10 +112,10 @@
 		                    @endif
 						</div>
 					</div>	
-					<div class="col-lg-2">
+					<!--<div class="col-lg-2">
 						<label for="">Custo por un.</label>
 						<div id="unit_price"></div>
-					</div>								
+					</div>-->								
 				</div>
 				<fieldset>
 					<legend><h3>Fornecedor</h3></legend>

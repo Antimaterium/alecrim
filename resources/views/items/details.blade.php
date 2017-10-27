@@ -16,8 +16,7 @@
           <h4 class="card-title">Produtos incluidos no Item:</h4>
             @foreach($item->products as $product)
               <li class="list-group-item">  
-                {{$product->product_name}} - {{ $product->product_price }}
-              </li>
+                {{$product->product_name}} : R$ {{ $product->product_price }} x {{$product->pivot->product_quantity}} = R$ {{ $product->product_price * $product->pivot->product_quantity}}              </li>
             @endforeach
          
 
