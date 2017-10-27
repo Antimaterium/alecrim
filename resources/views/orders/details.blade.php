@@ -25,9 +25,7 @@
           <tr>
             <td>{{$value->item_name}}</td>
             <td>
-              <!-- {{$order_items[$key]->pivot->item_quantity}} -->
-
-              <?php #dd($order_items[$key]) ?>
+              {{$order_items[$key]->pivot->item_quantity}}
             </td>
             <td></td>
           </tr>
@@ -36,6 +34,6 @@
         
 
 
-      <a href="/items/index" class="btn btn-primary">Voltar</a>
+      <a href="/pedidos/pendetes" class="btn btn-primary">Voltar</a>
 </section>
 @stop

@@ -122,7 +122,7 @@
 					</div>								
 				</div>
 				<fieldset>
-					<legend><h3>Fornecedor</h3></legend>
+					<!--<legend><h3>Fornecedor</h3></legend>
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="form-group {{ $errors->has('provider_name') ? 'has-danger' : '' }}">
@@ -131,12 +131,12 @@
 								@if($errors->has('provider_name'))
 			                        <span class="help-block">
 			                            <div class="form-control-feedback">
-			                                {{ $errors->first('provider_name') }}
+			                                {{ $provider->provider_name }}
 			                            </div>
 			                        </span>
 			                    @endif
 							</div>
-						</div>
+						</div>-->
 				<button class="btn btn-success" type="submit">Salvar</button>
 				<a href="/lista-produtos" class="btn btn-primary">Cancelar</a>
 			</form>
