@@ -147,8 +147,16 @@
 	@section('project-scripts')
 		<script>	
 			//------------------------ HOME ---------------------------------- HOME -------------------------------------- HOME -------------------//
-			function openOrder(obj){
+			var selectdOpenedItemsList	= [];						// array de items
+			var openedItemSelected  	= {};				  		// objeto do item selecionado
+			var opendeTotal 			= "";						// valor total do pedido
+			var openedTotalFloat		= 0;  						// valor total convertido em float
+			var openedOrders 			= <?= $data['order'] ?>; 	// pedidos em aberto
 
+				// opendeTotal 			= $('#opened_total').text();
+				// openedTotalFloat		= parseFloat(opendeTotal);
+			function openOrder(obj){
+				selectdOpenedItemsList = [];				
 				// limpando os campos antes de inserir
 				// isso é necessário pois é utilizada a mesma modal para cada pedidos. Evitando dados
 				$('#opened_table').empty();
@@ -163,6 +171,8 @@
 				$('#opened_order_total').val(obj.order_total);
 				$('#opened_total').text(obj.order_total);
 				$('#opened_paid').val(obj.order_paid);
+				openedTotalFloat = obj.order_total;
+
 
 				$('#opened_atendent').append("<option value='"+obj.user_id+"'>asjhdhkashdjkas<option>");
 				
@@ -178,7 +188,7 @@
 					      		+ '<div class="row">' 
 
 						      		+ '<div class="col-lg-9 ">' 
-						      			+ element.pivot.item_quantity + "x " + element.item_price
+						      			+ "R$" + element.item_price + " x " + element.pivot.item_quantity
 						      		+ '</div>'
 
 						      		+ '<div class="col-lg-3">' 
@@ -189,17 +199,20 @@
 					      	+ '</div>'
 					    + '</div>'
 					);
+
+					let openedSelectedItem = {
+						item 		: element,
+						quantity 	: element.pivot.item_quantity,
+						totalItems 	: obj.order_total
+					}
+
+					selectdOpenedItemsList.push(openedSelectedItem);
 					
 				});
 			}		
 			
 			$(document).ready(function() {
 
-				var selectdOpenedItemsList	= [];			 	  		// array de items
-				var openedItemSelected  	= {};				  		// objeto do item selecionado
-				var opendeTotal 			= $('#opened_total').text(); 		// valor total do pedido
-				var openedTotalFloat		= parseFloat(opendeTotal);  		// valor total convertido em float
-				var openedOrders 			= <?= $data['order'] ?>; 	// pedidos em aberto
 
 				// validando os botões de salvar e fechar pedido
 				$('#opened_paid').on('keyup', function() {
@@ -284,7 +297,7 @@
 					      		+ '<div class="row">' 
 
 						      		+ '<div class="col-lg-9 ">' 
-						      			+ openedItemSelected.quantity + "x " + openedItemSelected.item.item_price
+						      			+ "R$" + openedItemSelected.item.item_price + " x " + openedItemSelected.quantity
 						      		+ '</div>'
 
 						      		+ '<div class="col-lg-3">' 
@@ -394,7 +407,6 @@
 			
 			//------------------------ ORDER -------------------------------- ORDER ------------------------------------- ORDER -------------------//
 
-			
 			var selectdItemsList	= [];			 	  		// array de items
 			var tableOrderList		= [];				  		// array de mesas ocupadas
 			var itemSelected  		= {};				  		// objeto do item selecionado
