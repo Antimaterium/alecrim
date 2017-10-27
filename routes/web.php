@@ -32,7 +32,7 @@ Route::get('/', function () {
 
 //Authenticators
 Route::get('login', 'AuthController@index');
-Route::post('login', 'AuthController@attempt');
+Route::post('login', ['as' => 'login', 'uses' => 'AuthController@attempt']);
 Route::get('logout', 'AuthController@logout');
 
 //USERS 
