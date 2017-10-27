@@ -3,6 +3,7 @@
 namespace Alecrim\Http\Controllers;
 use Alecrim\Item;
 use Alecrim\Order;
+use Alecrim\User;
 use Alecrim\Product;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;  
@@ -93,7 +94,8 @@ class OrderController extends Controller
     public function details($id){
         $order = Order::find($id);
         $order_items = $order->items;
+        $user = User::find($order->user_id);
 
-        return view('orders/details', compact('order'));
+        return view('orders/details', compact('order', 'order_items','user'));
     }
 }
