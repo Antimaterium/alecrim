@@ -7,17 +7,33 @@
       <h3>Detalhes do Pedido</h3>
     </div>
     <div class="card-block">
-      <h4 class="card-title">Mesa n°{{$order->order_table}}</h1>
-      <ul class="list-group">
-           
-          </br>
-          <h4 class="card-title">Produtos incluidos no Item:</h4>
-            @foreach($order->items as $order)
-              <li class="list-group-item">  
-                {{$order->item_name}} - {{ $order->item_price }}
-              </li>
-            @endforeach
-         
+      <h4 class="card-title">
+        Mesa n°{{$order->order_table}}
+        <span class="float-right">Atendente: {{$user->name}}</span>
+      </h4> 
+
+      <table width="100%">
+        <thead>
+          <tr>
+            <td>Item</td>
+            <td>Qtd x Valor</td>
+            <td>Valor</td>
+        </tr>
+        </thead>
+
+        @foreach($order_items as $key => $value)
+          <tr>
+            <td>{{$value->item_name}}</td>
+            <td>
+              <!-- {{$order_items[$key]->pivot->item_quantity}} -->
+
+              <?php #dd($order_items[$key]) ?>
+            </td>
+            <td></td>
+          </tr>
+        @endforeach
+      </table>
+        
 
 
       <a href="/pedidos/pendetes" class="btn btn-primary">Voltar</a>

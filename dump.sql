@@ -14,5 +14,5 @@ INSERT INTO `items` (`id`, `item_name`, `item_description`, `item_category`, `it
 INSERT INTO `item_product` (`product_id`, `item_id`, `product_quantity`) VALUES
 (1, 1, 4),
 (3, 1, 2),
-(1, 2, 1)
+(1, 2, 1),
 (3, 3, 1);

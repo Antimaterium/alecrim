@@ -3,6 +3,7 @@
 namespace Alecrim\Http\Controllers;
 use Alecrim\Item;
 use Alecrim\Order;
+use Alecrim\User;
 use Alecrim\Product;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;  
@@ -15,7 +16,6 @@ class OrderController extends Controller
 {
   	
     public function store(OrderRequest $request) {
-
 
         $data           = $request->all();  // dados da requisição    
         $items          = $data['items'];   // item list
@@ -43,7 +43,7 @@ class OrderController extends Controller
             $item->orders()->attach($order, ['item_quantity' => $value['quantity']]);
 
         }
-        return response()->json(['order' => $order]);
+        return response()->json(['order' => ['order' => $order, 'items' => $order->items]]);
 
     }
 
@@ -93,7 +93,8 @@ class OrderController extends Controller
     public function details($id){
         $order = Order::find($id);
         $order_items = $order->items;
+        $user = User::find($order->user_id);
 
-        return view('orders/details', compact('order'));
+        return view('orders/details', compact('order', 'order_items','user'));
     }
 }
