@@ -189,7 +189,7 @@ $(document).ready(function(){
                 },
                 product_description: {
                     required: true,
-                    minlength: 3,
+                    minlength: 10,
                     maxlength: 100
                 },
                 product_acceptable_minimum_quantity: {
@@ -225,7 +225,7 @@ $(document).ready(function(){
                 },
                 product_description: {
                     required: "Campo obrigatório",
-                    minlength: "No mínimo 3 caractéres",
+                    minlength: "No mínimo 10 caractéres",
                     maxlength: "No máximo 100 caractéres"
                 },
                 product_acceptable_minimum_quantity: {
