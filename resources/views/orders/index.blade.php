@@ -20,7 +20,7 @@
 					<th>Ações</th>
 				</thead>
 				<tbody>
-					@foreach ($registros as $registro)
+					@foreach ($order_items as $registro)
 						<tr>
 							<td> {{ $registro->id }}</td>
 							<td> {{ $registro->user_id }}</td>
@@ -29,8 +29,8 @@
 							<td> {{ $registro->order_total }}</td>
 							<td>
 							<div class="btn-group">
-									<a href="{{route('orders.show')}}" class="btn btn-sm btn-outline-warning"" class="btn btn-sm btn-outline-warning"  class="btn btn-primary btn-lg">detalhes</a>	
 									<a href="#" class="btn btn-sm btn-outline-danger" value="delete">Apagar</a>
+									
 								</div>
 								
 							</td>
