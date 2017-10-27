@@ -23,6 +23,7 @@ class CreateOrderItemsTable extends Migration
 
 
             $table->integer('item_quantity')->default(0);
+            $table->integer('item_status');
         });
     }
 

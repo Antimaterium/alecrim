@@ -20,8 +20,6 @@ class ItemController extends Controller
 
     public function adicionar()
     {
-        //$products = Product::all();
-        //return view('items.adicionar', compact('products'));
         return view('items.adicionar');
     }
     public function salvar(ItemRequest $request)

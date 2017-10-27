@@ -8,18 +8,24 @@ Route::get('/', function () {
     if(Auth::guest()){
         return redirect('login');
     }
-    $data =  array();
-    $users      = User::all();
-    $orders     = Order::
-                    where([
-                        ['order_table', '>' , 0 ],
-                        ['order_status', '=' , 'pendente' ]
-                    ])
-                    ->get();
+    $data               = array();
+    $users              = User::all();
+    $usersOpenedOrder   = [];
+    $orders             = Order::
+                            whereHas('items', function($query) {
+                                $query->where(
+                                    [
+                                        ['order_table', '>' , 0 ],
+                                        ['order_status', '=' , 'pendente' ],
+                                        ['item_status', '=', 0]
+                                    ]);
+                            })
+                            ->get();
     $data['order'] = $orders;
     $data['users'] = $users;
     foreach ($orders as $key => $value) {
-        $data['order'][$key]['items'] = $value->items;
+        $data['order'][$key]['items']   = $value->items;
+        $data['order'][$key]['user']   = User::find($value->user_id);
     }
     return view('/home')->with('data', $data);  
 });
@@ -61,6 +67,7 @@ Route::get('/items/detalhes/{id}',['as'=>'items.details', 'uses'=> 'ItemControll
 Route::get('/pedidos/detalhes/{id?}',['as'=>'orders.details','uses'=>'OrderController@details']);
 Route::get('/pedidos/busca-itens', ['as' => 'orders.searchItems', 'uses' => 'OrderController@searchItems']);
 Route::post('/pedidos/salvar', ['as' => 'orders.store', 'uses' => 'OrderController@store']);
+Route::post('/pedidos/alterar', ['as' => 'orders.update', 'uses' => 'OrderController@update']);
 Route::get('/pedidos/pagos', ['as' => 'orders.paid', 'uses' => 'OrderController@showPaidOrders']);
 Route::get('/pedidos/pendetes', ['as' => 'orders.pending', 'uses' => 'OrderController@showPendingOrders']);
 Route::get('/pedidos/deletar/{id}', ['as' => 'order.destroy', 'uses' => 'OrderController@destroy']);

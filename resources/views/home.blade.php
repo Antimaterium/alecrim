@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')	
-	
 	<h1 style="text-align:center">Sistema de Controle e Fluxo de Caixa Alecrim</h1>				
 	<div id="content_tables">
+
 		@foreach($data['order'] as $key => $value)
 			<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder({{ $value }})">
 				<span>{{$value->order_table}}</span>
@@ -113,9 +113,9 @@
 							<div class="col-lg-12 opened_order-values">
 								<div class="row">
 									
-									<div class="input-group">							
+									<div class="input-group" id="opened_paid_div">							
 								      	<span class="input-group-addon">Pago</span>								      	
-								      	<input type="text" name="opened_paid" id="opened_paid" class="form-control form-control-sm" placeholder="R$00,00">					
+								      	<input type="number" name="opened_paid" id="opened_paid" class="form-control form-control-sm" placeholder="R$00,00">	
 								    </div>
 									
 								</div>
@@ -152,10 +152,12 @@
 			var opendeTotal 			= "";						// valor total do pedido
 			var openedTotalFloat		= 0;  						// valor total convertido em float
 			var openedOrders 			= <?= $data['order'] ?>; 	// pedidos em aberto
-
+			var openedTotalPaid			= 0;
+			var openedOrderId 			= 0;
 				// opendeTotal 			= $('#opened_total').text();
 				// openedTotalFloat		= parseFloat(opendeTotal);
 			function openOrder(obj){
+				console.log(obj)
 				selectdOpenedItemsList = [];				
 				// limpando os campos antes de inserir
 				// isso é necessário pois é utilizada a mesma modal para cada pedidos. Evitando dados
@@ -172,10 +174,12 @@
 				$('#opened_total').text(obj.order_total);
 				$('#opened_paid').val(obj.order_paid);
 				openedTotalFloat = obj.order_total;
+				openedTotalPaid = obj.order_paid;
+				$('#opened_paid').val(openedTotalPaid);
+				openedOrderId = obj.id;
 
+				$('#opened_atendent').append("<option value='"+obj.user_id+"'>"+ obj.user.name +"<option>");
 
-				$('#opened_atendent').append("<option value='"+obj.user_id+"'>asjhdhkashdjkas<option>");
-				
 				obj.items.forEach(function(element, index) {
 			  		//adicionando novo produto a lista e ao array
 					$('#opened_items_order').append(
@@ -192,7 +196,7 @@
 						      		+ '</div>'
 
 						      		+ '<div class="col-lg-3">' 
-						      			+ " R$" + obj.order_total
+						      			+ " R$" + element.item_price * element.pivot.item_quantity
 						      		+ '</div>'
 
 					      		+ '</div>'
@@ -201,9 +205,11 @@
 					);
 
 					let openedSelectedItem = {
-						item 		: element,
-						quantity 	: element.pivot.item_quantity,
-						totalItems 	: obj.order_total
+						oldItem : {
+							item 		: element,
+							quantity 	: element.pivot.item_quantity,
+							totalItems 	: obj.order_total
+						}
 					}
 
 					selectdOpenedItemsList.push(openedSelectedItem);
@@ -213,19 +219,31 @@
 			
 			$(document).ready(function() {
 
-
 				// validando os botões de salvar e fechar pedido
 				$('#opened_paid').on('keyup', function() {
-					let paidVal 	= $('#opened_paid').val();
-					let totalVal 	= $('#opened_order_total').val();
+					let openedPaidVal 	= parseFloat($('#opened_paid').val());
+					let openedTotalVal 	= parseFloat($('#opened_order_total').val());
 
-					if(paidVal == totalVal) {
+					console.log(openedPaidVal == openedTotalVal)
+					// console.log(openedPaidVal < openedTotalVal)
+
+					if(openedPaidVal == openedTotalVal) {
 						$('#close_opened_order').prop("disabled", false);
 						$('#save_opened_order').prop("disabled", false);					
-					}else if(paidVal < totalVal){
+						// $('#opened_paid_error_message').empty();
+					}else if(openedPaidVal < openedTotalVal){
+						$('#close_opened_order').prop("disabled", false);
+						$('#save_opened_order').prop("disabled", true);					
+						// $('#opened_paid_error_message').empty();
+					}else if(openedPaidVal > openedTotalVal) {
 						$('#close_opened_order').prop("disabled", true);
-						$('#save_opened_order').prop("disabled", false);					
+						$('#save_opened_order').prop("disabled", true);	
+						// $('#opened_paid_div').append('<span id="opened_paid_error_message" class="has-danger">Valor maior do que o total</span>');				
 					}
+
+					// if(openedTotalPaid < openedPaidVal) {
+					// 	console.log('akjsdlajsd')
+					// }
 
 				});
 
@@ -322,322 +340,337 @@
 				});
 
 				// evento de click para inseriri o pedido
-				$('.send_opened_ajax').on('click', function(event) {
+				$('.send_opened_ajax').on('click', function(e) {
 					// previnindo a ação default do botão
-					event.preventDefault();
+					e.preventDefault();
 
 					//pegando os valores dos campos
 					let atendent 		= $('#opened_atendent').val();
-					let order_status 	= $(event.target).val();
+					let order_status 	= $(e.target).val();
 					let paid			= $('#opened_paid').val();								
 
 					// dados que serão enviados
 					let openedData = {
-						table: $('#opened_table').val(),
-						atendent: atendent,
-						order_total: openedTotalFloat,
-						items: selectdOpenedItemsList,
-						paid: paid,
-						order_status: order_status,
-						_token: "{{ csrf_token() }}"
+						table 			: $('#opened_table').val(),
+						atendent 		: atendent,
+						order_total 	: openedTotalFloat,
+						items 			: selectdOpenedItemsList,
+						paid 			: paid,
+						order_status 	: order_status,
+						order_id 		: openedOrderId,
+						_token 			: "{{ csrf_token() }}"
 					};
 
-					console.log(openedData);
+					if (openedTotalFloat < paid) {
+						$('#opened_paid_div').addClass('has-danger');
+	            		$('#opened_atendent_error_message').html('<span class="help-block">'
+								                            + '<div class="form-control-feedback">'
+								                                + 'O valor pago não pode ser menor que: R$' + openedPaidVal 
+								                            + '</div>'
+								                        + '</span>');
+	            	}else {
+	            		$('#opened_paid_div').removeClass('has-danger');
+	            		$('#opened_atendent_error_message').empty();
+	            	}	
+					
 
 					//requisição assincrona para gravar os dados
-				// 	$.ajax({
-			 //            type: "POST",
-			 //            url: '/pedidos/salvar',
-			 //            data: openedData,
-			 //            dataType: 'json',
-			 //            success: function( order ) {		 
+					$.ajax({
+			            type: "POST",
+			            url: '/pedidos/alterar',
+			            data: openedData,
+			            dataType: 'json',
+			            success: function( order ) {		 
 
-			 //            	//limpando todos os campos
-				// 			$('#opened_total').html(0);        
-				// 			$('#opened_table').val(0);
-				// 			$('#opened_quantity').val(1);
-				// 			$('#opened_paid').val(''); 
-				// 			$('#opened_items').val('');
-				// 			$('input[name*="_token"]').val('');
-				// 			$('#opened_items_order').empty();		     
-				// 			$('#opened_item_description').empty();		     
-				// 			$('#opened_item_error_message').empty();
-				// 			$('#opened_atendent_error_message').empty();
-				// 			$('#opened_atendent_div').removeClass('has-danger');
-				// 			$('#close_order').prop("disabled", true);	
-				// 			$('#opened_item_div').removeClass('has-danger');
-				// 			$('input[name*="_token"]').val(data.csrf_token);  
-				// 			openedTotalFloat 			= 0;  // zerando o total
-				// 			selectdOpenedItemsList 	= []; // limpando o arrau de items selecionados
-				// 			data 				= {}; // limpando o objeto data
+			            	//limpando todos os campos
+							$('#opened_total').html(0);        
+							$('#opened_table').val(0);
+							$('#opened_quantity').val(1);
+							$('#opened_paid').val(''); 
+							$('#opened_items').val('');
+							$('input[name*="_token"]').val('');
+							$('#opened_items_order').empty();		     
+							$('#opened_item_description').empty();		     
+							$('#opened_item_error_message').empty();
+							$('#opened_atendent_error_message').empty();
+							$('#opened_atendent_div').removeClass('has-danger');
+							$('#close_order').prop("disabled", true);	
+							$('#opened_item_div').removeClass('has-danger');
+							$('input[name*="_token"]').val(openedData.csrf_token);  
+							openedTotalFloat 			= 0;  // zerando o total
+							selectdOpenedItemsList 		= []; // limpando o arrau de items selecionados
+							data 						= {}; // limpando o objeto data
 							
-				// 			// alert da mensagem de sucesso
-			 //                alert('Pedido inserido com sucesso');		                
-			 //            },
-			 //            error: function(errors) {
+							// alert da mensagem de sucesso
+			                alert('Pedido alterado com sucesso');		  
+			                location.reload();              
+			            },
+			            error: function(errors) {
 			            	
-	   //  		        	if (errors.responseJSON.atendent !== undefined) {
-			 //            		$('#opened_atendent_div').addClass('has-danger');
-			 //            		$('#opened_atendent_error_message').html('<span class="help-block">'
-				// 						                            + '<div class="form-control-feedback">'
-				// 						                                + 'Obrigatório'
-				// 						                            + '</div>'
-				// 						                        + '</span>');
-			 //            	}else {
-			 //            		$('#opened_atendent_div').removeClass('has-danger');
-	   //  	            		$('#opened_atendent_error_message').empty();
-			 //            	}	
+	    		        	if (errors.responseJSON.atendent !== undefined) {
+			            		$('#opened_atendent_div').addClass('has-danger');
+			            		$('#opened_atendent_error_message').html('<span class="help-block">'
+										                            + '<div class="form-control-feedback">'
+										                                + 'Obrigatório'
+										                            + '</div>'
+										                        + '</span>');
+			            	}else {
+			            		$('#opened_atendent_div').removeClass('has-danger');
+	    	            		$('#opened_atendent_error_message').empty();
+			            	}	
 
-			 //            	if (errors.responseJSON.items !== undefined) {
-			 //            		$('#opened_item_div').addClass('has-danger');
-			 //            		$('#opened_item_error_message').html('<span class="help-block">'
-				// 						                            + '<div class="form-control-feedback">'
-				// 						                                + 'Escolha pelo menos um item'
-				// 						                            + '</div>'
-				// 						                        + '</span>');
-			 //            	}else {
-			 //            		$('#opened_item_div').removeClass('has-danger');
-	   //  	            		$('#opened_item_error_message').empty();
-			 //            	}	
-			 //            }
-			 //        });
+			            	if (errors.responseJSON.items !== undefined) {
+			            		$('#opened_item_div').addClass('has-danger');
+			            		$('#opened_item_error_message').html('<span class="help-block">'
+										                            + '<div class="form-control-feedback">'
+										                                + 'Escolha pelo menos um item'
+										                            + '</div>'
+										                        + '</span>');
+			            	}else {
+			            		$('#opened_item_div').removeClass('has-danger');
+	    	            		$('#opened_item_error_message').empty();
+			            	}	
+			            }
+			        });
 									
 				});
 			//------------------------ FIM HOME -------------------------------- FIM HOME ------------------------------------- FIM HOME -------------------//
 			
 			//------------------------ ORDER -------------------------------- ORDER ------------------------------------- ORDER -------------------//
 
-			var selectdItemsList	= [];			 	  		// array de items
-			var tableOrderList		= [];				  		// array de mesas ocupadas
-			var itemSelected  		= {};				  		// objeto do item selecionado
-			var tableSelected 		= "";				  		// mesa selecionada
-			var total 				= $('#total').text(); 		// valor total do pedido
-			var totalFloat			= parseFloat(total);  		// valor total convertido em float
-			var openedOrders 		= <?= $data['order'] ?>; 	// pedidos em aberto
+				var selectdItemsList	= [];			 	  		// array de items
+				var tableOrderList		= [];				  		// array de mesas ocupadas
+				var itemSelected  		= {};				  		// objeto do item selecionado
+				var tableSelected 		= "";				  		// mesa selecionada
+				var total 				= $('#total').text(); 		// valor total do pedido
+				var totalFloat			= parseFloat(total);  		// valor total convertido em float
+				var openedOrders 		= <?= $data['order'] ?>; 	// pedidos em aberto
 
-			// iterando as orders para preencher o array de mesas ocupadas
-			openedOrders.forEach( function(order, index) {
-				tableOrderList[index] = order.order_table;
-			});
+				// iterando as orders para preencher o array de mesas ocupadas
+				openedOrders.forEach( function(order, index) {
+					tableOrderList[index] = order.order_table;
+				});
 
-			// evento de inserção de caractéres no campo mesa
-			$('#table').on('keyup', function() {
-				tableSelected = parseInt($('#table').val());
-				
-				// se for maior ou igual a zero significa que o ele já existe no array
-				if (tableOrderList.indexOf(tableSelected) >= 0 ) {
-					$('#error_table').html("Mesa indisponível");
-				}
-				else {
-					$('#error_table').empty();
-				}	
+				// evento de inserção de caractéres no campo mesa
+				$('#table').on('keyup', function() {
+					tableSelected = parseInt($('#table').val());
 					
-			});
+					// se for maior ou igual a zero significa que o ele já existe no array
+					if (tableOrderList.indexOf(tableSelected) >= 0 ) {
+						$('#error_table').html("Mesa indisponível");
+					}
+					else {
+						$('#error_table').empty();
+					}	
+						
+				});
 
-			// validando os botões de salvar e fechar pedido
-			$('#paid').on('keyup', function() {
-				let paidVal 	= $('#paid').val();
-				let totalVal 	= $('#order_total').val();
+				// validando os botões de salvar e fechar pedido
+				$('#paid').on('keyup', function() {
+					let paidVal 	= $('#paid').val();
+					let totalVal 	= $('#order_total').val();
 
-				if(paidVal == totalVal) {
-					$('#close_order').prop("disabled", false);
-					$('#save_order').prop("disabled", false);					
-				}else if(paidVal < totalVal){
-					$('#close_order').prop("disabled", true);
-					$('#save_order').prop("disabled", false);					
-				}
+					if(paidVal == totalVal) {
+						$('#close_order').prop("disabled", false);
+						$('#save_order').prop("disabled", false);					
+					}else if(paidVal < totalVal){
+						$('#close_order').prop("disabled", true);
+						$('#save_order').prop("disabled", false);					
+					}
 
-			});
+				});
 
-			// opções do easy autocomplete
-			var options = {
-				url: "/pedidos/busca-itens",
-				getValue: "item_name",
-				requestDelay: 400,
-			 	list: {
-			  		maxNumberOfElements: 10, 
+				// opções do easy autocomplete
+				var options = {
+					url: "/pedidos/busca-itens",
+					getValue: "item_name",
+					requestDelay: 400,
+				 	list: {
+				  		maxNumberOfElements: 10, 
 
-				  	sort: { 
-		  				enabled: true 
-		  			}, 
+					  	sort: { 
+			  				enabled: true 
+			  			}, 
 
-				  	match: {
-				  		enabled: true
+					  	match: {
+					  		enabled: true
+					  	},
+
+					  	onChooseEvent: function() {
+
+					  		var index = $("#items").getSelectedItemIndex();
+					  		var quantity = $('#quantity').val();
+					  		var item = $('#items').getItemData(index);
+					  		var description = item.item_description;
+					  		var totalItems = quantity * item.item_price;
+
+					  		$('#item_description').html(description);		
+					  		$('#add_item').prop("disabled", false);
+
+					  		itemSelected = {
+					  			item: item,
+					  			quantity: quantity,
+					  			totalItems: totalItems
+					  		};
+					  		
+					  	}
 				  	},
 
-				  	onChooseEvent: function() {
+					template: {
+						type: "description",
 
-				  		var index = $("#items").getSelectedItemIndex();
-				  		var quantity = $('#quantity').val();
-				  		var item = $('#items').getItemData(index);
-				  		var description = item.item_description;
-				  		var totalItems = quantity * item.item_price;
-
-				  		$('#item_description').html(description);		
-				  		$('#add_item').prop("disabled", false);
-
-				  		itemSelected = {
-				  			item: item,
-				  			quantity: quantity,
-				  			totalItems: totalItems
-				  		};
-				  		
-				  	}
-			  	},
-
-				template: {
-					type: "description",
-
-					fields: {
-						description: "item_price"
+						fields: {
+							description: "item_price"
+						}
 					}
-				}
-			};
-			// efetuando a busva
-			$("#items").easyAutocomplete(options);
-
-	
-			// evento do botão de inserir a lista do pedido
-			$('#add_item').on('click', function(event){
-
-				event.preventDefault();		
-
-				totalFloat += itemSelected.totalItems;
-				$('#total').html(totalFloat);		
-				$('#order_total').val(totalFloat);		
-
-		  		//adicionando novo produto a lista e ao array
-				$('#items_order').append(
-					'<div class="row item">'
-				      	+ '<div class="col-lg-12">' 
-				      		+ itemSelected.item.item_name 
-				      	+ '</div>'
-
-				      	+ '<div class="col-lg-12">' 
-				      		+ '<div class="row">' 
-
-					      		+ '<div class="col-lg-9 ">' 
-					      			+ itemSelected.quantity + "x " + itemSelected.item.item_price
-					      		+ '</div>'
-
-					      		+ '<div class="col-lg-3">' 
-					      			+ " R$" + itemSelected.totalItems
-					      		+ '</div>'
-
-				      		+ '</div>'
-				      	+ '</div>'
-				    + '</div>'
-				);
-
-				selectdItemsList.push(itemSelected);
-
-				//limpando os campos de items
-				$("#items").val('');
-				$('#item_description').empty();
-				$('#quantity').val(1);
-				itemSelected = {};				
-				$("#items").focus();
-				$('#add_item').prop("disabled", true);
-
-			});
-
-			// evento de click para inseriri o pedido
-			$('.send_ajax').on('click', function(event) {
-				// previnindo a ação default do botão
-				event.preventDefault();
-
-				//pegando os valores dos campos
-				let atendent 		= $('#atendent').val();
-				let order_status 	= $(event.target).val();
-				let paid			= $('#paid').val();
-				
-				if (tableOrderList.indexOf(tableSelected) >= 0) {
-					$('#error_table').html("Mesa indisponível");
-					return;
-				}
-				else {
-					$('#error_table').empty();	
-				}
-
-				// dados que serão enviados
-				let data = {
-					table: tableSelected,
-					atendent: atendent,
-					order_total: totalFloat,
-					items: selectdItemsList,
-					paid: paid,
-					order_status: order_status,
-					_token: "{{ csrf_token() }}"
 				};
+				// efetuando a busva
+				$("#items").easyAutocomplete(options);
 
-				//requisição assincrona para gravar os dados
-				$.ajax({
-		            type: "POST",
-		            url: '/pedidos/salvar',
-		            data: data,
-		            dataType: 'json',
-		            success: function( order ) {		 
-		            	// verificando se o pedido inserido é um pedido em aberto com uma mesa relacionada
-		            	if (order.order.order_table > 0 && order.order.order_status == 'pendente') {
-							$('#content_tables')
-								.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ order.order +')">'
-											+'<span>'+ order.order.order_table +'</span>'
-											+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
-										+'</a>');		      
-							openedOrders.push(order.order);  	
-		            	}
+		
+				// evento do botão de inserir a lista do pedido
+				$('#add_item').on('click', function(event){
 
-		            	//limpando todos os campos
-						$('#total').html(0);        
-						$('#table').val(0);
-						$('#quantity').val(1);
-						$('#paid').val(''); 
-						$('#items').val('');
-						$('input[name*="_token"]').val('');
-						$('#items_order').empty();		     
-						$('#item_description').empty();		     
-						$('#item_error_message').empty();
-						$('#atendent_error_message').empty();
-						$('#atendent_div').removeClass('has-danger');
-						$('#close_order').prop("disabled", true);	
-						$('#item_div').removeClass('has-danger');
-						$('input[name*="_token"]').val(data.csrf_token);  
-						totalFloat 			= 0;  // zerando o total
-						selectdItemsList 	= []; // limpando o arrau de items selecionados
-						data 				= {}; // limpando o objeto data
-						
-						// alert da mensagem de sucesso
-		                alert('Pedido inserido com sucesso');		                
-		            },
-		            error: function(errors) {
-		            	
-    		        	if (errors.responseJSON.atendent !== undefined) {
-		            		$('#atendent_div').addClass('has-danger');
-		            		$('#atendent_error_message').html('<span class="help-block">'
-									                            + '<div class="form-control-feedback">'
-									                                + 'Obrigatório'
-									                            + '</div>'
-									                        + '</span>');
-		            	}else {
-		            		$('#atendent_div').removeClass('has-danger');
-    	            		$('#atendent_error_message').empty();
-		            	}	
+					event.preventDefault();		
 
-		            	if (errors.responseJSON.items !== undefined) {
-		            		$('#item_div').addClass('has-danger');
-		            		$('#item_error_message').html('<span class="help-block">'
-									                            + '<div class="form-control-feedback">'
-									                                + 'Escolha pelo menos um item'
-									                            + '</div>'
-									                        + '</span>');
-		            	}else {
-		            		$('#item_div').removeClass('has-danger');
-    	            		$('#item_error_message').empty();
-		            	}	
-		            }
-		        });
-								
-			});
+					totalFloat += itemSelected.totalItems;
+					$('#total').html(totalFloat);		
+					$('#order_total').val(totalFloat);		
+
+			  		//adicionando novo produto a lista e ao array
+					$('#items_order').append(
+						'<div class="row item">'
+					      	+ '<div class="col-lg-12">' 
+					      		+ itemSelected.item.item_name 
+					      	+ '</div>'
+
+					      	+ '<div class="col-lg-12">' 
+					      		+ '<div class="row">' 
+
+						      		+ '<div class="col-lg-9 ">' 
+						      			+ itemSelected.quantity + "x " + itemSelected.item.item_price
+						      		+ '</div>'
+
+						      		+ '<div class="col-lg-3">' 
+						      			+ " R$" + itemSelected.totalItems
+						      		+ '</div>'
+
+					      		+ '</div>'
+					      	+ '</div>'
+					    + '</div>'
+					);
+
+					selectdItemsList.push(itemSelected);
+
+					//limpando os campos de items
+					$("#items").val('');
+					$('#item_description').empty();
+					$('#quantity').val(1);
+					itemSelected = {};				
+					$("#items").focus();
+					$('#add_item').prop("disabled", true);
+
+				});
+
+				// evento de click para inseriri o pedido
+				$('.send_ajax').on('click', function(event) {
+					// previnindo a ação default do botão
+					event.preventDefault();
+
+					//pegando os valores dos campos
+					let atendent 		= $('#atendent').val();
+					let order_status 	= $(event.target).val();
+					let paid			= $('#paid').val();
+					
+					if (tableOrderList.indexOf(tableSelected) >= 0) {
+						$('#error_table').html("Mesa indisponível");
+						return;
+					}
+					else {
+						$('#error_table').empty();	
+					}
+
+					// dados que serão enviados
+					let data = {
+						table 		: tableSelected,
+						atendent 	: atendent,
+						order_total : totalFloat,
+						items 		: selectdItemsList,
+						paid 		: paid,
+						order_status: order_status,
+						_token 		: "{{ csrf_token() }}"
+					};
+
+					//requisição assincrona para gravar os dados
+					$.ajax({
+			            type: "POST",
+			            url: '/pedidos/salvar',
+			            data: data,
+			            dataType: 'json',
+			            success: function( order ) {		 
+			            	// verificando se o pedido inserido é um pedido em aberto com uma mesa relacionada
+			            	if (order.order.order_table > 0 && order.order.order_status == 'pendente') {
+								$('#content_tables')
+									.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ order.order +')">'
+												+'<span>'+ order.order.order_table +'</span>'
+												+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
+											+'</a>');		      
+								openedOrders.push(order.order);  	
+			            	}
+
+			            	tableOrderList.push(tableSelected);
+
+			            	//limpando todos os campos
+							$('#total').html(0);        
+							$('#table').val(0);
+							$('#quantity').val(1);
+							$('#paid').val(''); 
+							$('#items').val('');
+							$('input[name*="_token"]').val('');
+							$('#items_order').empty();		     
+							$('#item_description').empty();		     
+							$('#item_error_message').empty();
+							$('#atendent_error_message').empty();
+							$('#atendent_div').removeClass('has-danger');
+							$('#close_order').prop("disabled", true);	
+							$('#item_div').removeClass('has-danger');
+							$('input[name*="_token"]').val(data.csrf_token);  
+							totalFloat 			= 0;  // zerando o total
+							selectdItemsList 	= []; // limpando o arrau de items selecionados
+							data 				= {}; // limpando o objeto data
+							
+							// alert da mensagem de sucesso
+			                alert('Pedido inserido com sucesso');		                
+			            },
+			            error: function(errors) {
+			            	
+	    		        	if (errors.responseJSON.atendent !== undefined) {
+			            		$('#atendent_div').addClass('has-danger');
+			            		$('#atendent_error_message').html('<span class="help-block">'
+										                            + '<div class="form-control-feedback">'
+										                                + 'Obrigatório'
+										                            + '</div>'
+										                        + '</span>');
+			            	}else {
+			            		$('#atendent_div').removeClass('has-danger');
+	    	            		$('#atendent_error_message').empty();
+			            	}	
+
+			            	if (errors.responseJSON.items !== undefined) {
+			            		$('#item_div').addClass('has-danger');
+			            		$('#item_error_message').html('<span class="help-block">'
+										                            + '<div class="form-control-feedback">'
+										                                + 'Escolha pelo menos um item'
+										                            + '</div>'
+										                        + '</span>');
+			            	}else {
+			            		$('#item_div').removeClass('has-danger');
+	    	            		$('#item_error_message').empty();
+			            	}	
+			            }
+			        });
+									
+				});
 			});
 
 

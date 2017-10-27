@@ -40,7 +40,8 @@ class OrderController extends Controller
                 $item->products[$key2]->product_quantity -= ($value['quantity'] * $products_by_item_quantity);
                 $item->products[$key2]->save();
             }
-            $item->orders()->attach($order, ['item_quantity' => $value['quantity']]);
+            $itemStatus = $data['order_status'] == 'pago' ? 1 : 0;
+            $item->orders()->attach($order, ['item_quantity' => $value['quantity'], 'item_status' => $itemStatus]);
 
         }
         return response()->json(['order' => ['order' => $order, 'items' => $order->items]]);
@@ -57,11 +58,40 @@ class OrderController extends Controller
         return view('orders/list-orders')->with('order_list', $order_list);
     }
 
-    /*public function editar($id)
+    public function update(OrderRequest $request)
     {
-        $registro = Item::find($id);
-        return view('items.editar', compact('registro'));
-    }*/
+        $data               = $request->all();                  // dados da requisição    
+        $items              = $data['items'];                   // item list
+        $order              = Order::find($data['order_id']);   // buscando a order que será atualizada
+        $item               = new Item();                       // nova instancia de Item
+
+        // order
+        $order->order_paid      = $data['paid'];
+        $order->order_total     = $data['order_total'];
+        $order->order_status    = $data['order_status'];
+        $order->update();
+
+        // dd($items[0]);
+
+        // iterating items
+        foreach ($items as $key => $value) {
+            if (isset($value['item']['id'])) {
+                // id item
+                $item->id = $value['item']['id'];
+                // iterating products
+                foreach($item->products as $key2 => $value2) {
+                    $products_by_item_quantity = $item->products[$key2]->pivot->product_quantity;
+                    $item->products[$key2]->product_quantity -= ($value['quantity'] * $products_by_item_quantity);
+                    $item->products[$key2]->save();
+                }
+
+                $itemStatus = $data['order_status'] == 'pago' ? 1 : 0;
+                $item->orders()->attach($order, ['item_quantity' => $value['quantity'], 'item_status' => $itemStatus]);                
+            }
+
+        }
+        return response()->json(['order' => ['order' => $order, 'items' => $order->items]]);
+    }
 
     public function destroy($id) {
         $order = Order::find($id);        
@@ -77,10 +107,6 @@ class OrderController extends Controller
         foreach ($items as $key => $value) {
             $data[$key] = $value->products;  
         }
-        // foreach ($data as $key => $value) {
-        //     $resp = $value[0]->pivot->product_quantity;
-        // }
-
         return response()->json($items);
 
     }

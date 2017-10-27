@@ -79,12 +79,13 @@ body a.link {
     width: 100% !important;
 }
 
-<<<<<<< HEAD
 .lable-error{
     color: #d9534f !important
 }
-=======
-label.error {
-    color: #d9534f;
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
->>>>>>> b4fd8f0a39e58a70226a3163c9ccabad41192afa
