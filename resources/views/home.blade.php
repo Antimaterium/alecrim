@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')	
-	<h1 style="text-align:center">Sistema de Controle e Fluxo de Caixa Alecrim</h1>				
+	<h1 style="text-align:center">Sistema de Gestão do Restaurante Alecrim</h1>				
 	<div id="content_tables">
 
 		@foreach($data['order'] as $key => $value)
@@ -640,7 +640,8 @@
 							data 				= {}; // limpando o objeto data
 							
 							// alert da mensagem de sucesso
-			                alert('Pedido inserido com sucesso');		                
+			                alert('Pedido inserido com sucesso');
+							location.reload();		                
 			            },
 			            error: function(errors) {
 			            	
