@@ -114,9 +114,7 @@
 						$('#list_products')
 							.append('<li class="list-group-item">'
 										+ quantity + 'X - ' + product.product_name + ' - R$'+ product.product_price 
-										+'<button class="btn btn-sm btn-danger btn-remove-product" value="'
-										+ product.id 
-										+'" onclick="removeProduct()">Remover</button></li>'
+										+'</li>'
 						);
 
 						selectdProducts.push(
