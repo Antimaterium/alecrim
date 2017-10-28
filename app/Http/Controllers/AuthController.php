@@ -32,7 +32,6 @@ class AuthController extends Controller
         //redirecionando o usuário para a página anterior(login)
         \Session::flash('mensagem',['msg'=>'Confira seus dados.','class'=>'red white-text']);
           
-        
     }
 
     public function logout() {

@@ -42,7 +42,7 @@
 			<ul class="nav navbar-nav navbar-right">              
 				<li id="user-name">{{ substr(Auth::user()->name, 0, 10) . '...' }}</li>
                	<li class="dropdown" id="logout">
-                   <a href="#" class="dropdown-toggle link" data-toggle="dropdown" role="button" aria-expanded="false">
+                   <a href="#" class="dropdown-toggle link" data-toggle="dropdown" role="button">
             			<i class="material-icons" >exit_to_app</i>
                    </a>
                              
@@ -63,11 +63,11 @@
 	        <div id="sidebar-wrapper">
 	            <ul class="sidebar-nav">					
 	                <li>
-	                    <a href="#item-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
+	                    <a href="#item-menu" class="principal_item_menu">
 	                    	Itens
 	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
-	                    <ul class="link collapse" id="item-menu" aria-expanded="false">
+	                    <ul class="link" id="item-menu">
 	                    	<li>
 	                    		<a href="/items/adicionar">Cadastrar</a>	
 	                    	</li>
@@ -77,11 +77,11 @@
 	                    </ul>
 	                </li>
 					<li>
-						<a href="#order-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
+						<a href="#order-menu"  class="principal_item_menu">
 	                    	Pedidos
 	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
-	                    <ul class="link collapse" id="order-menu" aria-expanded="false">
+	                    <ul class="link" id="order-menu">
 	                    	<li>
 	                    		<a href="/pedidos/pagos">Pagos</a>	
 	                    	</li>
@@ -91,11 +91,11 @@
 	                    </ul>
 					</li>
 	                <li>
-	                    <a href="#product-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
+	                    <a href="#product-menu" class="principal_item_menu">
 	                    	Produtos
 	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
-	                    <ul class="link collapse" id="product-menu" aria-expanded="false">
+	                    <ul class="link" id="product-menu">
 	                    	<li>
 	                    		<a href="/adiciona-produtos">Cadastrar</a>	
 	                    	</li>
@@ -113,11 +113,11 @@
                     </li>
                     	 -->                
 	                <li>
-	                    <a href="#employee-menu" data-toggle="collapse" class="collapsed" aria-expanded="false">
+	                    <a href="#employee-menu" class="principal_item_menu">
 	                    	Funcionários
 	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
-	                    <ul class="link collapse" id="employee-menu" aria-expanded="false">
+	                    <ul class="link" id="employee-menu">
 	                    	<li><a href="/cadastrar-usuario">Cadastrar</a></li>
 	                    	<li><a href="/listar-usuarios">Listar</a></li>
 	                    </ul>
