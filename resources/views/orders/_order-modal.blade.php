@@ -13,7 +13,11 @@
 	      	</div>
 
 	      	<div class="modal-body">
+		        <div class="alert alert-success" role="alert" id="alert_success">
+				  	Pedido inserido com sucesso.
+				</div>
 	      		<div class="row">
+
 
 		        	<form class="col-lg-6" method="post" id="form_order_modal">
 
@@ -111,7 +115,8 @@
 								
 									<div class="input-group">							
 								      	<span class="input-group-addon">Pago</span>								      	
-								      	<input type="text" name="paid" id="paid" class="form-control form-control-sm" placeholder="R$00,00">					
+								      	<input type="text" name="paid" id="paid" class="form-control form-control-sm" placeholder="R$00,00">
+								      	<button type="button" class="input-group-addon btn-success" id="add_total">Adicionar Total</button>					
 								    </div>
 								
 							</div>

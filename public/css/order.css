@@ -1,10 +1,15 @@
+#alert_success {
+	display: none;
+}
+
 #order_modal .modal-dialog {
 	height: 100%;
 }
 
 #order_modal .modal-content {
 	height: 60%;
-    min-height: 577px;
+	min-height: 594px;
+	max-height: 650px;
 }
 
 #items_order, #opened_items_order {

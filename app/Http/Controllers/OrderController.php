@@ -21,6 +21,12 @@ class OrderController extends Controller
         $items          = $data['items'];   // item list
         $order          = new Order();      // nova instancia de Order
         $item           = new Item();       // nova instancia de Item
+        $dataReturn     = array(
+                            'order' => array(
+                                'user'  => array(),
+                                'user'  => array()   
+                            )
+                        );                  // array com os dados que seráo retornados
 
         // order
         $order->user_id         = $data['atendent'];        
@@ -44,7 +50,14 @@ class OrderController extends Controller
             $item->orders()->attach($order, ['item_quantity' => $value['quantity'], 'item_status' => $itemStatus]);
 
         }
-        return response()->json(['order' => ['order' => $order, 'items' => $order->items]]);
+
+        $user   = User::find($order->user_id);
+
+        $dataReturn['order']          = $order;
+        $dataReturn['order']['items'] = $order->items;
+        $dataReturn['order']['user']  = $user;
+
+        return response()->json($dataReturn);
 
     }
 

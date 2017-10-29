@@ -67,7 +67,7 @@
 	                    	Itens
 	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
-	                    <ul class="link" id="item-menu">
+	                    <ul class="link secundary-menu" id="item-menu">
 	                    	<li>
 	                    		<a href="/items/adicionar">Cadastrar</a>	
 	                    	</li>
@@ -81,7 +81,7 @@
 	                    	Pedidos
 	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
-	                    <ul class="link" id="order-menu">
+	                    <ul class="link secundary-menu" id="order-menu">
 	                    	<li>
 	                    		<a href="/pedidos/pagos">Pagos</a>	
 	                    	</li>
@@ -95,7 +95,7 @@
 	                    	Produtos
 	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
-	                    <ul class="link" id="product-menu">
+	                    <ul class="link secundary-menu" id="product-menu">
 	                    	<li>
 	                    		<a href="/adiciona-produtos">Cadastrar</a>	
 	                    	</li>
@@ -117,7 +117,7 @@
 	                    	Funcionários
 	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
                     	</a>
-	                    <ul class="link" id="employee-menu">
+	                    <ul class="link secundary-menu" id="employee-menu">
 	                    	<li><a href="/cadastrar-usuario">Cadastrar</a></li>
 	                    	<li><a href="/listar-usuarios">Listar</a></li>
 	                    </ul>

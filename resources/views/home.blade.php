@@ -116,6 +116,7 @@
 									<div class="input-group" id="opened_paid_div">							
 								      	<span class="input-group-addon">Pago</span>								      	
 								      	<input type="number" name="opened_paid" id="opened_paid" class="form-control form-control-sm" placeholder="R$00,00">	
+								      	<button type="button" class="input-group-addon btn btn-success" id="opened_add_total">Adicionar Total</button>			
 								    </div>
 									
 								</div>
@@ -157,7 +158,9 @@
 				// opendeTotal 			= $('#opened_total').text();
 				// openedTotalFloat		= parseFloat(opendeTotal);
 			function openOrder(obj){
-				console.log(obj)
+					
+
+				
 				selectdOpenedItemsList = [];				
 				// limpando os campos antes de inserir
 				// isso é necessário pois é utilizada a mesma modal para cada pedidos. Evitando dados
@@ -224,9 +227,6 @@
 					let openedPaidVal 	= parseFloat($('#opened_paid').val());
 					let openedTotalVal 	= parseFloat($('#opened_order_total').val());
 
-					console.log(openedPaidVal == openedTotalVal)
-					// console.log(openedPaidVal < openedTotalVal)
-
 					if(openedPaidVal == openedTotalVal) {
 						$('#close_opened_order').prop("disabled", false);
 						$('#save_opened_order').prop("disabled", false);					
@@ -240,10 +240,6 @@
 						$('#save_opened_order').prop("disabled", true);	
 						// $('#opened_paid_div').append('<span id="opened_paid_error_message" class="has-danger">Valor maior do que o total</span>');				
 					}
-
-					// if(openedTotalPaid < openedPaidVal) {
-					// 	console.log('akjsdlajsd')
-					// }
 
 				});
 
@@ -293,7 +289,6 @@
 				};
 				// efetuando a busva
 				$("#opened_items").easyAutocomplete(options);
-
 		
 				// evento do botão de inserir a lista do pedido
 				$('#opened_add_item').on('click', function(event){
@@ -339,6 +334,11 @@
 
 				});
 
+				$('#opened_add_total').on('click', function(event) {
+					event.preventDefault();
+					$('#opened_paid').val(openedTotalFloat);
+				});
+
 				// evento de click para inseriri o pedido
 				$('.send_opened_ajax').on('click', function(e) {
 					// previnindo a ação default do botão
@@ -360,7 +360,7 @@
 						order_id 		: openedOrderId,
 						_token 			: "{{ csrf_token() }}"
 					};
-
+					
 					if (openedTotalFloat < paid) {
 						$('#opened_paid_div').addClass('has-danger');
 	            		$('#opened_atendent_error_message').html('<span class="help-block">'
@@ -372,16 +372,14 @@
 	            		$('#opened_paid_div').removeClass('has-danger');
 	            		$('#opened_atendent_error_message').empty();
 	            	}	
-					
-
+				
 					//requisição assincrona para gravar os dados
 					$.ajax({
 			            type: "POST",
 			            url: '/pedidos/alterar',
 			            data: openedData,
 			            dataType: 'json',
-			            success: function( order ) {		 
-
+			            success: function( order ) {		
 			            	//limpando todos os campos
 							$('#opened_total').html(0);        
 							$('#opened_table').val(0);
@@ -398,15 +396,14 @@
 							$('#opened_item_div').removeClass('has-danger');
 							$('input[name*="_token"]').val(openedData.csrf_token);  
 							openedTotalFloat 			= 0;  // zerando o total
-							selectdOpenedItemsList 		= []; // limpando o arrau de items selecionados
+							selectdOpenedItemsList 		= []; // limpando o array de items selecionados
 							data 						= {}; // limpando o objeto data
 							
 							// alert da mensagem de sucesso
-			                alert('Pedido alterado com sucesso');		  
+			                // alert('Pedido alterado com sucesso');		  
 			                location.reload();              
 			            },
 			            error: function(errors) {
-			            	
 	    		        	if (errors.responseJSON.atendent !== undefined) {
 			            		$('#opened_atendent_div').addClass('has-danger');
 			            		$('#opened_atendent_error_message').html('<span class="help-block">'
@@ -572,6 +569,11 @@
 
 				});
 
+				$('#add_total').on('click', function(event) {
+					event.preventDefault();
+					$('#paid').val(totalFloat);
+				});
+
 				// evento de click para inseriri o pedido
 				$('.send_ajax').on('click', function(event) {
 					// previnindo a ação default do botão
@@ -607,18 +609,20 @@
 			            url: '/pedidos/salvar',
 			            data: data,
 			            dataType: 'json',
-			            success: function( order ) {		 
+			            success: function( data ) {						
+
 			            	// verificando se o pedido inserido é um pedido em aberto com uma mesa relacionada
-			            	if (order.order.order_table > 0 && order.order.order_status == 'pendente') {
+			            	if (data.order.order_table > 0 && data.order.order_status == 'pendente') {			       
 								$('#content_tables')
-									.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ order.order +')">'
-												+'<span>'+ order.order.order_table +'</span>'
+									.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ data.order +')">'
+												+'<span>'+ data.order.order_table +'</span>'
 												+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
 											+'</a>');		      
-								openedOrders.push(order.order);  	
+								openedOrders.push(data.order);  	
 			            	}
-
-			            	tableOrderList.push(tableSelected);
+			            	if (tableSelected != 0) {
+			            		tableOrderList.push(tableSelected);			            		
+			            	}
 
 			            	//limpando todos os campos
 							$('#total').html(0);        
@@ -639,12 +643,14 @@
 							selectdItemsList 	= []; // limpando o arrau de items selecionados
 							data 				= {}; // limpando o objeto data
 							
-							// alert da mensagem de sucesso
-			                alert('Pedido inserido com sucesso');
-							location.reload();		                
+							$("#alert_success").fadeIn(200);
+							setTimeout(function() {
+								$('#alert_success').fadeOut(200);
+							}, 5000);
+	                
 			            },
 			            error: function(errors) {
-			            	
+
 	    		        	if (errors.responseJSON.atendent !== undefined) {
 			            		$('#atendent_div').addClass('has-danger');
 			            		$('#atendent_error_message').html('<span class="help-block">'
