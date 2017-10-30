@@ -150,10 +150,39 @@
 				</fieldset>
 				<button class="btn btn-success" type="submit">Adicionar</button>
 				<a href="/lista-produtos" class="btn btn-primary">Cancelar</a>
+			<!-- 	<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal" style="float: right;">
+				  	Importar Excel
+				</button> -->
 			</form>
 		</div>
 	</div>
 </section>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  	<div class="modal-dialog" role="document">
+    	<div class="modal-content">
+      		<div class="modal-header">
+        		<h5 class="modal-title" id="exampleModalLabel">Importar Excel</h5>
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          			<span aria-hidden="true">&times;</span>
+        		</button>
+      		</div>
+      	<div class="modal-body">
+        	<form>
+  				<div class="form-group">
+  					<label for="file" class="btn">Select Image</label>
+  					<input type="file" class="form-control form-control-sm" id="file" name="Escolha um arquivo">
+  					<small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+  				</div>
+			</form>
+      	</div>
+      	<div class="modal-footer">
+        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        	<a href="/excel/products/import" class="btn btn-primary">Importar</a>
+      	</div>
+    	</div>
+  	</div>
+</div>
 @stop
 
 @section('project-scripts')

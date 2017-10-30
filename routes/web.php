@@ -72,3 +72,6 @@ Route::get('/pedidos/pagos', ['as' => 'orders.paid', 'uses' => 'OrderController@
 Route::get('/pedidos/pendetes', ['as' => 'orders.pending', 'uses' => 'OrderController@showPendingOrders']);
 Route::get('/pedidos/deletar/{id}', ['as' => 'order.destroy', 'uses' => 'OrderController@destroy']);
 Route::get('/pedidos/pendentes/{id}', ['as' => 'order.opened', 'uses' => 'OrderController@opened']);
+
+// Excel
+Route::get('/excel/products/import', ['as' => 'products.import', 'uses' => 'ExcelController@importProducts']);

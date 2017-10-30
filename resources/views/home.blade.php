@@ -155,12 +155,9 @@
 			var openedOrders 			= <?= $data['order'] ?>; 	// pedidos em aberto
 			var openedTotalPaid			= 0;
 			var openedOrderId 			= 0;
-				// opendeTotal 			= $('#opened_total').text();
-				// openedTotalFloat		= parseFloat(opendeTotal);
+			
 			function openOrder(obj){
 					
-
-				
 				selectdOpenedItemsList = [];				
 				// limpando os campos antes de inserir
 				// isso é necessário pois é utilizada a mesma modal para cada pedidos. Evitando dados
@@ -213,6 +210,12 @@
 							quantity 	: element.pivot.item_quantity,
 							totalItems 	: obj.order_total
 						}
+					}
+
+					if (openedTotalFloat == openedTotalPaid) {						
+						$('#save_opened_order').prop("disabled", false);					
+					}else {
+						$('#save_opened_order').prop("disabled", true);											
 					}
 
 					selectdOpenedItemsList.push(openedSelectedItem);
@@ -337,6 +340,7 @@
 				$('#opened_add_total').on('click', function(event) {
 					event.preventDefault();
 					$('#opened_paid').val(openedTotalFloat);
+					$('#save_opened_order').prop("disabled", false);
 				});
 
 				// evento de click para inseriri o pedido
@@ -431,6 +435,11 @@
 			        });
 									
 				});
+
+				$('#opened_order_modal').on('hidden.bs.modal', function (e) {
+				  	
+				});
+
 			//------------------------ FIM HOME -------------------------------- FIM HOME ------------------------------------- FIM HOME -------------------//
 			
 			//------------------------ ORDER -------------------------------- ORDER ------------------------------------- ORDER -------------------//
@@ -612,17 +621,14 @@
 			            success: function( data ) {						
 
 			            	// verificando se o pedido inserido é um pedido em aberto com uma mesa relacionada
-			            	if (data.order.order_table > 0 && data.order.order_status == 'pendente') {			       
-								$('#content_tables')
-									.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ data.order +')">'
-												+'<span>'+ data.order.order_table +'</span>'
-												+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
-											+'</a>');		      
-								openedOrders.push(data.order);  	
-			            	}
-			            	if (tableSelected != 0) {
-			            		tableOrderList.push(tableSelected);			            		
-			            	}
+			     			// if (data.order.order_table > 0 && data.order.order_status == 'pendente') {			       
+								// $('#content_tables')
+								// 	.append('<a data-toggle="modal" id="btn_open_opened_order_modal" data-target="#opened_order_modal" class="table_order" onclick="openOrder('+ data.order +')">'
+								// 				+'<span>'+ data.order.order_table +'</span>'
+								// 				+'<img src="img/icons/cutlery.svg" alt="order" class="order_image">'
+								// 			+'</a>');		      
+								// openedOrders.push(data.order);  	
+			     			// }
 
 			            	//limpando todos os campos
 							$('#total').html(0);        
@@ -643,10 +649,16 @@
 							selectdItemsList 	= []; // limpando o arrau de items selecionados
 							data 				= {}; // limpando o objeto data
 							
-							$("#alert_success").fadeIn(200);
-							setTimeout(function() {
-								$('#alert_success').fadeOut(200);
-							}, 5000);
+			            	if (tableSelected != 0) {
+			            		tableOrderList.push(tableSelected);
+			            		location.reload();			            		
+			            	}else {
+								$("#alert_success").fadeIn(200);
+								setTimeout(function() {
+									$('#alert_success').fadeOut(200);
+								}, 5000);			            		
+			            	}
+
 	                
 			            },
 			            error: function(errors) {
@@ -678,6 +690,7 @@
 			        });
 									
 				});
+
 			});
 
 

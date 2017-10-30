@@ -17,8 +17,8 @@ class CreateOrdersTable extends Migration
 
             $table->increments('id');
             $table->integer('user_id')->unsigned();
-            $table->integer('order_table')->default(0)->nullable();
-            $table->float('order_paid')->default(0)->nullable();
+            $table->integer('order_table')->default(0);
+            $table->float('order_paid')->default(0);
             $table->float('order_total');
             $table->string('order_status', 20);
 

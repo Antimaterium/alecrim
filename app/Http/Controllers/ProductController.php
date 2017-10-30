@@ -36,6 +36,7 @@ class ProductController extends Controller
     public function store(ProductRequest $request) {
 
         $product    = new Product();
+        dd($request);
         $provider   = array('provider_name' => $request['provider_name']);
 
         $product->product_name                          = $request['product_name'];
