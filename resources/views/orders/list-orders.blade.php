@@ -42,15 +42,6 @@
 				</table>
 			@endif
 
-			<nav aria-label="Page navigation example">
-			  <ul class="pagination">
-			  	@foreach($order_list->links() as $link)
-			    	<li class="page-item">
-			    		<a class="page-link" href="#">{{ $link }}</a>
-		    		</li>
-			    @endforeach
-			  </ul>
-			</nav>
 		</div>
 	</div>
 	

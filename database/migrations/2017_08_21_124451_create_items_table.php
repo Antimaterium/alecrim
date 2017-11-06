@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration
             $table->string('item_description');
             $table->string('item_category');
             $table->float('item_price');
+            $table->smallInteger('status')->nullable();
             $table->timestamps();
         });
     }

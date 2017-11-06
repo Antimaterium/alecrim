@@ -35,7 +35,10 @@
         @if($order->order_status == 'pendente')<h4>Valor Pago: {{$order->order_paid}}</h4>@endif
         <h4>Total:      {{$order->order_total}}</h4>
       </div>
-
-      <a href="/pedidos/pendetes" class="btn btn-primary">Voltar</a>
+      @if($order->order_status == 'pendente')
+        <a href="/pedidos/pendetes" class="btn btn-primary">Voltar</a>
+      @else
+        <a href="/pedidos/pagos" class="btn btn-primary">Voltar</a>
+      @endif
 </section>
 @stop

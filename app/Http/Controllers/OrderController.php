@@ -8,7 +8,6 @@ use Alecrim\Product;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;  
 use Alecrim\Http\Requests\OrderRequest;
-// use Session;
 use Illuminate\Http\Request;
 
 
@@ -30,10 +29,11 @@ class OrderController extends Controller
 
         // order
         $order->user_id         = $data['atendent'];        
-        $order->order_table     = $data['table'];
+        $order->order_table     = $data['table'] ?? 0;
         $order->order_paid      = $data['paid'];
         $order->order_total     = $data['order_total'];
         $order->order_status    = $data['order_status'];
+        $order->status          = 1;
         $order->save();
 
         // iterating items
@@ -62,12 +62,18 @@ class OrderController extends Controller
     }
 
     public function showPaidOrders() {
-        $order_list = Order::where('order_status', 'pago')->paginate(10);
+        $order_list = Order::where([
+                                        ['order_status', 'pago'], 
+                                        ['status', 1]
+                                    ])->get();
         return view('orders/list-orders')->with('order_list', $order_list);
     }
 
     public function showPendingOrders() {
-        $order_list = Order::where('order_status', 'pendente')->paginate(10);
+        $order_list = Order::where([
+                                        ['order_status', 'pendente'], 
+                                        ['status', '=', 1]
+                                    ])->get();
         return view('orders/list-orders')->with('order_list', $order_list);
     }
 
@@ -83,8 +89,6 @@ class OrderController extends Controller
         $order->order_total     = $data['order_total'];
         $order->order_status    = $data['order_status'];
         $order->update();
-
-        // dd($items[0]);
 
         // iterating items
         foreach ($items as $key => $value) {
@@ -108,15 +112,15 @@ class OrderController extends Controller
 
     public function destroy($id) {
         $order = Order::find($id);        
-        $order->items()->detach();
-        $order->delete();
-        return redirect()->route('orders.pending');
+        $order->status = 0;
+        $order->save();
+        return redirect()->route($order->order_status == 'pendente' ? 'orders.pending' : 'orders.paid');
     } 
 
     public function searchItems() {
 
 
-        $items = Item::all();
+        $items = Item::where('status', '=', 1)->get();
         foreach ($items as $key => $value) {
             $data[$key] = $value->products;  
         }
@@ -125,7 +129,10 @@ class OrderController extends Controller
     }
 
     public function opened($id) {
-        $order = Order::find($id)->items;
+        $order = Order::where([
+                                ['id', '=', $id],
+                                ['status', '=', 1]
+                            ])->items;
         return response()->json($order);
     }
 

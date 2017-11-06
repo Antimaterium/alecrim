@@ -9,7 +9,7 @@ Route::get('/', function () {
         return redirect('login');
     }
     $data               = array();
-    $users              = User::all();
+    $users              = User::where('status', '=', 1)->get();
     $usersOpenedOrder   = [];
     $orders             = Order::
                             whereHas('items', function($query) {
@@ -20,12 +20,15 @@ Route::get('/', function () {
                                         ['item_status', '=', 0]
                                     ]);
                             })
-                            ->get();
+                            ->where('status', 1)->get();
     $data['order'] = $orders;
     $data['users'] = $users;
     foreach ($orders as $key => $value) {
         $data['order'][$key]['items']   = $value->items;
-        $data['order'][$key]['user']   = User::find($value->user_id);
+        $data['order'][$key]['user']    = User::where([
+                                                        ['id', '=', $value->user_id],
+                                                        ['status', '=', 1]
+                                                    ])->get();
     }
     return view('/home')->with('data', $data);  
 });
@@ -72,6 +75,9 @@ Route::get('/pedidos/pagos', ['as' => 'orders.paid', 'uses' => 'OrderController@
 Route::get('/pedidos/pendetes', ['as' => 'orders.pending', 'uses' => 'OrderController@showPendingOrders']);
 Route::get('/pedidos/deletar/{id}', ['as' => 'order.destroy', 'uses' => 'OrderController@destroy']);
 Route::get('/pedidos/pendentes/{id}', ['as' => 'order.opened', 'uses' => 'OrderController@opened']);
+
+// Relatórios
+Route::get('/relatorio/gastos', ['as' => 'report.spending'  , 'uses' => 'ReportController@spendings']);
 
 // Excel
 Route::get('/excel/products/import', ['as' => 'products.import', 'uses' => 'ExcelController@importProducts']);

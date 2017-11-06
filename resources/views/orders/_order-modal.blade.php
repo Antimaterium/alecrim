@@ -99,18 +99,6 @@
 
 
 						<div class="col-lg-12 order-values">
-						<!--
-							<div class="row">
-								<div class="col-lg-9">Total Pago</div>
-								<div class="col-lg-3"> R$<span>----</span></div>
-							</div>
-
-							<div class="row">
-								<div class="col-lg-9">Susbtotal</div>
-								<div class="col-lg-3"> R$<span>----</span></div>
-							</div>
-
-						-->
 							<div class="row">
 								
 									<div class="input-group">							

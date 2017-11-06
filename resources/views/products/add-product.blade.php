@@ -87,6 +87,19 @@
 						</div>
 					</div>
 					<div class="col-lg-2">
+						<div class="form-group {{ $errors->has('product_purchase_price') ? 'has-danger' : '' }}">
+							<label for="product_purchase_price">Valor de compra</label>
+							<input class="form-control form-control-sm" name="product_purchase_price" id="product_purchase_price" type="text">
+							@if($errors->has('product_purchase_price'))
+		                        <span class="help-block">
+		                            <div class="form-control-feedback">
+		                                {{ $errors->first('product_purchase_price') }}
+		                            </div>
+		                        </span>
+		                    @endif
+						</div>
+					</div>	
+					<div class="col-lg-2">
 						<div class="form-group {{ $errors->has('product_quantity') ? 'has-danger' : '' }}">
 							<label for="product_quantity">Quantidade(unit.)</label>
 							<input class="form-control form-control-sm" name="product_quantity" id="product_quantity" type="number">
@@ -100,22 +113,10 @@
 						</div>
 					</div>					
 					<div class="col-lg-2">
-						<div class="form-group {{ $errors->has('product_purchase_price') ? 'has-danger' : '' }}">
-							<label for="product_purchase_price">Valor de compra</label>
-							<input class="form-control form-control-sm" name="product_purchase_price" id="product_purchase_price" type="text">
-							@if($errors->has('product_purchase_price'))
-		                        <span class="help-block">
-		                            <div class="form-control-feedback">
-		                                {{ $errors->first('product_purchase_price') }}
-		                            </div>
-		                        </span>
-		                    @endif
-						</div>
-					</div>	
-					<!--<div class="col-lg-2">
 						<label for="">Custo por un.</label>
-						<div id="unit_price"></div>
-					</div>-->								
+						<div id="unit_price_field"></div>
+						<input type="hidden" name="product_purchase_unit_price" id="product_purchase_unit_price">
+					</div>								
 				</div>
 				<fieldset>
 					<legend><h3>Fornecedor</h3></legend>
@@ -133,19 +134,7 @@
 			                    @endif
 							</div>
 						</div>
-						<!-- <div class="col-lg-12">
-							<div class="form-group {{ $errors->has('provider_address') ? 'has-danger' : '' }}">
-								<label for="provider_address">Logradouro</label>
-								<input type="text" class="form-control form-control-sm" id="provider_address" name="provider_address">
-								@if($errors->has('provider_address'))
-			                        <span class="help-block">
-			                            <div class="form-control-feedback">
-			                                {{ $errors->first('provider_address') }}
-			                            </div>
-			                        </span>
-			                    @endif
-							</div>
-						</div> -->
+						
 					</div>
 				</fieldset>
 				<button class="btn btn-success" type="submit">Adicionar</button>
@@ -188,101 +177,94 @@
 @section('project-scripts')
 <script>
 $(document).ready(function(){
-	$('#product_purchase_price').on('blur', function(){
-		let purchase_price 	= $('#product_purchase_price').val();
-		let quantity 		= $('#product_quantity').val();
+	$('#product_purchase_price, #product_quantity').on('keyup', function(){
+		let purchase_price 	= parseFloat($('#product_purchase_price').val());
+		let quantity 		= parseFloat($('#product_quantity').val());
 		let unitPrice 		= purchase_price / quantity;
 		
 		if (quantity != '' && purchase_price != '') {
-			$('#unit_price').html(unitPrice);
+			$('#unit_price_field').html(unitPrice);
+			$('#product_purchase_unit_price').val(unitPrice);
 		}
 
 	});
+
+	$('#add-product').validate({
+	    rules: {
+	        product_name: {
+	            required: true,
+	            minlength: 3,
+	            maxlength: 100
+	        },
+	        product_price: {
+	            required: true,
+	            minlength:1
+	        },
+	        product_description: {
+	            required: true,
+	            minlength: 10,
+	            maxlength: 100
+	        },
+	        product_acceptable_minimum_quantity: {
+	            required: true,
+	            minlength: 1,
+	        },
+	        product_packing: {
+	            required: true,
+	        },
+	        product_quantity: {
+	            required: true,
+	            minlength: 1,
+	        },
+	        product_purchase_price: {
+	        	required: true,
+	        	minlength: 1,
+	        },
+	        provider_name: {
+	        	required: true,
+	        	minlength: 2,
+	        	maxlength: 100,
+	        },
+	    },
+	    messages: {
+	        product_name: {
+	            required: "Campo obrigatório",
+	            minlength: "No mínimo 3 caractéres",
+	            maxlength: "No máximo 100 caractéres",
+	        },
+	        product_price: {
+	            required: "Campo obrigatório",
+	            minlength: "Digite um valor maior que zero",
+	        },
+	        product_description: {
+	            required: "Campo obrigatório",
+	            minlength: "No mínimo 10 caractéres",
+	            maxlength: "No máximo 100 caractéres"
+	        },
+	        product_acceptable_minimum_quantity: {
+	            required: "Campo obrigatório",
+	            minlength: "Informe valor maior que zero",
+	        },
+	        product_packing: {              
+	            required: "Selecione uma opção",
+	        },
+	        product_quantity: {
+	        	required: "Campo obrigatório",
+	        	minlength: "Informe um valor maior que zero",
+	        },
+	        product_purchase_price: {
+	        	required: "Campo obrigatório",
+	        	minlength: "valor deve ser maior que zero",
+	        },
+	        provider_name: {
+	        	required: "informe um Fornecedor",
+	        	minlength: "No mínimo 3 caractéres",
+	            maxlength: "No máximo 100 caractéres" 
+	        },
+
+	    },
+	});
+
 });
 </script>
-
-@section('project-scripts')
-<script>
-    $(document).ready(function(){
-
-        $('#add-product').validate({
-            rules: {
-                product_name: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 100
-                },
-                product_price: {
-                    required: true,
-                    minlength:1
-                },
-                product_description: {
-                    required: true,
-                    minlength: 10,
-                    maxlength: 100
-                },
-                product_acceptable_minimum_quantity: {
-                    required: true,
-                    minlength: 1,
-                },
-                product_packing: {
-                    required: true,
-                },
-                product_quantity: {
-                    required: true,
-                    minlength: 1,
-                },
-                product_purchase_price: {
-                	required: true,
-                	minlength: 1,
-                },
-                provider_name: {
-                	required: true,
-                	minlength: 2,
-                	maxlength: 100,
-                },
-            },
-            messages: {
-                product_name: {
-                    required: "Campo obrigatório",
-                    minlength: "No mínimo 3 caractéres",
-                    maxlength: "No máximo 100 caractéres",
-                },
-                product_price: {
-                    required: "Campo obrigatório",
-                    minlength: "Digite um valor maior que zero",
-                },
-                product_description: {
-                    required: "Campo obrigatório",
-                    minlength: "No mínimo 10 caractéres",
-                    maxlength: "No máximo 100 caractéres"
-                },
-                product_acceptable_minimum_quantity: {
-                    required: "Campo obrigatório",
-                    minlength: "Informe valor maior que zero",
-                },
-                product_packing: {              
-                    required: "Selecione uma opção",
-                },
-                product_quantity: {
-                	required: "Campo obrigatório",
-                	minlength: "Informe um valor maior que zero",
-                },
-                product_purchase_price: {
-                	required: "Campo obrigatório",
-                	minlength: "valor deve ser maior que zero",
-                },
-                provider_name: {
-                	required: "informe um Fornecedor",
-                	minlength: "No mínimo 3 caractéres",
-                    maxlength: "No máximo 100 caractéres" 
-                },
-
-            },
-        });
-
-    });
-</script>
-@stop
-
 @stop

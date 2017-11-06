@@ -4,7 +4,6 @@
 <section class="create-user">
 	
 	<h1>Cadastrar Funcionário</h1>
-	
 	<div class="card">
 		<div class="card-header">
 			Cadastrar

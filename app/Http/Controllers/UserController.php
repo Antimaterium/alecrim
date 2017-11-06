@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Alecrim\User;
 use Alecrim\Http\Requests\UserRequest;
 use Session;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -16,7 +17,7 @@ class UserController extends Controller
         if(\Auth::guest()){
             return redirect('login');
         }
-        $users_list = User::all();
+        $users_list = User::where('status', '=', 1)->get();
         return view('users/show-users')->with('users_list', $users_list);
     }
 
@@ -34,12 +35,20 @@ class UserController extends Controller
         if(\Auth::guest()){
           return redirect('login');
         }
-        User::create($request->all()); 
+        $user = new User();
+        $user->name             = $request['name'];
+        $user->email            = $request['email'];
+        $user->permission       = $request['permission'];
+        $user->password         = $request['password'];
+        $user->status           = 1;
+        $user->remember_token   = Str::random(60);
+
+        $user->save();
+
         return redirect('/listar-usuarios')->withInput();
     }
 
-    public function show($id)
-    {
+    public function show($id) {
         
     }
 
@@ -88,7 +97,8 @@ class UserController extends Controller
          return redirect('login');
         }   
         $user = User::find($id);
-        $user->delete();
+        $user->status = 0; 
+        $user->save();
         Session::flash('flash_message',[
                 'msg'=>"Usuário deletado com sucesso!?",
                 'class'=>"alert-success"

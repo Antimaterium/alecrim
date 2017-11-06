@@ -177,8 +177,7 @@
 				openedTotalPaid = obj.order_paid;
 				$('#opened_paid').val(openedTotalPaid);
 				openedOrderId = obj.id;
-
-				$('#opened_atendent').append("<option value='"+obj.user_id+"'>"+ obj.user.name +"<option>");
+				$('#opened_atendent').append("<option value='"+obj.user_id+"'>"+ obj.user[0].name +"<option>");
 
 				obj.items.forEach(function(element, index) {
 			  		//adicionando novo produto a lista e ao array
@@ -581,6 +580,8 @@
 				$('#add_total').on('click', function(event) {
 					event.preventDefault();
 					$('#paid').val(totalFloat);
+					$('#close_order').prop("disabled", false);
+
 				});
 
 				// evento de click para inseriri o pedido

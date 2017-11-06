@@ -22,6 +22,15 @@
 		<!-- BOOTSTRAP -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous"/>
 		<!-- END BOOTSTRAP -->
+
+		<!-- DATEPICKER -->
+
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+		<script src="http://code.gijgo.com/1.6.1/js/gijgo.js" type="text/javascript"></script>
+		<link href="http://code.gijgo.com/1.6.1/css/gijgo.css" rel="stylesheet" type="text/css" />
+		<!-- END DATEPICKER -->
 		
 	    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -104,14 +113,7 @@
 	                    	</li>
 	                    </ul>
 	                </li>        
-	                <!-- <li>
-                        <a href="#">Fornecedores</a>
-                    </li>
-                    
-                    <li>
-                         <a href="#">Caixa</a>
-                    </li>
-                    	 -->                
+        
 	                <li>
 	                    <a href="#employee-menu" class="principal_item_menu">
 	                    	Funcionários
@@ -120,6 +122,15 @@
 	                    <ul class="link secundary-menu" id="employee-menu">
 	                    	<li><a href="/cadastrar-usuario">Cadastrar</a></li>
 	                    	<li><a href="/listar-usuarios">Listar</a></li>
+	                    </ul>
+	                </li>
+	                <li>
+	                    <a href="#report-menu" class="principal_item_menu">
+	                    	Relatório Financeiro
+	                    	<i class="material-icons menu-left-side-icon">keyboard_arrow_down</i>
+                    	</a>
+	                    <ul class="link secundary-menu" id="report-menu">
+	                    	<li><a href="{{route('report.spending')}}">Gastos</a></li>
 	                    </ul>
 	                </li>
 	              </ul>

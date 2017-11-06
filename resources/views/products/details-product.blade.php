@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+
 <section class="details-product">
 	<div class="card">
 		<div class="card-header">
@@ -16,9 +17,9 @@
 				<li class="list-group-item">Custo por Unidade: R$ {{$product->unit_price}}</li>
 				<li class="list-group-item">Quantidade: {{$product->product_quantity}}</li>
 				<li class="list-group-item">Quantidade Minima Estoque: {{$product->product_acceptable_minimum_quantity}}</li>
-				<li class="list-group-item">Fornecedor: {{$provider->provider_name}}</li>
+
 			</ul>
 		</div>
-			<a href="/lista-produtos" class="btn btn-primary">Voltar</a>
+		<a href="/lista-produtos" class="btn btn-primary">Voltar</a>
 </section>
 @stop

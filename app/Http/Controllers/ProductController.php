@@ -18,7 +18,7 @@ class ProductController extends Controller
             return redirect('login');
         }
         
-        $products_list = Product::paginate(10);
+        $products_list = Product::where('status', '=', '1')->get();
         return view('products/list-products')->with('products_list', $products_list);
 
     }
@@ -36,7 +36,6 @@ class ProductController extends Controller
     public function store(ProductRequest $request) {
 
         $product    = new Product();
-        dd($request);
         $provider   = array('provider_name' => $request['provider_name']);
 
         $product->product_name                          = $request['product_name'];
@@ -44,8 +43,11 @@ class ProductController extends Controller
         $product->product_description                   = $request['product_description'];
         $product->product_packing                       = $request['product_packing'];
         $product->product_quantity                      = $request['product_quantity'];
+        $product->product_initial_quantity              = $request['product_quantity'];
         $product->product_purchase_price                = $request['product_purchase_price'];
         $product->product_acceptable_minimum_quantity   = $request['product_acceptable_minimum_quantity'];
+        $product->product_purchase_unit_price           = $request['product_purchase_unit_price'];
+        $product->status                                = 1;
         $provider['provider_name']                      = $request['provider_name'];
 
         if (!empty($provider['provider_name'])) {
@@ -64,9 +66,9 @@ class ProductController extends Controller
         }
         $product = Product::find($id);
         $provider = Provider::find($id);
-        return view('products/details-product')->with('product',$product)->with('provider',$provider);
+
+        return view('products/details-product', compact('product', 'provider'));
         
-        //return view('products/details-product')->with('provider',$provider);
     }
 
     public function edit($id) {
@@ -107,7 +109,8 @@ class ProductController extends Controller
         }
     
         $product = Product::find($id);
-        $product->delete();
+        $product->status = 0;
+        $product->save();
         Session::flash('flash_message', [
             'msg'   => 'Produto apagado com sucesso!',
             'class' => 'alert-danger'

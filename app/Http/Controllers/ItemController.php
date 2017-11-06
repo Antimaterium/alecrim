@@ -14,7 +14,7 @@ class ItemController extends Controller
 {
    public function index()
     {
-        $registros = Item::all();
+        $registros = Item::where('status', '=', 1)->get();
         return view('items.index', compact('registros'));
     }
 
@@ -33,10 +33,11 @@ class ItemController extends Controller
         $product            = new Product();     // products
 
         
-        $item->item_name = $data['item_name'];
+        $item->item_name        = $data['item_name'];
         $item->item_description = $data['item_description'];
-        $item->item_category = $data['item_category'];
-        $item->item_price = $data['item_price'];
+        $item->item_category    = $data['item_category'];
+        $item->item_price       = $data['item_price'];
+        $item->status           = 1;
         $item->save();
         
         foreach ($products as $key => $value) {
@@ -84,8 +85,8 @@ class ItemController extends Controller
     public function deletar($id)
     {
         $item = Item::find($id);
-        $item->products()->detach();
-        $item->delete();
+        $item->status = 0;
+        $item->save();
 
         Session::flash('mensagem',['msg'=>'Registro Deletado com sucesso!','class'=>'green white-text']);
         return redirect()->route('items.index');
